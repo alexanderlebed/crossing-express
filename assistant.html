@@ -1,16 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="utf-8">
-<title>Crossing Assistant</title>
+<title>Crossing — AI Relocation Assistant</title>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<link rel="canonical" href="https://crossing.express/assistant.html">
+
 <style>
+
 body {
-  font-family: system-ui;
-  max-width: 700px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  max-width: 800px;
   margin: 40px auto;
-  padding: 20px;
+  padding: 0 20px;
+  line-height: 1.6;
+  color: #111;
+}
+
+nav {
+  margin-bottom: 30px;
+}
+
+nav a {
+  margin-right: 14px;
+  text-decoration: none;
+}
+
+nav a:hover {
+  text-decoration: underline;
 }
 
 #chat {
@@ -19,28 +39,72 @@ body {
   height: 400px;
   overflow-y: auto;
   margin-bottom: 20px;
+  background: #fafafa;
+}
+
+.input-row {
+  display: flex;
+  gap: 10px;
 }
 
 input {
-  width: 80%;
-  padding: 10px;
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #000;
 }
 
 button {
-  padding: 10px;
+  padding: 12px 18px;
+  border: 1px solid #000;
+  background: white;
+  cursor: pointer;
 }
+
+button:hover {
+  background: #eee;
+}
+
+.message-user {
+  margin: 10px 0;
+}
+
+.message-ai {
+  margin: 10px 0;
+}
+
+.status {
+  font-size: 0.9em;
+  color: #666;
+  margin-bottom: 10px;
+}
+
 </style>
 
 </head>
 
 <body>
 
+<nav>
+<a href="https://crossing.express/">Home</a>
+</nav>
+
 <h1>Crossing Assistant</h1>
+
+<p>
+AI relocation assistant helping individuals navigate international relocation,
+visa processes, legal requirements, and practical transition logistics.
+</p>
+
+<div class="status">
+Status: Active
+</div>
 
 <div id="chat"></div>
 
+<div class="input-row">
 <input id="input" placeholder="Ask about relocation..." />
 <button onclick="send()">Send</button>
+</div>
 
 <script>
 
@@ -53,46 +117,65 @@ async function send() {
 
   const message = input.value;
 
-  chat.innerHTML += "<p><b>You:</b> " + message + "</p>";
+  if (!message) return;
 
-  const response = await fetch("https://api.openai.com/v1/chat/completions", {
-
-    method: "POST",
-
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + API_KEY
-    },
-
-    body: JSON.stringify({
-
-      model: "gpt-4o-mini",
-
-      messages: [
-
-        {
-          role: "system",
-          content: "You are Crossing, an AI relocation assistant helping people move between countries safely and intelligently."
-        },
-
-        {
-          role: "user",
-          content: message
-        }
-
-      ]
-
-    })
-
-  });
-
-  const data = await response.json();
-
-  const reply = data.choices[0].message.content;
-
-  chat.innerHTML += "<p><b>Crossing:</b> " + reply + "</p>";
+  chat.innerHTML += "<div class='message-user'><b>You:</b> " + message + "</div>";
 
   input.value = "";
+
+  chat.innerHTML += "<div class='message-ai'><i>Crossing is thinking...</i></div>";
+
+  chat.scrollTop = chat.scrollHeight;
+
+  try {
+
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + API_KEY
+      },
+
+      body: JSON.stringify({
+
+        model: "gpt-4o-mini",
+
+        messages: [
+
+          {
+            role: "system",
+            content:
+            "You are Crossing, a professional AI relocation assistant. Help users move between countries safely, legally, and efficiently. Provide practical guidance."
+          },
+
+          {
+            role: "user",
+            content: message
+          }
+
+        ]
+
+      })
+
+    });
+
+    const data = await response.json();
+
+    const reply = data.choices[0].message.content;
+
+    chat.innerHTML += "<div class='message-ai'><b>Crossing:</b> " + reply + "</div>";
+
+    chat.scrollTop = chat.scrollHeight;
+
+  }
+
+  catch (error) {
+
+    chat.innerHTML += "<div class='message-ai'>Error connecting to AI.</div>";
+
+  }
 
 }
 
