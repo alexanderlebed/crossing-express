@@ -1,57 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="utf-8">
 <title>Crossing — AI Relocation Assistant</title>
-<meta name="description" content="AI relocation assistant helping individuals move safely between countries.">
+
+<meta name="description" content="AI relocation assistant helping individuals move between countries safely, legally, and efficiently.">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="canonical" href="https://crossing.express/">
 
 <style>
 
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(135deg, #0f172a, #1e3a8a);
-  color: white;
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+  line-height: 1.7;
+  color: #111;
+  background: #fff;
 }
 
-.container {
-  max-width: 900px;
-  margin: 80px auto;
-  padding: 20px;
+nav {
+  margin-bottom: 30px;
+}
+
+nav a {
+  margin-right: 14px;
+  text-decoration: none;
+  color: #111;
+}
+
+nav a:hover {
+  text-decoration: underline;
 }
 
 h1 {
-  font-size: 42px;
-  margin-bottom: 10px;
+  font-size: 32px;
 }
 
-p {
-  font-size: 18px;
-  opacity: 0.9;
-  margin-bottom: 30px;
+.box {
+  border: 1px solid #000;
+  padding: 20px;
+  margin: 30px 0;
+  background: #fafafa;
 }
 
 .button {
   display: inline-block;
   padding: 14px 22px;
-  margin: 10px 10px 10px 0;
-  background: white;
-  color: black;
+  margin-top: 15px;
+  border: 1px solid #000;
   text-decoration: none;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 0.2s;
+  color: #000;
+  font-weight: bold;
 }
 
 .button:hover {
-  background: #e5e7eb;
+  background: #000;
+  color: #fff;
 }
 
 .footer {
-  margin-top: 60px;
-  opacity: 0.6;
+  margin-top: 50px;
   font-size: 14px;
 }
 
@@ -61,34 +73,74 @@ p {
 
 <body>
 
-<div class="container">
+<nav>
+<a href="/">Home</a> ·
+<a href="/assistant.html">Assistant</a>
+</nav>
 
 <h1>Crossing</h1>
 
+<p><strong>AI relocation assistant for international moves.</strong></p>
+
 <p>
-AI relocation assistant helping individuals navigate international relocation,
-visa processes, legal requirements, and practical transition logistics.
+Crossing helps individuals navigate relocation between countries safely,
+legally, and efficiently.
 </p>
 
-<a href="assistant.html" class="button">
-Start Assistant
+<div class="box">
+
+<h2>Relocation Consultation — €29</h2>
+
+<p>
+Receive structured relocation guidance tailored to your situation.
+</p>
+
+<ul>
+
+<li>Country selection based on your goals</li>
+
+<li>Visa pathway analysis</li>
+
+<li>Tax environment overview</li>
+
+<li>Step-by-step relocation plan</li>
+
+<li>Risk identification and mitigation</li>
+
+</ul>
+
+<a href="https://buy.stripe.com/test" class="button">
+Start Consultation — €29
 </a>
 
-<a href="purchase.html" class="button">
-Get Personal Relocation Plan — €90
+</div>
+
+<div class="box">
+
+<h2>Crossing Assistant</h2>
+
+<p>
+Access the AI relocation assistant for preliminary guidance.
+</p>
+
+<a href="/assistant.html" class="button">
+Open Assistant
 </a>
+
+</div>
 
 <div class="footer">
 
-<p>Status: Active</p>
-
 <p>
-Contact: hello@crossing.express
+Crossing is an AI-assisted relocation infrastructure project.
 </p>
 
-</div>
+<p>
+crossing.express
+</p>
 
 </div>
 
 </body>
+
 </html>
