@@ -2,52 +2,113 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Crossing — AI Relocation Assistant</title>
+<title>Crossing — AI Relocation Intelligence</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: #0b0f14;
-  color: #e6edf3;
   margin: 0;
+  background: linear-gradient(180deg, #0a0f1c, #05070f);
+  color: #e8ecf1;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
 }
 
 .container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 40px 20px;
+  max-width: 1100px;
+  margin: auto;
+  padding: 60px 30px;
 }
 
-h1 {
-  font-size: 32px;
-  margin-bottom: 10px;
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 80px;
 }
 
-.subtitle {
-  color: #8b949e;
-  margin-bottom: 30px;
+.logo {
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: 1px;
 }
 
-.box {
-  border: 1px solid #30363d;
-  background: #11161c;
-  padding: 20px;
-  margin-top: 20px;
+.nav-links a {
+  color: #aaa;
+  text-decoration: none;
+  margin-left: 25px;
+  font-size: 14px;
+}
+
+.nav-links a:hover {
+  color: white;
+}
+
+.hero h1 {
+  font-size: 56px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  line-height: 1.1;
+}
+
+.hero p {
+  font-size: 20px;
+  color: #9aa3ad;
+  max-width: 600px;
+  margin-bottom: 40px;
 }
 
 .button {
   display: inline-block;
-  margin-top: 15px;
-  padding: 12px 20px;
-  background: #238636;
-  color: white;
+  padding: 16px 32px;
+  background: linear-gradient(90deg, #4f8cff, #7a5cff);
+  border-radius: 8px;
   text-decoration: none;
+  color: white;
+  font-weight: 500;
+  transition: 0.2s;
 }
 
 .button:hover {
-  background: #2ea043;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(79,140,255,0.3);
+}
+
+.section {
+  margin-top: 120px;
+}
+
+.section h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.feature {
+  background: rgba(255,255,255,0.03);
+  padding: 30px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.feature h3 {
+  margin-bottom: 10px;
+}
+
+.feature p {
+  color: #9aa3ad;
+}
+
+.footer {
+  margin-top: 120px;
+  color: #666;
+  font-size: 14px;
 }
 
 </style>
@@ -58,37 +119,89 @@ h1 {
 
 <div class="container">
 
-<h1>Crossing</h1>
+<nav>
 
-<div class="subtitle">
-AI relocation assistant helping individuals move between countries safely and efficiently.
+<div class="logo">
+Crossing
 </div>
 
-<div class="box">
+<div class="nav-links">
+<a href="/assistant.html">Assistant</a>
+<a href="#">Consultation</a>
+<a href="#">About</a>
+</div>
 
-<h2>Crossing Assistant</h2>
+</nav>
+
+
+<div class="hero">
+
+<h1>
+Relocation,<br>
+without uncertainty.
+</h1>
 
 <p>
-Ask about visas, relocation, residency, logistics, and international transition.
+Crossing is an AI relocation intelligence system helping individuals
+navigate international relocation, visas, legal requirements,
+and real-world transition logistics.
 </p>
 
 <a href="/assistant.html" class="button">
-Open Crossing Assistant
+Start with AI Assistant
 </a>
 
 </div>
 
-<div class="box">
 
-<h2>Status</h2>
+<div class="section">
 
+<h2>
+Capabilities
+</h2>
+
+<div class="features">
+
+<div class="feature">
+<h3>Visa intelligence</h3>
 <p>
-System status: Active<br>
-Agent: Crossing Relocation Assistant<br>
-Domain: crossing.express
+Understand visa pathways, timelines, and eligibility conditions across jurisdictions.
 </p>
+</div>
+
+<div class="feature">
+<h3>Relocation strategy</h3>
+<p>
+Receive structured relocation plans tailored to your citizenship, goals, and constraints.
+</p>
+</div>
+
+<div class="feature">
+<h3>Legal and structural clarity</h3>
+<p>
+Navigate residency, taxation, and compliance with confidence.
+</p>
+</div>
+
+<div class="feature">
+<h3>AI-guided transition</h3>
+<p>
+Continuous support across the entire relocation process.
+</p>
+</div>
 
 </div>
+
+</div>
+
+
+<div class="footer">
+
+Crossing Intelligence System<br>
+crossing.express
+
+</div>
+
 
 </div>
 
