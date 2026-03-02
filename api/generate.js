@@ -8,28 +8,16 @@ export default async function handler(req, res) {
     const { citizenship, targetCountry, income, familyStatus, timeline } = req.body;
 
     const prompt = `
-You are Crossing, a professional AI relocation strategist.
-
-Create a structured relocation strategy based on:
+Create a structured relocation strategy:
 
 Citizenship: ${citizenship}
-Target Country: ${targetCountry || "Open to suggestions"}
-Monthly Income: €${income}
-Family Status: ${familyStatus}
+Target Country: ${targetCountry || "Open"}
+Income: €${income}
+Family: ${familyStatus}
 Timeline: ${timeline}
-
-Provide:
-1. Best country options (if target not fixed)
-2. Visa/residency pathway
-3. Timeline breakdown
-4. Legal considerations
-5. Risk factors
-6. Recommended next steps
-
-Be precise, structured, and realistic.
 `;
 
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    const openaiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -38,24 +26,37 @@ Be precise, structured, and realistic.
       body: JSON.stringify({
         model: "gpt-4o-mini",
         messages: [
-          { role: "system", content: "You are Crossing, an elite AI relocation advisor." },
+          { role: "system", content: "You are an elite relocation strategist." },
           { role: "user", content: prompt }
-        ],
-        temperature: 0.7
+        ]
       })
     });
 
-    const data = await response.json();
+    const text = await openaiResponse.text();
 
-    if (!response.ok) {
-      return res.status(response.status).json({ error: data });
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (e) {
+      return res.status(500).json({
+        error: "Invalid JSON from OpenAI",
+        raw: text
+      });
+    }
+
+    if (!openaiResponse.ok) {
+      return res.status(500).json({
+        error: data.error?.message || "OpenAI error"
+      });
     }
 
     return res.status(200).json({
       result: data.choices[0].message.content
     });
 
-  } catch (error) {
-    return res.status(500).json({ error: error.message });
+  } catch (err) {
+    return res.status(500).json({
+      error: err.message
+    });
   }
 }
