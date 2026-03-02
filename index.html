@@ -128,7 +128,6 @@ async function generate() {
 
     resultBox.innerText = data.result || JSON.stringify(data, null, 2);
 
-    // показать кнопку оплаты
     payBtn.style.display = "inline-block";
 
   } catch (err) {
@@ -148,16 +147,26 @@ async function buyFullReport() {
       method: "POST"
     });
 
-    const data = await response.json();
+    const text = await response.text();
+
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (e) {
+      alert("Stripe returned invalid JSON:\n\n" + text);
+      return;
+    }
 
     if (data.url) {
       window.location.href = data.url;
+    } else if (data.error) {
+      alert("Stripe error:\n\n" + data.error);
     } else {
-      alert("Payment session error.");
+      alert("Unknown Stripe response:\n\n" + text);
     }
 
   } catch (err) {
-    alert("Payment error: " + err.message);
+    alert("Payment error:\n\n" + err.message);
   }
 
 }
