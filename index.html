@@ -33,15 +33,28 @@ h1 {
   border-left: 3px solid #4f8cff;
   border-radius: 6px;
 }
-.section {
-  margin-top: 70px;
-}
 .box {
   margin-top: 50px;
   padding: 35px;
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.06);
   border-radius: 12px;
+  transition: all 0.3s ease;
+}
+.box:hover {
+  border-color: rgba(79,140,255,0.3);
+}
+.highlight {
+  background: rgba(79,140,255,0.10);
+  border: 1px solid rgba(79,140,255,0.4);
+  box-shadow: 0 0 40px rgba(79,140,255,0.15);
+}
+.tier-label {
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #4f8cff;
+  margin-bottom: 10px;
 }
 .price {
   font-size: 28px;
@@ -101,9 +114,11 @@ Structured feasibility modeling for individuals evaluating relocation decisions.
 
 </div>
 
-<!-- 2500 -->
+<!-- 2500 HIGHLIGHT -->
 
-<div class="box">
+<div class="box highlight">
+
+<div class="tier-label">Core Tier</div>
 
 <h3>SRIM Sovereign Architecture</h3>
 
