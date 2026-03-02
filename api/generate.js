@@ -1,62 +1,24 @@
-export default async function handler(req, res) {
+const prompt = `
+You are Crossing, a senior relocation strategist.
 
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
-
-  try {
-    const { citizenship, targetCountry, income, familyStatus, timeline } = req.body;
-
-    const prompt = `
-Create a structured relocation strategy:
-
+Profile:
 Citizenship: ${citizenship}
-Target Country: ${targetCountry || "Open"}
-Income: €${income}
-Family: ${familyStatus}
+Target Country: ${targetCountry || "Not fixed"}
+Monthly Income: €${income}
+Family Status: ${familyStatus}
 Timeline: ${timeline}
+
+Generate a highly specific relocation strategy.
+Do NOT give generic advice.
+
+Structure strictly:
+
+1. Best Country Match (max 3 options with reasoning)
+2. Visa Path (specific visa types)
+3. Financial Feasibility Assessment
+4. Timeline Plan (month-by-month)
+5. Legal Risks
+6. Strategic Recommendation
+
+Be analytical. No motivational language.
 `;
-
-    const openaiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        messages: [
-          { role: "system", content: "You are an elite relocation strategist." },
-          { role: "user", content: prompt }
-        ]
-      })
-    });
-
-    const text = await openaiResponse.text();
-
-    let data;
-    try {
-      data = JSON.parse(text);
-    } catch (e) {
-      return res.status(500).json({
-        error: "Invalid JSON from OpenAI",
-        raw: text
-      });
-    }
-
-    if (!openaiResponse.ok) {
-      return res.status(500).json({
-        error: data.error?.message || "OpenAI error"
-      });
-    }
-
-    return res.status(200).json({
-      result: data.choices[0].message.content
-    });
-
-  } catch (err) {
-    return res.status(500).json({
-      error: err.message
-    });
-  }
-}
