@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,6 +34,9 @@ button {
   border-radius: 6px;
   cursor: pointer;
 }
+button:hover {
+  opacity: 0.9;
+}
 .result {
   margin-top: 40px;
   padding: 25px;
@@ -45,6 +47,9 @@ button {
 }
 .loader {
   margin-top: 20px;
+}
+.pay-btn {
+  display: none;
 }
 </style>
 </head>
@@ -77,6 +82,10 @@ Computing relocation model...
 
 <div id="result" class="result" style="display:none;"></div>
 
+<button id="payBtn" class="pay-btn" onclick="buyFullReport()">
+Unlock Full Strategy (€79)
+</button>
+
 </div>
 
 <script>
@@ -85,9 +94,11 @@ async function generate() {
 
   const loading = document.getElementById("loading");
   const resultBox = document.getElementById("result");
+  const payBtn = document.getElementById("payBtn");
 
   loading.style.display = "block";
   resultBox.style.display = "none";
+  payBtn.style.display = "none";
 
   try {
 
@@ -117,6 +128,9 @@ async function generate() {
 
     resultBox.innerText = data.result || JSON.stringify(data, null, 2);
 
+    // показать кнопку оплаты
+    payBtn.style.display = "inline-block";
+
   } catch (err) {
 
     loading.style.display = "none";
@@ -124,6 +138,28 @@ async function generate() {
     resultBox.innerText = "Error:\n\n" + err.message;
 
   }
+}
+
+async function buyFullReport() {
+
+  try {
+
+    const response = await fetch("/api/checkout", {
+      method: "POST"
+    });
+
+    const data = await response.json();
+
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      alert("Payment session error.");
+    }
+
+  } catch (err) {
+    alert("Payment error: " + err.message);
+  }
+
 }
 
 </script>
