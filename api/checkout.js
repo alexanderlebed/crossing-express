@@ -1,3 +1,5 @@
+import Stripe from "stripe";
+
 export default async function handler(req, res) {
 
   if (req.method !== "POST") {
@@ -6,7 +8,13 @@ export default async function handler(req, res) {
 
   try {
 
-    const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+    if (!process.env.STRIPE_SECRET_KEY) {
+      return res.status(500).json({ error: "Stripe key not configured" });
+    }
+
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: "2023-10-16",
+    });
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -16,10 +24,10 @@ export default async function handler(req, res) {
           price_data: {
             currency: "eur",
             product_data: {
-              name: "Full AI Relocation Strategy",
-              description: "Detailed relocation roadmap including visa breakdown, financial modeling and execution timeline."
+              name: "SRIM Intelligence Report",
+              description: "Sovereign Relocation Intelligence Modeling — structured geopolitical, legal and economic relocation architecture."
             },
-            unit_amount: 7900 // €79
+            unit_amount: 24900 // €249
           },
           quantity: 1
         }
@@ -28,9 +36,13 @@ export default async function handler(req, res) {
       cancel_url: `${req.headers.origin}/`
     });
 
-    res.status(200).json({ url: session.url });
+    return res.status(200).json({ url: session.url });
 
   } catch (err) {
-    res.status(500).json({ error: err.message });
+
+    return res.status(500).json({
+      error: err.message || "Stripe session creation failed"
+    });
+
   }
 }
