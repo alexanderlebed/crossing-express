@@ -5,23 +5,19 @@ export default async function handler(req, res) {
   }
 
   try {
-
-    const body = typeof req.body === "string"
-      ? JSON.parse(req.body)
-      : req.body;
-
-    const citizenship = body?.citizenship;
-    const targetCountry = body?.targetCountry;
-    const income = body?.income;
-    const familyStatus = body?.familyStatus;
-    const timeline = body?.timeline;
-
-    if (!citizenship || !income) {
-      return res.status(400).json({
-        error: "Citizenship and income are required."
-      });
+    // Жёстко парсим тело запроса
+    let body = req.body;
+    if (typeof body === "string") {
+      try { body = JSON.parse(body); } catch (e) { body = {}; }
     }
 
+    const citizenship  = body?.citizenship  || "";
+    const targetCountry = body?.targetCountry || "";
+    const income       = body?.income       || "";
+    const familyStatus = body?.familyStatus || "";
+    const timeline     = body?.timeline     || "";
+
+    // ВРЕМЕННО убираем 400-проверки — сервер всегда должен ответить
     const previewPrompt = `
 You are Crossing, a senior relocation strategist.
 
@@ -32,8 +28,8 @@ Monthly Income: €${income}
 Family Status: ${familyStatus}
 Timeline: ${timeline}
 
-Provide a SHORT strategic relocation assessment (maximum 10 lines).
-Be analytical. No generic advice.
+Provide a SHORT strategic relocation assessment (max 8 lines).
+Be specific. No generic advice.
 `;
 
     const openaiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -56,13 +52,15 @@ Be analytical. No generic advice.
 
     if (!openaiResponse.ok) {
       return res.status(500).json({
-        error: data.error?.message || "OpenAI error"
+        error: data.error?.message || "OpenAI error",
+        debug: data
       });
     }
 
     return res.status(200).json({
-      result: data.choices[0].message.content,
-      preview: true
+      result: data.choices?.[0]?.message?.content || "No response",
+      preview: true,
+      debug_received_body: body
     });
 
   } catch (err) {
