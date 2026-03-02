@@ -70,6 +70,15 @@ button:hover {
   margin-top: 20px;
   opacity: 0.7;
 }
+
+.unlock {
+  margin-top: 20px;
+  background: linear-gradient(90deg, #ff8c42, #ff4d4d);
+}
+
+.unlock:hover {
+  opacity: 0.95;
+}
 </style>
 </head>
 
@@ -121,55 +130,49 @@ Computing relocation model...
 
 <div id="result" class="result" style="display:none;"></div>
 
+<button id="unlockButton" class="unlock" style="display:none;" onclick="unlock()">
+Unlock Full Strategy (€79)
+</button>
+
 </div>
 
 <script>
 
 async function generate() {
 
-  const citizenship = document.getElementById("citizenship").value;
-  const targetCountry = document.getElementById("target").value;
-  const income = document.getElementById("income").value;
-  const familyStatus = document.getElementById("family").value;
-  const timeline = document.getElementById("timeline").value;
+  const profile = {
+    citizenship: document.getElementById("citizenship").value,
+    targetCountry: document.getElementById("target").value,
+    income: document.getElementById("income").value,
+    familyStatus: document.getElementById("family").value,
+    timeline: document.getElementById("timeline").value
+  };
 
   document.getElementById("loading").style.display = "block";
   document.getElementById("result").style.display = "none";
+  document.getElementById("unlockButton").style.display = "none";
 
-  try {
+  const response = await fetch("/api/generate", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(profile)
+  });
 
-    const response = await fetch("/api/generate", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        citizenship,
-        targetCountry,
-        income,
-        familyStatus,
-        timeline
-      })
-    });
+  const data = await response.json();
 
-    const data = await response.json();
+  document.getElementById("loading").style.display = "none";
+  document.getElementById("result").style.display = "block";
+  document.getElementById("result").innerText = data.result;
 
-    document.getElementById("loading").style.display = "none";
-    document.getElementById("result").style.display = "block";
-
-    if (data.result) {
-      document.getElementById("result").innerText = data.result;
-    } else {
-      document.getElementById("result").innerText = "Error: " + JSON.stringify(data);
-    }
-
-  } catch (err) {
-
-    document.getElementById("loading").style.display = "none";
-    document.getElementById("result").style.display = "block";
-    document.getElementById("result").innerText = "Connection error: " + err.message;
-
+  if (data.preview) {
+    document.getElementById("unlockButton").style.display = "inline-block";
   }
+}
+
+function unlock() {
+  window.location.href = "/purchase.html";
 }
 
 </script>
