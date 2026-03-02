@@ -13,17 +13,17 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
 }
 .container {
-  max-width: 900px;
+  max-width: 950px;
   margin: auto;
   padding: 60px 30px;
 }
 h1 {
-  font-size: 40px;
+  font-size: 42px;
   margin-bottom: 10px;
 }
 .subtitle {
   opacity: 0.9;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   line-height: 1.6;
 }
 .statement {
@@ -32,65 +32,36 @@ h1 {
   background: rgba(79,140,255,0.08);
   border-left: 3px solid #4f8cff;
   border-radius: 6px;
-  font-size: 15px;
+}
+.section {
+  margin-top: 70px;
+}
+.box {
+  margin-top: 50px;
+  padding: 35px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
 }
 input, select {
   width: 100%;
   padding: 12px;
+  margin-top: 12px;
   background: #0d1117;
   border: 1px solid #30363d;
   color: white;
-  margin-top: 12px;
 }
 button {
-  margin-top: 30px;
-  padding: 16px 30px;
+  margin-top: 25px;
+  padding: 16px 32px;
   background: linear-gradient(90deg, #4f8cff, #7a5cff);
   border: none;
+  border-radius: 8px;
   color: white;
-  border-radius: 6px;
   cursor: pointer;
-  font-size: 16px;
 }
-button:hover {
-  opacity: 0.9;
-}
-.section {
-  margin-top: 60px;
-}
-.result {
-  margin-top: 40px;
-  padding: 30px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 10px;
-  white-space: pre-wrap;
-}
-.loader {
-  margin-top: 20px;
-}
-.pay-btn {
-  display: none;
-}
-.box {
-  margin-top: 60px;
-  padding: 30px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 10px;
-}
-.footer {
-  margin-top: 80px;
-  opacity: 0.6;
-  font-size: 14px;
-}
-.footer a {
-  color: #4f8cff;
-  text-decoration: none;
-}
-.footer a:hover {
-  text-decoration: underline;
-}
+button:hover { opacity: 0.9; }
+.price { font-size: 28px; margin-top: 20px; }
 .link a {
   color: #4f8cff;
   text-decoration: none;
@@ -98,11 +69,20 @@ button:hover {
 .link a:hover {
   text-decoration: underline;
 }
+.footer {
+  margin-top: 90px;
+  opacity: 0.6;
+  font-size: 14px;
+}
+.footer a {
+  color: #4f8cff;
+  text-decoration: none;
+}
+.footer a:hover { text-decoration: underline; }
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
 <h1>Crossing</h1>
@@ -116,59 +96,84 @@ Structured geopolitical, legal and economic modeling for serious cross-border li
 SRIM is not advisory opinion. It is structured sovereign decision modeling designed to map jurisdictional risk, optionality and long-term mobility architecture.
 </div>
 
+<!-- FEASIBILITY SCAN -->
+
 <div class="section">
 
-<h2>Run SRIM Feasibility Scan</h2>
+<h2>SRIM Intelligence Report</h2>
 
-<input id="citizenship" placeholder="Citizenship">
-<input id="target" placeholder="Target Country (optional)">
-<input id="income" type="number" placeholder="Monthly Income (€)">
-<select id="family">
-<option value="single">Single</option>
-<option value="married">Married</option>
-<option value="married_children">Married with children</option>
-</select>
-<select id="timeline">
-<option value="3_months">Within 3 months</option>
-<option value="6_months">Within 6 months</option>
-<option value="12_months">Within 12 months</option>
-</select>
+<p>
+Entry-level structured modeling for individuals evaluating relocation feasibility.
+</p>
 
-<button onclick="generate()">Run SRIM Model</button>
+<div class="price">€249</div>
 
-<div id="loading" class="loader" style="display:none;">
-Running jurisdictional modeling...
+<div class="link">
+<a href="#scan">Run Feasibility Scan →</a>
 </div>
 
-<div id="result" class="result" style="display:none;"></div>
-
-<button id="payBtn" class="pay-btn" onclick="buyFullReport()">
-Access Full SRIM Intelligence Report (€249)
-</button>
-
 </div>
+
+<!-- SOVEREIGN -->
 
 <div class="box">
+
 <h3>SRIM Sovereign Architecture</h3>
+
 <p>
 Multi-jurisdiction strategic modeling for long-horizon relocation and mobility planning.
 </p>
+
+<div class="price">€2,500</div>
+
 <div class="link">
-<a href="/sovereign.html">Explore Sovereign Architecture (€2,500) →</a>
-</div>
+<a href="/sovereign.html">Explore Sovereign Architecture →</a>
 </div>
 
+</div>
+
+<!-- PRIVATE LAB -->
+
 <div class="box">
+
 <h3>SRIM Private Architecture Lab</h3>
+
 <p>
 Structural jurisdictional positioning across capital, citizenship and generational continuity.
 </p>
+
+<div class="price">€7,500</div>
+
 <div class="link">
-<a href="/lab.html">Explore Private Architecture Lab (€7,500) →</a>
-</div>
+<a href="/lab.html">Explore Private Architecture Lab →</a>
 </div>
 
+</div>
+
+<!-- ORIGIN -->
+
 <div class="box">
+
+<h3>Origin</h3>
+
+<p>
+Crossing emerged from the intersection of artificial intelligence modeling and sovereign decision theory.
+</p>
+
+<p>
+It was not created as a relocation service, but as a response to structural uncertainty in modern jurisdictional environments.
+</p>
+
+<p>
+The SRIM framework formalizes decision modeling across mobility, capital exposure and long-term geopolitical volatility.
+</p>
+
+</div>
+
+<!-- STRUCTURAL INTEGRITY -->
+
+<div class="box">
+
 <h3>Structural Integrity</h3>
 
 <p>
@@ -178,16 +183,16 @@ It does not provide legal representation, immigration filing, or tax structuring
 
 <ul>
 <li>Independent analytical modeling</li>
-<li>Jurisdictional risk mapping</li>
-<li>Scenario-based decision architecture</li>
 <li>No commission-based country bias</li>
 <li>No affiliate incentives</li>
+<li>No political positioning</li>
 </ul>
 
 <p>
 All modeling outputs are structured assessments designed to support sovereign decision-making.
 Final implementation remains the responsibility of the client and their chosen legal representatives.
 </p>
+
 </div>
 
 <div class="footer">
@@ -196,71 +201,5 @@ Crossing — Sovereign Relocation Intelligence Modeling Platform<br>
 </div>
 
 </div>
-
-<script>
-async function generate() {
-
-  const loading = document.getElementById("loading");
-  const resultBox = document.getElementById("result");
-  const payBtn = document.getElementById("payBtn");
-
-  loading.style.display = "block";
-  resultBox.style.display = "none";
-  payBtn.style.display = "none";
-
-  try {
-
-    const response = await fetch("/api/generate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        citizenship: document.getElementById("citizenship").value,
-        targetCountry: document.getElementById("target").value,
-        income: document.getElementById("income").value,
-        familyStatus: document.getElementById("family").value,
-        timeline: document.getElementById("timeline").value
-      })
-    });
-
-    const data = await response.json();
-
-    loading.style.display = "none";
-    resultBox.style.display = "block";
-    resultBox.innerText = data.result;
-
-    payBtn.style.display = "inline-block";
-
-  } catch (err) {
-
-    loading.style.display = "none";
-    resultBox.style.display = "block";
-    resultBox.innerText = "Modeling error:\n\n" + err.message;
-
-  }
-}
-
-async function buyFullReport() {
-
-  try {
-
-    const response = await fetch("/api/checkout", {
-      method: "POST"
-    });
-
-    const data = await response.json();
-
-    if (data.url) {
-      window.location.href = data.url;
-    } else {
-      alert("Payment session error:\n\n" + JSON.stringify(data));
-    }
-
-  } catch (err) {
-    alert("Payment error:\n\n" + err.message);
-  }
-
-}
-</script>
-
 </body>
 </html>
