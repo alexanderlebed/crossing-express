@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <title>Crossing — AI Relocation Engine</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <style>
 body {
   margin: 0;
@@ -12,51 +12,27 @@ body {
   color: #e8ecf1;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
 }
-
 .container {
   max-width: 800px;
   margin: auto;
   padding: 60px 30px;
 }
-
-h1 {
-  font-size: 36px;
-  margin-bottom: 10px;
-}
-
-p {
-  opacity: 0.8;
-}
-
-.form-group {
-  margin-top: 20px;
-}
-
 input, select {
   width: 100%;
   padding: 12px;
   background: #0d1117;
   border: 1px solid #30363d;
   color: white;
-  margin-top: 5px;
-  font-size: 14px;
+  margin-top: 10px;
 }
-
 button {
   margin-top: 30px;
   padding: 14px 28px;
   background: linear-gradient(90deg, #4f8cff, #7a5cff);
   border: none;
   color: white;
-  cursor: pointer;
   border-radius: 6px;
-  font-size: 16px;
 }
-
-button:hover {
-  opacity: 0.9;
-}
-
 .result {
   margin-top: 40px;
   padding: 25px;
@@ -65,62 +41,30 @@ button:hover {
   border-radius: 10px;
   white-space: pre-wrap;
 }
-
 .loader {
   margin-top: 20px;
-  opacity: 0.7;
-}
-
-.unlock {
-  margin-top: 20px;
-  background: linear-gradient(90deg, #ff8c42, #ff4d4d);
-}
-
-.unlock:hover {
-  opacity: 0.95;
 }
 </style>
 </head>
-
 <body>
 
 <div class="container">
 
 <h1>AI Relocation Strategy</h1>
-<p>Structured relocation decision engine powered by AI modeling.</p>
 
-<div class="form-group">
-<label>Citizenship</label>
-<input id="citizenship" placeholder="e.g. Russia, Germany, USA">
-</div>
-
-<div class="form-group">
-<label>Target Country (optional)</label>
-<input id="target" placeholder="e.g. Spain, Portugal">
-</div>
-
-<div class="form-group">
-<label>Monthly Income (€)</label>
-<input id="income" type="number" placeholder="e.g. 4000">
-</div>
-
-<div class="form-group">
-<label>Family Status</label>
+<input id="citizenship" placeholder="Citizenship">
+<input id="target" placeholder="Target Country">
+<input id="income" type="number" placeholder="Monthly Income (€)">
 <select id="family">
 <option value="single">Single</option>
 <option value="married">Married</option>
 <option value="married_children">Married with children</option>
 </select>
-</div>
-
-<div class="form-group">
-<label>Timeline</label>
 <select id="timeline">
 <option value="3_months">Within 3 months</option>
 <option value="6_months">Within 6 months</option>
 <option value="12_months">Within 12 months</option>
 </select>
-</div>
 
 <button onclick="generate()">Generate Strategy</button>
 
@@ -130,49 +74,46 @@ Computing relocation model...
 
 <div id="result" class="result" style="display:none;"></div>
 
-<button id="unlockButton" class="unlock" style="display:none;" onclick="unlock()">
-Unlock Full Strategy (€79)
-</button>
-
 </div>
 
 <script>
 
 async function generate() {
 
-  const profile = {
-    citizenship: document.getElementById("citizenship").value,
-    targetCountry: document.getElementById("target").value,
-    income: document.getElementById("income").value,
-    familyStatus: document.getElementById("family").value,
-    timeline: document.getElementById("timeline").value
-  };
+  const loading = document.getElementById("loading");
+  const resultBox = document.getElementById("result");
 
-  document.getElementById("loading").style.display = "block";
-  document.getElementById("result").style.display = "none";
-  document.getElementById("unlockButton").style.display = "none";
+  loading.style.display = "block";
+  resultBox.style.display = "none";
 
-  const response = await fetch("/api/generate", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(profile)
-  });
+  try {
 
-  const data = await response.json();
+    const response = await fetch("/api/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        citizenship: document.getElementById("citizenship").value,
+        targetCountry: document.getElementById("target").value,
+        income: document.getElementById("income").value,
+        familyStatus: document.getElementById("family").value,
+        timeline: document.getElementById("timeline").value
+      })
+    });
 
-  document.getElementById("loading").style.display = "none";
-  document.getElementById("result").style.display = "block";
-  document.getElementById("result").innerText = data.result;
+    const data = await response.json();
 
-  if (data.preview) {
-    document.getElementById("unlockButton").style.display = "inline-block";
+    loading.style.display = "none";
+    resultBox.style.display = "block";
+
+    resultBox.innerText = data.result || JSON.stringify(data, null, 2);
+
+  } catch (err) {
+
+    loading.style.display = "none";
+    resultBox.style.display = "block";
+    resultBox.innerText = "Error: " + err.message;
+
   }
-}
-
-function unlock() {
-  window.location.href = "/purchase.html";
 }
 
 </script>
