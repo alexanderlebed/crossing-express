@@ -22,8 +22,9 @@ h1 {
   margin-bottom: 10px;
 }
 .subtitle {
-  opacity: 0.8;
+  opacity: 0.85;
   margin-bottom: 40px;
+  line-height: 1.6;
 }
 input, select {
   width: 100%;
@@ -47,7 +48,7 @@ button:hover {
   opacity: 0.9;
 }
 .section {
-  margin-top: 50px;
+  margin-top: 60px;
 }
 .result {
   margin-top: 40px;
@@ -67,6 +68,25 @@ button:hover {
   font-size: 28px;
   margin-top: 20px;
 }
+.methodology-box {
+  margin-top: 50px;
+  padding: 25px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+}
+.methodology-box a {
+  color: #4f8cff;
+  text-decoration: none;
+}
+.methodology-box a:hover {
+  text-decoration: underline;
+}
+.footer {
+  margin-top: 80px;
+  opacity: 0.6;
+  font-size: 14px;
+}
 </style>
 </head>
 
@@ -75,9 +95,10 @@ button:hover {
 <div class="container">
 
 <h1>Crossing</h1>
+
 <p class="subtitle">
 Sovereign Relocation Intelligence Modeling (SRIM)<br>
-Structured geopolitical, legal and economic modeling for cross-border life decisions.
+Structured geopolitical, legal and economic modeling for serious cross-border life decisions.
 </p>
 
 <div class="section">
@@ -127,7 +148,23 @@ Access Full SRIM Intelligence Report (€249)
 </ul>
 
 <p class="price">€249</p>
+<p>Designed for individuals making serious cross-border life decisions.</p>
 
+</div>
+
+<div class="methodology-box">
+<h3>Built on the SRIM Framework</h3>
+<p>
+Crossing applies a structured analytical model rather than opinion-based advice.
+The full methodological foundation is publicly available.
+</p>
+<p>
+<a href="/methodology.html">View SRIM Methodology →</a>
+</p>
+</div>
+
+<div class="footer">
+Crossing — Sovereign Relocation Intelligence Modeling Platform
 </div>
 
 </div>
@@ -158,8 +195,7 @@ async function generate() {
       })
     });
 
-    const text = await response.text();
-    const data = JSON.parse(text);
+    const data = await response.json();
 
     loading.style.display = "none";
     resultBox.style.display = "block";
