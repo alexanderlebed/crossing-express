@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Crossing — AI Relocation Engine</title>
+<title>Crossing — Sovereign Relocation Intelligence Modeling</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -13,9 +13,17 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
 }
 .container {
-  max-width: 800px;
+  max-width: 900px;
   margin: auto;
   padding: 60px 30px;
+}
+h1 {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+.subtitle {
+  opacity: 0.8;
+  margin-bottom: 40px;
 }
 input, select {
   width: 100%;
@@ -23,23 +31,27 @@ input, select {
   background: #0d1117;
   border: 1px solid #30363d;
   color: white;
-  margin-top: 10px;
+  margin-top: 12px;
 }
 button {
   margin-top: 30px;
-  padding: 14px 28px;
+  padding: 16px 30px;
   background: linear-gradient(90deg, #4f8cff, #7a5cff);
   border: none;
   color: white;
   border-radius: 6px;
   cursor: pointer;
+  font-size: 16px;
 }
 button:hover {
   opacity: 0.9;
 }
+.section {
+  margin-top: 50px;
+}
 .result {
   margin-top: 40px;
-  padding: 25px;
+  padding: 30px;
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 10px;
@@ -51,6 +63,10 @@ button:hover {
 .pay-btn {
   display: none;
 }
+.price {
+  font-size: 28px;
+  margin-top: 20px;
+}
 </style>
 </head>
 
@@ -58,10 +74,18 @@ button:hover {
 
 <div class="container">
 
-<h1>AI Relocation Strategy</h1>
+<h1>Crossing</h1>
+<p class="subtitle">
+Sovereign Relocation Intelligence Modeling (SRIM)<br>
+Structured geopolitical, legal and economic modeling for cross-border life decisions.
+</p>
+
+<div class="section">
+
+<h2>Run SRIM Feasibility Scan</h2>
 
 <input id="citizenship" placeholder="Citizenship">
-<input id="target" placeholder="Target Country">
+<input id="target" placeholder="Target Country (optional)">
 <input id="income" type="number" placeholder="Monthly Income (€)">
 <select id="family">
 <option value="single">Single</option>
@@ -74,17 +98,37 @@ button:hover {
 <option value="12_months">Within 12 months</option>
 </select>
 
-<button onclick="generate()">Generate Strategy</button>
+<button onclick="generate()">Run SRIM Model</button>
 
 <div id="loading" class="loader" style="display:none;">
-Computing relocation model...
+Running jurisdictional modeling...
 </div>
 
 <div id="result" class="result" style="display:none;"></div>
 
 <button id="payBtn" class="pay-btn" onclick="buyFullReport()">
-Unlock Full Strategy (€79)
+Access Full SRIM Intelligence Report (€249)
 </button>
+
+</div>
+
+<div class="section">
+
+<h2>SRIM Intelligence Report Includes</h2>
+
+<ul>
+<li>Jurisdictional Risk Mapping</li>
+<li>Visa Pathway Architecture</li>
+<li>Tax Exposure Overview</li>
+<li>Financial Sustainability Modeling</li>
+<li>Mobility Optionality Index</li>
+<li>3–10 Year Strategic Timeline</li>
+<li>Exit Layer Architecture</li>
+</ul>
+
+<p class="price">€249</p>
+
+</div>
 
 </div>
 
@@ -115,18 +159,11 @@ async function generate() {
     });
 
     const text = await response.text();
-
-    let data;
-    try {
-      data = JSON.parse(text);
-    } catch (e) {
-      throw new Error("Server did not return valid JSON:\n\n" + text);
-    }
+    const data = JSON.parse(text);
 
     loading.style.display = "none";
     resultBox.style.display = "block";
-
-    resultBox.innerText = data.result || JSON.stringify(data, null, 2);
+    resultBox.innerText = data.result;
 
     payBtn.style.display = "inline-block";
 
@@ -134,7 +171,7 @@ async function generate() {
 
     loading.style.display = "none";
     resultBox.style.display = "block";
-    resultBox.innerText = "Error:\n\n" + err.message;
+    resultBox.innerText = "Modeling error:\n\n" + err.message;
 
   }
 }
@@ -147,22 +184,12 @@ async function buyFullReport() {
       method: "POST"
     });
 
-    const text = await response.text();
-
-    let data;
-    try {
-      data = JSON.parse(text);
-    } catch (e) {
-      alert("Stripe returned invalid JSON:\n\n" + text);
-      return;
-    }
+    const data = await response.json();
 
     if (data.url) {
       window.location.href = data.url;
-    } else if (data.error) {
-      alert("Stripe error:\n\n" + data.error);
     } else {
-      alert("Unknown Stripe response:\n\n" + text);
+      alert("Payment session error:\n\n" + JSON.stringify(data));
     }
 
   } catch (err) {
