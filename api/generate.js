@@ -6,7 +6,15 @@ export default async function handler(req, res) {
 
   try {
 
-    const { citizenship, targetCountry, income, familyStatus, timeline } = req.body;
+    const body = typeof req.body === "string"
+      ? JSON.parse(req.body)
+      : req.body;
+
+    const citizenship = body?.citizenship;
+    const targetCountry = body?.targetCountry;
+    const income = body?.income;
+    const familyStatus = body?.familyStatus;
+    const timeline = body?.timeline;
 
     if (!citizenship || !income) {
       return res.status(400).json({
@@ -25,15 +33,7 @@ Family Status: ${familyStatus}
 Timeline: ${timeline}
 
 Provide a SHORT strategic relocation assessment (maximum 10 lines).
-
-Rules:
-- No generic advice
-- No motivational language
-- No full visa breakdown
-- No execution roadmap
-- Provide only high-level direction
-
-Be analytical and specific.
+Be analytical. No generic advice.
 `;
 
     const openaiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -52,17 +52,7 @@ Be analytical and specific.
       })
     });
 
-    const text = await openaiResponse.text();
-
-    let data;
-    try {
-      data = JSON.parse(text);
-    } catch (e) {
-      return res.status(500).json({
-        error: "Invalid JSON from OpenAI",
-        raw: text
-      });
-    }
+    const data = await openaiResponse.json();
 
     if (!openaiResponse.ok) {
       return res.status(500).json({
@@ -81,4 +71,3 @@ Be analytical and specific.
     });
   }
 }
- 
