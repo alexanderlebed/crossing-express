@@ -2,19 +2,21 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Crossing — AI Relocation Assistant</title>
+<title>Crossing — AI Relocation Engine</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  max-width: 720px;
-  margin: 60px auto;
-  padding: 20px;
-  background: #ffffff;
-  color: #111;
-  line-height: 1.6;
+  margin: 0;
+  background: #05070f;
+  color: #e8ecf1;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 60px 30px;
 }
 
 h1 {
@@ -22,75 +24,136 @@ h1 {
   margin-bottom: 10px;
 }
 
-.subtitle {
-  color: #555;
-  margin-bottom: 30px;
+p {
+  opacity: 0.8;
 }
 
-.button {
-  display: inline-block;
+.form-group {
   margin-top: 20px;
-  margin-right: 12px;
-  padding: 16px 28px;
-  background: black;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  background: #0d1117;
+  border: 1px solid #30363d;
   color: white;
-  text-decoration: none;
-  font-size: 18px;
-  border-radius: 6px;
-  transition: opacity 0.2s;
-}
-
-.button:hover {
-  opacity: 0.85;
-}
-
-.button-secondary {
-  background: #f0f0f0;
-  color: #111;
-}
-
-.footer {
-  margin-top: 50px;
-  color: #777;
+  margin-top: 5px;
   font-size: 14px;
 }
 
-</style>
+button {
+  margin-top: 30px;
+  padding: 14px 28px;
+  background: linear-gradient(90deg, #4f8cff, #7a5cff);
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 16px;
+}
 
+button:hover {
+  opacity: 0.9;
+}
+
+.result {
+  margin-top: 40px;
+  padding: 25px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  white-space: pre-wrap;
+}
+
+.loader {
+  margin-top: 20px;
+  opacity: 0.7;
+}
+</style>
 </head>
+
 <body>
 
-<h1>Crossing</h1>
+<div class="container">
 
-<p class="subtitle">
-AI relocation assistant helping individuals relocate between countries safely, legally, and efficiently.
-</p>
+<h1>AI Relocation Strategy</h1>
+<p>Structured relocation decision engine powered by AI modeling.</p>
 
-<p>
-Crossing provides structured relocation guidance including visa pathways, residency requirements, legal constraints, and transition logistics.
-</p>
+<div class="form-group">
+<label>Citizenship</label>
+<input id="citizenship" placeholder="e.g. Russia, Germany, USA">
+</div>
 
-<a class="button"
-href="https://buy.stripe.com/fZueVe1stgGId5DdDl1wY00">
-Start consultation — €29
-</a>
+<div class="form-group">
+<label>Target Country (optional)</label>
+<input id="target" placeholder="e.g. Spain, Portugal">
+</div>
 
-<a class="button button-secondary"
-href="/assistant.html">
-Enter consultation
-</a>
+<div class="form-group">
+<label>Monthly Income (€)</label>
+<input id="income" type="number" placeholder="e.g. 4000">
+</div>
 
-<div class="footer">
+<div class="form-group">
+<label>Family Status</label>
+<select id="family">
+<option value="single">Single</option>
+<option value="married">Married</option>
+<option value="married_children">Married with children</option>
+</select>
+</div>
 
-<p>
-Secure payments powered by Stripe.
-</p>
+<div class="form-group">
+<label>Timeline</label>
+<select id="timeline">
+<option value="3_months">Within 3 months</option>
+<option value="6_months">Within 6 months</option>
+<option value="12_months">Within 12 months</option>
+</select>
+</div>
 
-<p>
-Crossing is an independent AI-assisted relocation infrastructure project.
-</p>
+<button onclick="generate()">Generate Strategy</button>
+
+<div id="loading" class="loader" style="display:none;">
+Computing relocation model...
+</div>
+
+<div id="result" class="result" style="display:none;"></div>
 
 </div>
+
+<script>
+
+async function generate() {
+
+  const profile = {
+    citizenship: document.getElementById("citizenship").value,
+    target_country: document.getElementById("target").value,
+    income: document.getElementById("income").value,
+    family_status: document.getElementById("family").value,
+    timeline: document.getElementById("timeline").value
+  };
+
+  document.getElementById("loading").style.display = "block";
+  document.getElementById("result").style.display = "none";
+
+  const response = await fetch("/api/generate", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ profile })
+  });
+
+  const data = await response.json();
+
+  document.getElementById("loading").style.display = "none";
+  document.getElementById("result").style.display = "block";
+  document.getElementById("result").innerText = data.result;
+}
+
+</script>
 
 </body>
 </html>
