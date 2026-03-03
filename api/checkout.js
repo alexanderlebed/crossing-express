@@ -17,22 +17,20 @@ export default async function handler(req, res) {
             currency: "eur",
             product_data: {
               name: "SRIM Intelligence Report",
-              description: "Full sovereign relocation intelligence modeling including jurisdictional feasibility, legal pathways, economic sustainability and risk vectors."
+              description: "Full sovereign relocation intelligence modeling."
             },
-            unit_amount: 24900 // €249
+            unit_amount: 24900
           },
           quantity: 1
         }
       ],
-      success_url: `${req.headers.origin}/portal.html`,
+      success_url: `${req.headers.origin}/portal.html?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.origin}/report.html`
     });
 
     return res.status(200).json({ url: session.url });
 
   } catch (err) {
-
     return res.status(500).json({ error: err.message });
-
   }
 }
