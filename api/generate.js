@@ -1,14 +1,4 @@
-import { saveReport } from "./storage.js";
 import crypto from "crypto";
-
-function cleanMarkdown(text) {
-  return text
-    .replace(/\*\*(.*?)\*\*/g, "$1")   // remove bold
-    .replace(/\*(.*?)\*/g, "$1")       // remove italic
-    .replace(/#+\s/g, "")              // remove headings
-    .replace(/---/g, "")               // remove separators
-    .trim();
-}
 
 export default async function handler(req, res) {
 
@@ -22,7 +12,7 @@ export default async function handler(req, res) {
 
     const prompt = `
 Generate a structured SRIM relocation assessment.
-Return clean institutional text without markdown, no asterisks, no symbols.
+Return clean institutional text without markdown formatting or asterisks.
 
 Citizenship: ${citizenship}
 Target Country: ${targetCountry}
@@ -31,7 +21,8 @@ Family Status: ${familyStatus}
 Timeline: ${timeline}
 `;
 
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    // 1️⃣ Generate report from OpenAI
+    const aiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,14 +35,41 @@ Timeline: ${timeline}
       })
     });
 
-    const data = await response.json();
+    const aiData = await aiResponse.json();
+    let result = aiData.choices?.[0]?.message?.content || "No output.";
 
-    let result = data.choices?.[0]?.message?.content || "No output.";
-
-    result = cleanMarkdown(result);
+    // Remove markdown symbols defensively
+    result = result
+      .replace(/\*\*(.*?)\*\*/g, "$1")
+      .replace(/\*(.*?)\*/g, "$1")
+      .replace(/#+\s/g, "")
+      .replace(/---/g, "")
+      .trim();
 
     const reportId = crypto.randomUUID();
-    saveReport(reportId, result);
+
+    // 2️⃣ Save into Supabase
+    const saveResponse = await fetch(
+      `${process.env.SUPABASE_URL}/rest/v1/reports`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": process.env.SUPABASE_SERVICE_KEY,
+          "Authorization": `Bearer ${process.env.SUPABASE_SERVICE_KEY}`,
+          "Prefer": "return=minimal"
+        },
+        body: JSON.stringify({
+          id: reportId,
+          content: result
+        })
+      }
+    );
+
+    if (!saveResponse.ok) {
+      const errorText = await saveResponse.text();
+      throw new Error("Supabase insert failed: " + errorText);
+    }
 
     res.status(200).json({ result, reportId });
 
