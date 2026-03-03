@@ -34,6 +34,16 @@ body {
   opacity: 0.6;
   font-size: 13px;
 }
+.pdf-link {
+  margin-top: 20px;
+  display: inline-block;
+  color: #4f8cff;
+  text-decoration: none;
+  font-weight: 500;
+}
+.pdf-link:hover {
+  text-decoration: underline;
+}
 </style>
 </head>
 
@@ -44,6 +54,7 @@ body {
 <div class="header">
 <h1>SRIM Intelligence File</h1>
 <div class="meta">Confidential</div>
+<div id="pdfContainer"></div>
 </div>
 
 <div id="report" class="report">
@@ -56,7 +67,7 @@ Loading intelligence file...
 
 function getReportId() {
   const params = new URLSearchParams(window.location.search);
-  return params.get("report");   // ← исправлено
+  return params.get("report");
 }
 
 async function loadReport() {
@@ -68,7 +79,7 @@ async function loadReport() {
     return;
   }
 
-  const response = await fetch("/api/getPortal?report=" + reportId); // ← исправлено
+  const response = await fetch("/api/getPortal?report=" + reportId);
   const data = await response.json();
 
   if (data.error) {
@@ -76,10 +87,18 @@ async function loadReport() {
     return;
   }
 
-  let formatted = data.content    // ← исправлено
+  let formatted = data.content
     .replace(/\n\n/g, "<br><br>");
 
   document.getElementById("report").innerHTML = formatted;
+
+  // 🔹 PDF button
+  const pdfLink = document.createElement("a");
+  pdfLink.href = "/api/exportPdf?report=" + reportId;
+  pdfLink.className = "pdf-link";
+  pdfLink.innerText = "Download PDF →";
+
+  document.getElementById("pdfContainer").appendChild(pdfLink);
 }
 
 loadReport();
