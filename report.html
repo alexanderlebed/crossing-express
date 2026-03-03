@@ -80,13 +80,22 @@ button:hover {
   line-height: 1.8;
   font-size: 15px;
   letter-spacing: 0.2px;
+  position: relative;
 }
 
-.result h3 {
-  margin-top: 30px;
-  margin-bottom: 10px;
-  font-size: 17px;
-  font-weight: 600;
+.fade-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  background: linear-gradient(to bottom, rgba(5,7,15,0), #05070f);
+}
+
+.notice {
+  margin-top: 20px;
+  opacity: 0.7;
+  font-size: 14px;
 }
 
 .footer {
@@ -141,11 +150,20 @@ Preview analysis is complimentary. Full structured report — €249.
 
 <button onclick="generatePreview()">Generate Preview</button>
 
-<div id="preview" class="result" style="display:none;"></div>
+<div id="previewWrapper" style="display:none; position:relative;">
+  <div id="preview" class="result"></div>
+  <div class="fade-overlay"></div>
+</div>
 
-<button id="unlockBtn" class="unlock" style="display:none;" onclick="startCheckout()">
-Unlock Full SRIM Report — €249
-</button>
+<div id="unlockSection" style="display:none;">
+  <div class="notice">
+    Full jurisdictional exposure matrix, risk modeling, execution sequencing and structural positioning analysis available in complete report.
+  </div>
+
+  <button class="unlock" onclick="startCheckout()">
+    Unlock Full SRIM Report — €249
+  </button>
+</div>
 
 </div>
 
@@ -157,11 +175,9 @@ Unlock Full SRIM Report — €249
 
 <script>
 
-let lastProfile = null;
-
 async function generatePreview() {
 
-  lastProfile = {
+  const profile = {
     citizenship: document.getElementById("citizenship").value,
     targetCountry: document.getElementById("target").value,
     income: document.getElementById("income").value,
@@ -173,29 +189,27 @@ async function generatePreview() {
   const response = await fetch("/api/generate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(lastProfile)
+    body: JSON.stringify(profile)
   });
 
   const data = await response.json();
 
-  let formatted = data.result
+  let text = data.result
     .replace(/\*\*/g, "")
-    .replace(/(\d+\.\s.*?:)/g, "<h3>$1</h3>")
     .replace(/\n\n/g, "<br><br>");
 
-  const previewBox = document.getElementById("preview");
-  previewBox.style.display = "block";
-  previewBox.innerHTML = formatted;
+  const words = text.split(" ");
+  const truncated = words.slice(0, 180).join(" ") + "...";
 
-  document.getElementById("unlockBtn").style.display = "block";
+  document.getElementById("preview").innerHTML = truncated;
+  document.getElementById("previewWrapper").style.display = "block";
+  document.getElementById("unlockSection").style.display = "block";
 }
 
 async function startCheckout() {
-
   const response = await fetch("/api/checkout", {
     method: "POST"
   });
-
   const data = await response.json();
   window.location.href = data.url;
 }
