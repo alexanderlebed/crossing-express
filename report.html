@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>SRIM Intelligence Report</title>
+<title>SRIM Entry Sovereign Scan — Crossing</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -14,103 +14,41 @@ body {
 }
 
 .container {
-  max-width: 900px;
+  max-width: 800px;
   margin: auto;
   padding: 60px 30px;
-}
-
-h1 {
-  font-size: 40px;
-  margin-bottom: 10px;
-}
-
-.subtitle {
-  opacity: 0.85;
-  line-height: 1.6;
-}
-
-.small {
-  opacity: 0.6;
-  margin-top: 10px;
-}
-
-.box {
-  margin-top: 40px;
-  padding: 35px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 12px;
 }
 
 input, select {
   width: 100%;
   padding: 12px;
-  margin-top: 12px;
   background: #0d1117;
   border: 1px solid #30363d;
   color: white;
-  font-size: 14px;
+  margin-top: 10px;
 }
 
 button {
-  margin-top: 20px;
+  margin-top: 30px;
   padding: 14px 28px;
   background: linear-gradient(90deg, #4f8cff, #7a5cff);
   border: none;
-  border-radius: 8px;
   color: white;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 14px;
-}
-
-button:hover {
-  opacity: 0.9;
-}
-
-.unlock {
-  background: linear-gradient(90deg, #1f6feb, #4f8cff);
 }
 
 .result {
-  margin-top: 30px;
-  padding: 30px;
+  margin-top: 40px;
+  padding: 25px;
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 12px;
-  line-height: 1.8;
-  font-size: 15px;
-  letter-spacing: 0.2px;
-  position: relative;
+  border-radius: 10px;
+  white-space: pre-wrap;
 }
 
-.fade-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 120px;
-  background: linear-gradient(to bottom, rgba(5,7,15,0), #05070f);
-}
-
-.notice {
+.loader {
   margin-top: 20px;
-  opacity: 0.7;
-  font-size: 14px;
-}
-
-.footer {
-  margin-top: 80px;
-  opacity: 0.6;
-  font-size: 13px;
-}
-
-.footer a {
-  color: #4f8cff;
-  text-decoration: none;
-}
-
-.footer a:hover {
-  text-decoration: underline;
 }
 </style>
 </head>
@@ -119,111 +57,78 @@ button:hover {
 
 <div class="container">
 
-<h1>SRIM Intelligence Report</h1>
-
-<p class="subtitle">
-Structured sovereign relocation modeling based on jurisdictional feasibility,
-economic sustainability and geopolitical exposure analysis.
-</p>
-
-<p class="small">
-Preview analysis is complimentary. Full structured report — €249.
-</p>
-
-<div class="box">
+<h1>SRIM Entry Sovereign Scan</h1>
 
 <input id="citizenship" placeholder="Citizenship">
 <input id="target" placeholder="Target Country">
 <input id="income" type="number" placeholder="Monthly Income (€)">
-
 <select id="family">
 <option value="single">Single</option>
 <option value="married">Married</option>
 <option value="married_children">Married with children</option>
 </select>
-
 <select id="timeline">
 <option value="3_months">Within 3 months</option>
 <option value="6_months">Within 6 months</option>
 <option value="12_months">Within 12 months</option>
 </select>
 
-<button onclick="generatePreview()">Generate Preview</button>
+<button onclick="generate()">Generate Preview</button>
 
-<div id="previewWrapper" style="display:none; position:relative;">
-  <div id="preview" class="result"></div>
-  <div class="fade-overlay"></div>
+<div id="loading" class="loader" style="display:none;">
+Computing sovereign model...
 </div>
 
-<div id="unlockSection" style="display:none;">
-  <div class="notice">
-    Full jurisdictional exposure matrix, risk modeling, execution sequencing and structural positioning analysis available in complete report.
-  </div>
-
-  <button class="unlock" onclick="startCheckout()">
-    Unlock Full SRIM Report — €249
-  </button>
-</div>
-
-</div>
-
-<div class="footer">
-<a href="/">← Back to Crossing</a>
-</div>
+<div id="result" class="result" style="display:none;"></div>
 
 </div>
 
 <script>
 
-let currentProfile = null;
+async function generate() {
 
-async function generatePreview() {
+  const loading = document.getElementById("loading");
+  const resultBox = document.getElementById("result");
 
-  currentProfile = {
-    citizenship: document.getElementById("citizenship").value,
-    targetCountry: document.getElementById("target").value,
-    income: document.getElementById("income").value,
-    familyStatus: document.getElementById("family").value,
-    timeline: document.getElementById("timeline").value,
-    mode: "preview"
-  };
+  loading.style.display = "block";
+  resultBox.style.display = "none";
 
-  const response = await fetch("/api/generate", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(currentProfile)
-  });
+  try {
 
-  const data = await response.json();
+    const response = await fetch("/api/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        citizenship: document.getElementById("citizenship").value,
+        targetCountry: document.getElementById("target").value,
+        income: document.getElementById("income").value,
+        familyStatus: document.getElementById("family").value,
+        timeline: document.getElementById("timeline").value
+      })
+    });
 
-  let text = data.result
-    .replace(/\*\*/g, "")
-    .replace(/\n\n/g, "<br><br>");
+    const data = await response.json();
 
-  const words = text.split(" ");
-  const truncated = words.slice(0, 180).join(" ") + "...";
+    loading.style.display = "none";
+    resultBox.style.display = "block";
 
-  document.getElementById("preview").innerHTML = truncated;
-  document.getElementById("previewWrapper").style.display = "block";
-  document.getElementById("unlockSection").style.display = "block";
-}
+    resultBox.innerText = data.result;
 
-async function startCheckout() {
+    if (data.reportId) {
+      const link = document.createElement("a");
+      link.href = `/portal.html?report=${data.reportId}`;
+      link.innerText = "Open Full Report →";
+      link.style.display = "block";
+      link.style.marginTop = "20px";
+      link.style.color = "#4f8cff";
+      resultBox.appendChild(link);
+    }
 
-  localStorage.setItem("srimProfile", JSON.stringify({
-    citizenship: document.getElementById("citizenship").value,
-    targetCountry: document.getElementById("target").value,
-    income: document.getElementById("income").value,
-    familyStatus: document.getElementById("family").value,
-    timeline: document.getElementById("timeline").value
-  }));
-
-  const response = await fetch("/api/checkout", {
-    method: "POST"
-  });
-
-  const data = await response.json();
-  window.location.href = data.url;
+  } catch (err) {
+    loading.style.display = "none";
+    resultBox.style.display = "block";
+    resultBox.innerText = "Error:\n\n" + err.message;
+  }
 }
 
 </script>
