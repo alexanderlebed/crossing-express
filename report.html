@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SRIM Intelligence Report</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body {
+  margin: 0;
+  background: #05070f;
+  color: #e8ecf1;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+}
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 60px 30px;
+}
+h1 { font-size: 40px; }
+.box {
+  margin-top: 40px;
+  padding: 35px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+}
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  background: #0d1117;
+  border: 1px solid #30363d;
+  color: white;
+}
+button {
+  margin-top: 20px;
+  padding: 14px 28px;
+  background: linear-gradient(90deg, #4f8cff, #7a5cff);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+button:hover { opacity: 0.9; }
+.result {
+  margin-top: 25px;
+  padding: 20px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 10px;
+  white-space: pre-wrap;
+}
+.unlock {
+  background: linear-gradient(90deg, #1f6feb, #4f8cff);
+}
+.small {
+  opacity: 0.6;
+  margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>SRIM Intelligence Report</h1>
+
+<p>
+Structured sovereign relocation modeling based on jurisdictional feasibility,
+economic sustainability and geopolitical exposure analysis.
+</p>
+
+<p class="small">
+Preview analysis is complimentary. Full structured report — €249.
+</p>
+
+<div class="box">
+
+<input id="citizenship" placeholder="Citizenship">
+<input id="target" placeholder="Target Country">
+<input id="income" type="number" placeholder="Monthly Income (€)">
+
+<select id="family">
+<option value="single">Single</option>
+<option value="married">Married</option>
+<option value="married_children">Married with children</option>
+</select>
+
+<select id="timeline">
+<option value="3_months">Within 3 months</option>
+<option value="6_months">Within 6 months</option>
+<option value="12_months">Within 12 months</option>
+</select>
+
+<button onclick="generatePreview()">Generate Preview</button>
+
+<div id="preview" class="result" style="display:none;"></div>
+
+<button id="unlockBtn" class="unlock" style="display:none;" onclick="startCheckout()">
+Unlock Full SRIM Report — €249
+</button>
+
+<div id="fullReport" class="result" style="display:none;"></div>
+
+</div>
+
+</div>
+
+<script>
+
+let lastProfile = null;
+
+async function generatePreview() {
+
+  lastProfile = {
+    citizenship: document.getElementById("citizenship").value,
+    targetCountry: document.getElementById("target").value,
+    income: document.getElementById("income").value,
+    familyStatus: document.getElementById("family").value,
+    timeline: document.getElementById("timeline").value,
+    mode: "preview"
+  };
+
+  const response = await fetch("/api/generate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(lastProfile)
+  });
+
+  const data = await response.json();
+
+  document.getElementById("preview").style.display = "block";
+  document.getElementById("preview").innerText = data.result;
+
+  document.getElementById("unlockBtn").style.display = "block";
+}
+
+async function startCheckout() {
+
+  const response = await fetch("/api/checkout", {
+    method: "POST"
+  });
+
+  const data = await response.json();
+  window.location.href = data.url;
+}
+
+</script>
+
+</body>
+</html>
