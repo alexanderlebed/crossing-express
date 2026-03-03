@@ -175,9 +175,11 @@ Preview analysis is complimentary. Full structured report — €249.
 
 <script>
 
+let currentProfile = null;
+
 async function generatePreview() {
 
-  const profile = {
+  currentProfile = {
     citizenship: document.getElementById("citizenship").value,
     targetCountry: document.getElementById("target").value,
     income: document.getElementById("income").value,
@@ -189,7 +191,7 @@ async function generatePreview() {
   const response = await fetch("/api/generate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(profile)
+    body: JSON.stringify(currentProfile)
   });
 
   const data = await response.json();
@@ -207,9 +209,19 @@ async function generatePreview() {
 }
 
 async function startCheckout() {
+
+  localStorage.setItem("srimProfile", JSON.stringify({
+    citizenship: document.getElementById("citizenship").value,
+    targetCountry: document.getElementById("target").value,
+    income: document.getElementById("income").value,
+    familyStatus: document.getElementById("family").value,
+    timeline: document.getElementById("timeline").value
+  }));
+
   const response = await fetch("/api/checkout", {
     method: "POST"
   });
+
   const data = await response.json();
   window.location.href = data.url;
 }
