@@ -21,37 +21,43 @@ body {
 
 h1 {
   font-size: 34px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
-h2 {
-  font-size: 18px;
-  color: #4f8cff;
-  margin-top: 50px;
-}
-
-p {
+.intro {
+  opacity: 0.85;
   line-height: 1.8;
-  opacity: 0.9;
+  margin-bottom: 50px;
 }
 
 .paper {
   margin-top: 40px;
-  padding: 25px;
+  padding: 30px;
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 10px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.paper:hover {
+  border-color: rgba(79,140,255,0.3);
 }
 
 .paper-title {
-  font-size: 20px;
-  margin-bottom: 10px;
+  font-size: 22px;
+  margin-bottom: 8px;
 }
 
 .paper-meta {
   opacity: 0.6;
   font-size: 14px;
-  margin-bottom: 15px;
+  margin-bottom: 18px;
+}
+
+.paper-description {
+  line-height: 1.8;
+  opacity: 0.9;
+  margin-bottom: 20px;
 }
 
 .paper a {
@@ -62,6 +68,15 @@ p {
 
 .paper a:hover {
   text-decoration: underline;
+}
+
+.series-note {
+  margin-top: 60px;
+  padding: 18px;
+  background: rgba(79,140,255,0.07);
+  border-left: 3px solid #4f8cff;
+  border-radius: 6px;
+  opacity: 0.85;
 }
 
 .footer {
@@ -87,8 +102,10 @@ p {
 
 <h1>Research & Publications</h1>
 
-<p>
-Crossing publishes structured analytical papers addressing jurisdictional volatility, sovereign mobility architecture and regulatory exposure modeling.
+<p class="intro">
+Crossing publishes structured analytical research addressing jurisdictional volatility,
+sovereign mobility architecture and regulatory exposure modeling.
+These publications formalize the conceptual foundation underlying the SRIM framework.
 </p>
 
 <div class="paper">
@@ -101,12 +118,18 @@ Jurisdictional Volatility and the Structural Rise of Sovereign Mobility
 Position Paper 01 · Strategic Research Series · 2026
 </div>
 
-<p>
-An analytical overview of regulatory acceleration, structural mobility and sovereign positioning in volatile jurisdictional environments.
-</p>
+<div class="paper-description">
+An analytical examination of regulatory acceleration, structural mobility and sovereign positioning in increasingly volatile jurisdictional environments.
+This paper outlines the macro-conditions that transform relocation from personal preference into strategic architecture.
+</div>
 
 <a href="/paper-01.html">Read Position Paper →</a>
 
+</div>
+
+<div class="series-note">
+The Strategic Research Series explores long-term structural trends shaping sovereign mobility.
+Subsequent papers will address capital exposure modeling, regulatory acceleration dynamics and multi-jurisdiction positioning theory.
 </div>
 
 <div class="footer">
