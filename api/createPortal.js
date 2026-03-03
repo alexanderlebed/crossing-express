@@ -1,3 +1,5 @@
+import { saveReport } from "./storage.js";
+
 export default async function handler(req, res) {
 
   if (req.method !== "POST") {
@@ -19,7 +21,7 @@ export default async function handler(req, res) {
       return res.status(403).json({ error: "Payment not verified" });
     }
 
-    // Генерируем полный отчёт
+    // Генерация отчёта
     const aiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -35,10 +37,9 @@ export default async function handler(req, res) {
             content: `
 You are SRIM — Sovereign Relocation Intelligence Modeling engine.
 
-Provide full structured analytical relocation modeling.
+Produce structured, analytical, formal intelligence brief.
 800–1200 words.
-Formal intelligence memo tone.
-No marketing language.
+No marketing tone.
             `
           },
           {
@@ -57,9 +58,16 @@ Mode: FULL
     });
 
     const data = await aiResponse.json();
+    const reportContent = data.choices[0].message.content;
+
+    // Генерация permanent ID
+    const portalId = "SRIM-" + Math.random().toString(36).substring(2, 8).toUpperCase();
+
+    // Сохраняем
+    saveReport(portalId, reportContent);
 
     return res.status(200).json({
-      report: data.choices[0].message.content
+      portalId: portalId
     });
 
   } catch (err) {
