@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+import PDFDocument from "pdfkit";
 
 export default async function handler(req, res) {
 
@@ -14,7 +15,7 @@ export default async function handler(req, res) {
 
   try {
 
-    // 1. Получаем отчёт из Supabase
+    // 1. Получаем отчёт
     const response = await fetch(
       `${process.env.SUPABASE_URL}/rest/v1/reports?id=eq.${report}`,
       {
@@ -34,38 +35,38 @@ export default async function handler(req, res) {
 
     const content = data[0].content;
 
-    // 2. Генерируем PDF в памяти
-    const PDFDocument = require("pdfkit");
+    // 2. Генерируем PDF (без подвисания)
     const doc = new PDFDocument();
-    let buffers = [];
+    const buffers = [];
 
     doc.on("data", buffers.push.bind(buffers));
-    doc.on("end", async () => {
 
-      const pdfBuffer = Buffer.concat(buffers);
-
-      const resend = new Resend(process.env.RESEND_API_KEY);
-
-      await resend.emails.send({
-        from: "Crossing <no-reply@crossing.express>",
-        to: email,
-        subject: "Your SRIM Intelligence File",
-        text: "Your SRIM report is attached.",
-        attachments: [
-          {
-            filename: "SRIM-Intelligence-File.pdf",
-            content: pdfBuffer
-          }
-        ]
-      });
-
-      res.status(200).json({ success: true });
-    });
-
-    doc.fontSize(12).text(content);
+    doc.text(content);
     doc.end();
 
+    await new Promise(resolve => doc.on("end", resolve));
+
+    const pdfBuffer = Buffer.concat(buffers);
+
+    // 3. Отправляем email
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
+    await resend.emails.send({
+      from: "onboarding@resend.dev",  // временно безопасный адрес
+      to: email,
+      subject: "Your SRIM Intelligence File",
+      text: "Your SRIM report is attached.",
+      attachments: [
+        {
+          filename: "SRIM-Intelligence-File.pdf",
+          content: pdfBuffer
+        }
+      ]
+    });
+
+    return res.status(200).json({ success: true });
+
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 }
