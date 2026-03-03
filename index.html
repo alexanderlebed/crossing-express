@@ -18,14 +18,6 @@ body {
   padding: 60px 30px;
 }
 h1 { font-size: 42px; }
-.subtitle { opacity: 0.9; margin-bottom: 25px; }
-.statement {
-  margin-top: 20px;
-  padding: 18px;
-  background: rgba(79,140,255,0.08);
-  border-left: 3px solid #4f8cff;
-  border-radius: 6px;
-}
 .box {
   margin-top: 50px;
   padding: 35px;
@@ -33,21 +25,6 @@ h1 { font-size: 42px; }
   border: 1px solid rgba(255,255,255,0.06);
   border-radius: 12px;
 }
-.highlight {
-  background: rgba(79,140,255,0.10);
-  border: 1px solid rgba(79,140,255,0.4);
-  box-shadow: 0 0 40px rgba(79,140,255,0.15);
-}
-.tier-label {
-  font-size: 12px;
-  text-transform: uppercase;
-  color: #4f8cff;
-  margin-bottom: 10px;
-}
-.price { font-size: 28px; margin-top: 15px; }
-.link a { color: #4f8cff; text-decoration: none; }
-.link a:hover { text-decoration: underline; }
-
 input, select {
   width: 100%;
   padding: 12px;
@@ -56,7 +33,6 @@ input, select {
   border: 1px solid #30363d;
   color: white;
 }
-
 button {
   margin-top: 20px;
   padding: 14px 28px;
@@ -66,7 +42,7 @@ button {
   color: white;
   cursor: pointer;
 }
-
+button:hover { opacity: 0.9; }
 .result {
   margin-top: 25px;
   padding: 20px;
@@ -74,69 +50,20 @@ button {
   border-radius: 10px;
   white-space: pre-wrap;
 }
-
-.footer {
-  margin-top: 90px;
-  opacity: 0.6;
-  font-size: 14px;
+.hidden { display:none; }
+.unlock {
+  margin-top: 20px;
+  background: linear-gradient(90deg, #1f6feb, #4f8cff);
 }
-.footer a { color: #4f8cff; text-decoration: none; }
-.footer a:hover { text-decoration: underline; }
 </style>
 </head>
 
 <body>
 <div class="container">
 
-<h1>Crossing</h1>
-
-<p class="subtitle">
-Sovereign Relocation Intelligence Modeling (SRIM)
-</p>
-
-<div class="statement">
-Structured jurisdictional modeling for long-term sovereign decisions.
-</div>
-
-<!-- 249 -->
+<h1>SRIM Intelligence Report</h1>
 
 <div class="box">
-<h3>SRIM Intelligence Report</h3>
-<p>Structured feasibility modeling.</p>
-<div class="price">€249</div>
-<div class="link">
-<a href="#scan">Run Feasibility Scan →</a>
-</div>
-</div>
-
-<!-- 2500 -->
-
-<div class="box highlight">
-<div class="tier-label">Core Tier</div>
-<h3>SRIM Sovereign Architecture</h3>
-<p>Multi-jurisdiction strategic modeling.</p>
-<div class="price">€2,500</div>
-<div class="link">
-<a href="/sovereign.html">Explore →</a>
-</div>
-</div>
-
-<!-- 7500 -->
-
-<div class="box">
-<h3>SRIM Private Architecture Lab</h3>
-<p>Advanced jurisdictional positioning.</p>
-<div class="price">€7,500</div>
-<div class="link">
-<a href="/lab.html">Explore →</a>
-</div>
-</div>
-
-<!-- REAL SCAN FORM -->
-
-<div class="box" id="scan">
-
-<h3>Feasibility Scan</h3>
 
 <input id="citizenship" placeholder="Citizenship">
 <input id="target" placeholder="Target Country">
@@ -154,39 +81,59 @@ Structured jurisdictional modeling for long-term sovereign decisions.
 <option value="12_months">Within 12 months</option>
 </select>
 
-<button onclick="generate()">Generate Strategy</button>
+<button onclick="generatePreview()">Generate Preview</button>
 
-<div id="result" class="result" style="display:none;"></div>
+<div id="preview" class="result hidden"></div>
 
-</div>
+<button id="unlockBtn" class="unlock hidden" onclick="startCheckout()">
+Unlock Full SRIM Report — €249
+</button>
 
-<div class="footer">
-Crossing — Sovereign Relocation Intelligence Modeling Platform<br>
-<a href="/methodology.html">Methodology</a>
+<div id="fullReport" class="result hidden"></div>
+
 </div>
 
 </div>
 
 <script>
-async function generate() {
+
+let lastProfile = null;
+
+async function generatePreview() {
+
+  lastProfile = {
+    citizenship: document.getElementById("citizenship").value,
+    targetCountry: document.getElementById("target").value,
+    income: document.getElementById("income").value,
+    familyStatus: document.getElementById("family").value,
+    timeline: document.getElementById("timeline").value,
+    mode: "preview"
+  };
 
   const response = await fetch("/api/generate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      citizenship: document.getElementById("citizenship").value,
-      targetCountry: document.getElementById("target").value,
-      income: document.getElementById("income").value,
-      familyStatus: document.getElementById("family").value,
-      timeline: document.getElementById("timeline").value
-    })
+    body: JSON.stringify(lastProfile)
   });
 
   const data = await response.json();
-  const resultBox = document.getElementById("result");
-  resultBox.style.display = "block";
-  resultBox.innerText = data.result;
+
+  document.getElementById("preview").style.display = "block";
+  document.getElementById("preview").innerText = data.result;
+
+  document.getElementById("unlockBtn").style.display = "block";
 }
+
+async function startCheckout() {
+
+  const response = await fetch("/api/checkout", {
+    method: "POST"
+  });
+
+  const data = await response.json();
+  window.location.href = data.url;
+}
+
 </script>
 
 </body>
