@@ -1,38 +1,59 @@
-import { getReport } from "./storage.js";
+import { createClient } from "@supabase/supabase-js";
 import PDFDocument from "pdfkit";
+import getStream from "get-stream";
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_KEY
+);
 
 export default async function handler(req, res) {
 
-  const { id } = req.query;
-
-  if (!id) {
-    return res.status(400).json({ error: "Missing ID" });
-  }
-
-  const report = getReport(id);
+  const { report } = req.query;
 
   if (!report) {
-    return res.status(404).json({ error: "Report not found" });
+    return res.status(400).json({ error: "Missing report ID" });
   }
 
-  const doc = new PDFDocument({ margin: 50 });
+  try {
 
-  res.setHeader("Content-Type", "application/pdf");
-  res.setHeader(
-    "Content-Disposition",
-    `attachment; filename=SRIM-${id}.pdf`
-  );
+    const { data, error } = await supabase
+      .from("reports")
+      .select("content")
+      .eq("id", report)
+      .single();
 
-  doc.pipe(res);
+    if (error || !data) {
+      return res.status(404).json({ error: "Report not found" });
+    }
 
-  doc.fontSize(18).text("SRIM Intelligence Report", { align: "center" });
-  doc.moveDown();
-  doc.fontSize(10).text("Confidential — Sovereign Relocation Intelligence Modeling", { align: "center" });
-  doc.moveDown(2);
+    const doc = new PDFDocument({
+      margin: 50
+    });
 
-  doc.fontSize(12).text(report, {
-    align: "left"
-  });
+    doc.fontSize(18).text("SRIM Intelligence File", { align: "left" });
+    doc.moveDown();
+    doc.fontSize(12).text("Confidential");
+    doc.moveDown(2);
 
-  doc.end();
+    doc.fontSize(11).text(data.content, {
+      align: "left",
+      lineGap: 4
+    });
+
+    doc.end();
+
+    const pdfBuffer = await getStream.buffer(doc);
+
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename=SRIM_Report_${report}.pdf`
+    );
+
+    res.send(pdfBuffer);
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 }
