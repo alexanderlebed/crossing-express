@@ -17,15 +17,8 @@ body {
   margin: auto;
   padding: 60px 30px;
 }
-h1 {
-  font-size: 42px;
-  margin-bottom: 10px;
-}
-.subtitle {
-  opacity: 0.9;
-  margin-bottom: 25px;
-  line-height: 1.6;
-}
+h1 { font-size: 42px; }
+.subtitle { opacity: 0.9; margin-bottom: 25px; }
 .statement {
   margin-top: 20px;
   padding: 18px;
@@ -39,10 +32,6 @@ h1 {
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.06);
   border-radius: 12px;
-  transition: all 0.3s ease;
-}
-.box:hover {
-  border-color: rgba(79,140,255,0.3);
 }
 .highlight {
   background: rgba(79,140,255,0.10);
@@ -51,34 +40,48 @@ h1 {
 }
 .tier-label {
   font-size: 12px;
-  letter-spacing: 1px;
   text-transform: uppercase;
   color: #4f8cff;
   margin-bottom: 10px;
 }
-.price {
-  font-size: 28px;
-  margin-top: 15px;
+.price { font-size: 28px; margin-top: 15px; }
+.link a { color: #4f8cff; text-decoration: none; }
+.link a:hover { text-decoration: underline; }
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  background: #0d1117;
+  border: 1px solid #30363d;
+  color: white;
 }
-.link a {
-  color: #4f8cff;
-  text-decoration: none;
+
+button {
+  margin-top: 20px;
+  padding: 14px 28px;
+  background: linear-gradient(90deg, #4f8cff, #7a5cff);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
 }
-.link a:hover {
-  text-decoration: underline;
+
+.result {
+  margin-top: 25px;
+  padding: 20px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 10px;
+  white-space: pre-wrap;
 }
+
 .footer {
   margin-top: 90px;
   opacity: 0.6;
   font-size: 14px;
 }
-.footer a {
-  color: #4f8cff;
-  text-decoration: none;
-}
-.footer a:hover {
-  text-decoration: underline;
-}
+.footer a { color: #4f8cff; text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
 </style>
 </head>
 
@@ -88,112 +91,72 @@ h1 {
 <h1>Crossing</h1>
 
 <p class="subtitle">
-Sovereign Relocation Intelligence Modeling (SRIM)<br>
-Structured geopolitical, legal and economic modeling for serious cross-border life decisions.
+Sovereign Relocation Intelligence Modeling (SRIM)
 </p>
 
 <div class="statement">
-SRIM is not advisory opinion. It is structured sovereign decision modeling designed to map jurisdictional risk, optionality and long-term mobility architecture.
+Structured jurisdictional modeling for long-term sovereign decisions.
 </div>
 
 <!-- 249 -->
 
 <div class="box">
-
 <h3>SRIM Intelligence Report</h3>
-
-<p>
-Structured feasibility modeling for individuals evaluating relocation decisions.
-</p>
-
+<p>Structured feasibility modeling.</p>
 <div class="price">€249</div>
-
 <div class="link">
 <a href="#scan">Run Feasibility Scan →</a>
 </div>
-
 </div>
 
-<!-- 2500 HIGHLIGHT -->
+<!-- 2500 -->
 
 <div class="box highlight">
-
 <div class="tier-label">Core Tier</div>
-
 <h3>SRIM Sovereign Architecture</h3>
-
-<p>
-Multi-jurisdiction strategic modeling for long-horizon relocation and mobility planning.
-</p>
-
+<p>Multi-jurisdiction strategic modeling.</p>
 <div class="price">€2,500</div>
-
 <div class="link">
-<a href="/sovereign.html">Explore Sovereign Architecture →</a>
+<a href="/sovereign.html">Explore →</a>
 </div>
-
 </div>
 
 <!-- 7500 -->
 
 <div class="box">
-
 <h3>SRIM Private Architecture Lab</h3>
-
-<p>
-Structural jurisdictional positioning across capital, citizenship and generational continuity.
-</p>
-
+<p>Advanced jurisdictional positioning.</p>
 <div class="price">€7,500</div>
-
 <div class="link">
-<a href="/lab.html">Explore Private Architecture Lab →</a>
+<a href="/lab.html">Explore →</a>
+</div>
 </div>
 
-</div>
+<!-- REAL SCAN FORM -->
 
-<!-- ORIGIN -->
+<div class="box" id="scan">
 
-<div class="box">
+<h3>Feasibility Scan</h3>
 
-<h3>Origin</h3>
+<input id="citizenship" placeholder="Citizenship">
+<input id="target" placeholder="Target Country">
+<input id="income" type="number" placeholder="Monthly Income (€)">
 
-<p>
-Crossing emerged from the intersection of artificial intelligence modeling and sovereign decision theory.
-</p>
+<select id="family">
+<option value="single">Single</option>
+<option value="married">Married</option>
+<option value="married_children">Married with children</option>
+</select>
 
-<p>
-It was not created as a relocation service, but as a response to structural uncertainty in modern jurisdictional environments.
-</p>
+<select id="timeline">
+<option value="3_months">Within 3 months</option>
+<option value="6_months">Within 6 months</option>
+<option value="12_months">Within 12 months</option>
+</select>
 
-<p>
-The SRIM framework formalizes decision modeling across mobility, capital exposure and long-term geopolitical volatility.
-</p>
+<button onclick="generate()">Generate Strategy</button>
 
-</div>
-
-<!-- STRUCTURAL INTEGRITY -->
-
-<div class="box">
-
-<h3>Structural Integrity</h3>
-
-<p>
-Crossing operates under a defined modeling framework.
-It does not provide legal representation, immigration filing, or tax structuring services.
-</p>
-
-<ul>
-<li>Independent analytical modeling</li>
-<li>No commission-based country bias</li>
-<li>No affiliate incentives</li>
-<li>No political positioning</li>
-</ul>
-
-<p>
-All modeling outputs are structured assessments designed to support sovereign decision-making.
-Final implementation remains the responsibility of the client and their chosen legal representatives.
-</p>
+<div id="result" class="result" style="display:none;"></div>
 
 </div>
 
@@ -203,5 +166,28 @@ Crossing — Sovereign Relocation Intelligence Modeling Platform<br>
 </div>
 
 </div>
+
+<script>
+async function generate() {
+
+  const response = await fetch("/api/generate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      citizenship: document.getElementById("citizenship").value,
+      targetCountry: document.getElementById("target").value,
+      income: document.getElementById("income").value,
+      familyStatus: document.getElementById("family").value,
+      timeline: document.getElementById("timeline").value
+    })
+  });
+
+  const data = await response.json();
+  const resultBox = document.getElementById("result");
+  resultBox.style.display = "block";
+  resultBox.innerText = data.result;
+}
+</script>
+
 </body>
 </html>
