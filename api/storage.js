@@ -1,9 +1,9 @@
-let reports = {};
+const reports = new Map();
 
-export function saveReport(id, content) {
-  reports[id] = content;
+export function saveReport(id, data) {
+  reports.set(id, data);
 }
 
 export function getReport(id) {
-  return reports[id];
+  return reports.get(id);
 }
