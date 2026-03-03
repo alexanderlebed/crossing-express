@@ -1,5 +1,5 @@
-import { Resend } from "resend";
-import PDFDocument from "pdfkit";
+const { Resend } = require("resend");
+const PDFDocument = require("pdfkit");
 
 export default async function handler(req, res) {
 
@@ -15,7 +15,14 @@ export default async function handler(req, res) {
 
   try {
 
-    // 1. Получаем отчёт
+    const apiKey = process.env.RESEND_API_KEY;
+
+    if (!apiKey) {
+      return res.status(500).json({ error: "RESEND_API_KEY is undefined" });
+    }
+
+    const resend = new Resend(apiKey);
+
     const response = await fetch(
       `${process.env.SUPABASE_URL}/rest/v1/reports?id=eq.${report}`,
       {
@@ -35,12 +42,10 @@ export default async function handler(req, res) {
 
     const content = data[0].content;
 
-    // 2. Генерируем PDF (без подвисания)
     const doc = new PDFDocument();
     const buffers = [];
 
     doc.on("data", buffers.push.bind(buffers));
-
     doc.text(content);
     doc.end();
 
@@ -48,11 +53,8 @@ export default async function handler(req, res) {
 
     const pdfBuffer = Buffer.concat(buffers);
 
-    // 3. Отправляем email
-    const resend = new Resend(process.env.RESEND_API_KEY);
-
     await resend.emails.send({
-      from: "onboarding@resend.dev",  // временно безопасный адрес
+      from: "onboarding@resend.dev",
       to: email,
       subject: "Your SRIM Intelligence File",
       text: "Your SRIM report is attached.",
