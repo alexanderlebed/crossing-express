@@ -1,5 +1,3 @@
-import Stripe from "stripe";
-
 export default async function handler(req, res) {
 
   if (req.method !== "POST") {
@@ -8,13 +6,7 @@ export default async function handler(req, res) {
 
   try {
 
-    if (!process.env.STRIPE_SECRET_KEY) {
-      return res.status(500).json({ error: "Stripe key not configured" });
-    }
-
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: "2023-10-16",
-    });
+    const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -25,24 +17,22 @@ export default async function handler(req, res) {
             currency: "eur",
             product_data: {
               name: "SRIM Intelligence Report",
-              description: "Sovereign Relocation Intelligence Modeling — structured geopolitical, legal and economic relocation architecture."
+              description: "Full sovereign relocation intelligence modeling including jurisdictional feasibility, legal pathways, economic sustainability and risk vectors."
             },
             unit_amount: 24900 // €249
           },
           quantity: 1
         }
       ],
-      success_url: `${req.headers.origin}/success.html`,
-      cancel_url: `${req.headers.origin}/`
+      success_url: `${req.headers.origin}/portal.html`,
+      cancel_url: `${req.headers.origin}/report.html`
     });
 
     return res.status(200).json({ url: session.url });
 
   } catch (err) {
 
-    return res.status(500).json({
-      error: err.message || "Stripe session creation failed"
-    });
+    return res.status(500).json({ error: err.message });
 
   }
 }
