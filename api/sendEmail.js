@@ -23,6 +23,7 @@ export default async function handler(req, res) {
 
     const resend = new Resend(apiKey);
 
+    // 1️⃣ Получаем отчёт из Supabase
     const response = await fetch(
       `${process.env.SUPABASE_URL}/rest/v1/reports?id=eq.${report}`,
       {
@@ -34,6 +35,11 @@ export default async function handler(req, res) {
       }
     );
 
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error("Supabase error: " + errText);
+    }
+
     const data = await response.json();
 
     if (!data || data.length === 0) {
@@ -42,6 +48,7 @@ export default async function handler(req, res) {
 
     const content = data[0].content;
 
+    // 2️⃣ Генерация PDF
     const doc = new PDFDocument();
     const buffers = [];
 
@@ -53,8 +60,9 @@ export default async function handler(req, res) {
 
     const pdfBuffer = Buffer.concat(buffers);
 
+    // 3️⃣ Отправка email уже от crossing.express
     await resend.emails.send({
-      from: "onboarding@resend.dev",
+      from: "Crossing <no-reply@crossing.express>",
       to: email,
       subject: "Your SRIM Intelligence File",
       text: "Your SRIM report is attached.",
