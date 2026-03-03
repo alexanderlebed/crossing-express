@@ -5,34 +5,57 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Жёстко парсим тело запроса
-    let body = req.body;
-    if (typeof body === "string") {
-      try { body = JSON.parse(body); } catch (e) { body = {}; }
-    }
 
-    const citizenship  = body?.citizenship  || "";
-    const targetCountry = body?.targetCountry || "";
-    const income       = body?.income       || "";
-    const familyStatus = body?.familyStatus || "";
-    const timeline     = body?.timeline     || "";
+    const {
+      citizenship,
+      targetCountry,
+      income,
+      familyStatus,
+      timeline,
+      mode
+    } = req.body;
 
-    // ВРЕМЕННО убираем 400-проверки — сервер всегда должен ответить
-    const previewPrompt = `
-You are Crossing, a senior relocation strategist.
+    const isPreview = mode === "preview";
 
+    const systemPrompt = `
+You are SRIM — Sovereign Relocation Intelligence Modeling engine.
+
+Your task is to provide structured, analytical relocation modeling.
+
+Do NOT provide emotional tone.
+Do NOT provide marketing language.
+Do NOT provide generic travel advice.
+
+Structure output clearly.
+
+If mode is preview:
+- Provide a short strategic outline (max 250 words)
+- Highlight key structural factors only
+- Do not provide deep modeling
+
+If mode is full:
+- Provide structured sections:
+  1. Jurisdictional Feasibility
+  2. Legal Pathways
+  3. Economic Sustainability
+  4. Risk Vectors
+  5. Strategic Positioning
+  6. Execution Timeline
+- Write in analytical tone
+- 800–1200 words
+`;
+
+    const userPrompt = `
 Profile:
 Citizenship: ${citizenship}
-Target Country: ${targetCountry || "Not fixed"}
+Target Country: ${targetCountry || "Open"}
 Monthly Income: €${income}
 Family Status: ${familyStatus}
 Timeline: ${timeline}
-
-Provide a SHORT strategic relocation assessment (max 8 lines).
-Be specific. No generic advice.
+Mode: ${mode}
 `;
 
-    const openaiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,32 +64,24 @@ Be specific. No generic advice.
       body: JSON.stringify({
         model: "gpt-4o-mini",
         messages: [
-          { role: "system", content: "You are an elite relocation strategist." },
-          { role: "user", content: previewPrompt }
+          { role: "system", content: systemPrompt },
+          { role: "user", content: userPrompt }
         ],
-        temperature: 0.6
+        temperature: 0.4
       })
     });
 
-    const data = await openaiResponse.json();
+    const data = await response.json();
 
-    if (!openaiResponse.ok) {
-      return res.status(500).json({
-        error: data.error?.message || "OpenAI error",
-        debug: data
-      });
+    if (!response.ok) {
+      return res.status(500).json({ error: data });
     }
 
-    return res.status(200).json({
-      result: data.choices?.[0]?.message?.content || "No response",
-      preview: true,
-      debug_received_body: body
-    });
+    const result = data.choices[0].message.content;
 
-  } catch (err) {
-    return res.status(500).json({
-      error: err.message
-    });
+    return res.status(200).json({ result });
+
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
   }
 }
- 
