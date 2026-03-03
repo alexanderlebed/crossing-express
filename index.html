@@ -14,58 +14,85 @@ body {
 }
 
 .container {
-  max-width: 900px;
+  max-width: 950px;
   margin: auto;
-  padding: 100px 30px;
+  padding: 60px 30px;
 }
 
 h1 {
-  font-size: 38px;
-  font-weight: 500;
-  margin-bottom: 25px;
-}
-
-p {
-  line-height: 1.7;
-  opacity: 0.85;
-  margin-bottom: 25px;
-}
-
-.section {
-  margin-top: 70px;
-}
-
-.instrument {
-  margin-top: 35px;
-  padding: 28px;
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 8px;
-  background: rgba(255,255,255,0.02);
-}
-
-.instrument-title {
-  font-size: 18px;
+  font-size: 42px;
   margin-bottom: 10px;
 }
 
-.instrument-price {
-  margin-top: 18px;
-  opacity: 0.6;
+.subtitle {
+  opacity: 0.9;
+  margin-bottom: 25px;
+  line-height: 1.6;
 }
 
-.instrument a {
+.statement {
+  margin-top: 20px;
+  padding: 18px;
+  background: rgba(79,140,255,0.08);
+  border-left: 3px solid #4f8cff;
+  border-radius: 6px;
+}
+
+/* BOX SYSTEM */
+
+.box {
+  margin-top: 50px;
+  padding: 35px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.box:hover {
+  border-color: rgba(79,140,255,0.3);
+}
+
+.box-entry {
+  background: rgba(79,140,255,0.05);
+  border: 1px solid rgba(79,140,255,0.25);
+  box-shadow: 0 0 30px rgba(79,140,255,0.08);
+}
+
+.box-core {
+  background: rgba(79,140,255,0.12);
+  border: 1px solid rgba(79,140,255,0.45);
+  box-shadow: 0 0 50px rgba(79,140,255,0.18);
+}
+
+.tier-label {
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #4f8cff;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-size: 30px;
+  margin-top: 15px;
+  font-weight: 500;
+}
+
+.link a {
   color: #4f8cff;
   text-decoration: none;
+  font-weight: 500;
 }
 
-.instrument a:hover {
+.link a:hover {
   text-decoration: underline;
 }
 
 .footer {
-  margin-top: 120px;
-  font-size: 13px;
-  opacity: 0.5;
+  margin-top: 90px;
+  opacity: 0.6;
+  font-size: 14px;
 }
 
 .footer a {
@@ -83,54 +110,117 @@ p {
 
 <div class="container">
 
-<h1>Strategic Navigation for Sovereign Mobility</h1>
+<h1>Strategic Navigation for Cross-Border Decisions</h1>
+
+<p class="subtitle">
+Crossing models jurisdictional feasibility, regulatory exposure and long-term mobility positioning for individuals evaluating relocation.
+If you are choosing a country, assessing structural risk, or planning cross-border life architecture — this laboratory provides analytical navigation.
+</p>
+
+<div class="statement">
+SRIM is an internal sovereign modeling instrument designed to map jurisdictional risk, optionality and long-term mobility architecture.
+</div>
+
+<!-- ENTRY TIER -->
+
+<div class="box box-entry">
+
+<div class="tier-label">Entry Instrument</div>
+
+<h3>Entry Sovereign Scan</h3>
 
 <p>
-Crossing operates as a strategic analytical environment modeling jurisdictional positioning under structural uncertainty.
+Structured feasibility modeling for individuals evaluating jurisdictional relocation decisions.
+Initial sovereign positioning analysis powered by SRIM.
+</p>
+
+<div class="price">€249</div>
+
+<div class="link">
+<a href="/report.html">Access Entry Sovereign Scan →</a>
+</div>
+
+</div>
+
+<!-- CORE TIER -->
+
+<div class="box box-core">
+
+<div class="tier-label">Core Tier</div>
+
+<h3>SRIM Sovereign Architecture</h3>
+
+<p>
+Multi-jurisdiction strategic modeling for long-horizon mobility, regulatory exposure mapping and structural positioning.
+</p>
+
+<div class="price">€2,500</div>
+
+<div class="link">
+<a href="/sovereign.html">Explore Sovereign Architecture →</a>
+</div>
+
+</div>
+
+<!-- LAB TIER -->
+
+<div class="box">
+
+<div class="tier-label">Laboratory Tier</div>
+
+<h3>SRIM Private Architecture Lab</h3>
+
+<p>
+Structural jurisdictional positioning across capital, citizenship and generational continuity under geopolitical volatility.
+</p>
+
+<div class="price">€7,500</div>
+
+<div class="link">
+<a href="/lab.html">Explore Private Architecture Lab →</a>
+</div>
+
+</div>
+
+<!-- ORIGIN -->
+
+<div class="box">
+
+<h3>Origin</h3>
+
+<p>
+Crossing emerged from the intersection of artificial intelligence modeling and sovereign decision theory.
+It was not created as a relocation service, but as a response to structural uncertainty in modern jurisdictional environments.
 </p>
 
 <p>
-We do not provide immigration brokerage.
-We do not sell relocation packages.
-We construct structured sovereign navigation models.
-</p>
-
-<div class="section">
-
-<p>
-SRIM (Sovereign Relocation Intelligence Modeling) is an internal modeling instrument integrating regulatory exposure, jurisdictional stability and long-horizon mobility architecture.
+The SRIM framework formalizes decision modeling across mobility, capital exposure and geopolitical volatility.
 </p>
 
 </div>
 
-<div class="section">
+<!-- STRUCTURAL INTEGRITY -->
 
-<div class="instrument">
-<div class="instrument-title">Entry Sovereign Scan</div>
-<p>
-Initial sovereign positioning assessment across jurisdictional feasibility, regulatory volatility and mobility optionality.
-</p>
-<div class="instrument-price">Access: €249</div>
-<a href="/report.html">Access Instrument →</a>
-</div>
+<div class="box">
 
-<div class="instrument">
-<div class="instrument-title">Sovereign Architecture Modeling</div>
-<p>
-Multi-jurisdiction structural modeling for long-term mobility and capital positioning.
-</p>
-<div class="instrument-price">Access: €2,500</div>
-<a href="/sovereign.html">Request Architecture →</a>
-</div>
+<h3>Structural Integrity</h3>
 
-<div class="instrument">
-<div class="instrument-title">Private Architecture Lab</div>
 <p>
-Extended structural positioning across capital continuity, citizenship architecture and generational jurisdictional strategy.
+Crossing operates under a defined modeling framework.
+It does not provide legal representation, immigration filing, or tax structuring services.
 </p>
-<div class="instrument-price">Access: €7,500</div>
-<a href="/lab.html">Enter Laboratory →</a>
-</div>
+
+<ul>
+<li>Independent analytical modeling</li>
+<li>No commission-based country bias</li>
+<li>No affiliate incentives</li>
+<li>No political positioning</li>
+</ul>
+
+<p>
+All modeling outputs are structured assessments designed to support sovereign decision-making.
+Final implementation remains the responsibility of the client and their chosen legal representatives.
+</p>
 
 </div>
 
