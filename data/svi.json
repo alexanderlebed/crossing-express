@@ -1,0 +1,42 @@
+{
+  "spain": {
+    "country": "Spain",
+    "svi": 54,
+    "summary": "Moderate structural stability within EU framework. Predictable regulatory system with rising tax transparency exposure and gradual fiscal tightening."
+  },
+  "portugal": {
+    "country": "Portugal",
+    "svi": 51,
+    "summary": "Relatively stable mobility environment with evolving tax incentives and moderate policy recalibration following NHR reforms."
+  },
+  "france": {
+    "country": "France",
+    "svi": 58,
+    "summary": "High regulatory density with strong institutional stability. Elevated tax complexity and social policy rigidity increase compliance exposure."
+  },
+  "montenegro": {
+    "country": "Montenegro",
+    "svi": 63,
+    "summary": "Emerging jurisdiction with flexible entry pathways but elevated geopolitical sensitivity and evolving EU-alignment risks."
+  },
+  "thailand": {
+    "country": "Thailand",
+    "svi": 60,
+    "summary": "Accessible mobility hub with periodic visa policy shifts and moderate political volatility. Regulatory shifts tend to be episodic rather than systemic."
+  },
+  "vietnam": {
+    "country": "Vietnam",
+    "svi": 65,
+    "summary": "Rapidly developing jurisdiction with controlled regulatory framework and higher structural unpredictability for foreign capital and residency pathways."
+  },
+  "united states": {
+    "country": "United States",
+    "svi": 57,
+    "summary": "Strong institutional framework with high regulatory density. Elevated compliance complexity and tax exposure for global income holders."
+  },
+  "new zealand": {
+    "country": "New Zealand",
+    "svi": 46,
+    "summary": "High institutional stability with relatively predictable regulatory environment. Geographic isolation reduces geopolitical volatility exposure."
+  }
+}
