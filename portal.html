@@ -44,6 +44,38 @@ body {
 .pdf-link:hover {
   text-decoration: underline;
 }
+.email-box {
+  margin-top: 40px;
+  padding: 25px;
+  background: rgba(79,140,255,0.06);
+  border: 1px solid rgba(79,140,255,0.3);
+  border-radius: 10px;
+}
+.email-box input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  background: #0d1117;
+  border: 1px solid #30363d;
+  color: white;
+}
+.email-box button {
+  margin-top: 15px;
+  padding: 12px 20px;
+  background: linear-gradient(90deg, #4f8cff, #7a5cff);
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.email-box button:hover {
+  opacity: 0.9;
+}
+.status {
+  margin-top: 15px;
+  font-size: 14px;
+  opacity: 0.8;
+}
 </style>
 </head>
 
@@ -61,6 +93,13 @@ body {
 Loading intelligence file...
 </div>
 
+<div class="email-box">
+<h3>Receive a copy by email</h3>
+<input type="email" id="emailInput" placeholder="Enter your email">
+<button onclick="sendEmail()">Send Report</button>
+<div id="emailStatus" class="status"></div>
+</div>
+
 </div>
 
 <script>
@@ -70,9 +109,12 @@ function getReportId() {
   return params.get("report");
 }
 
+let currentReportId = null;
+
 async function loadReport() {
 
   const reportId = getReportId();
+  currentReportId = reportId;
 
   if (!reportId) {
     document.getElementById("report").innerText = "Invalid access.";
@@ -92,13 +134,44 @@ async function loadReport() {
 
   document.getElementById("report").innerHTML = formatted;
 
-  // 🔹 PDF button
   const pdfLink = document.createElement("a");
   pdfLink.href = "/api/exportPdf?report=" + reportId;
   pdfLink.className = "pdf-link";
   pdfLink.innerText = "Download PDF →";
 
   document.getElementById("pdfContainer").appendChild(pdfLink);
+}
+
+async function sendEmail() {
+
+  const email = document.getElementById("emailInput").value;
+  const status = document.getElementById("emailStatus");
+
+  if (!email) {
+    status.innerText = "Please enter an email.";
+    return;
+  }
+
+  status.innerText = "Sending...";
+
+  const response = await fetch("/api/sendEmail", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      email: email,
+      report: currentReportId
+    })
+  });
+
+  const data = await response.json();
+
+  if (data.success) {
+    status.innerText = "Report sent successfully.";
+  } else {
+    status.innerText = "Error: " + (data.error || "Failed to send.");
+  }
 }
 
 loadReport();
