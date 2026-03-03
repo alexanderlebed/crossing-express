@@ -1,8 +1,8 @@
 {
   "name": "crossing-express",
   "version": "1.0.0",
-  "private": true,
   "dependencies": {
-    "stripe": "^14.0.0"
+    "stripe": "^14.0.0",
+    "pdfkit": "^0.13.0"
   }
 }
