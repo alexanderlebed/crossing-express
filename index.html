@@ -12,129 +12,212 @@ body {
   color: #e8ecf1;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
 }
+
 .container {
   max-width: 950px;
   margin: auto;
   padding: 60px 30px;
 }
-h1 { font-size: 42px; }
+
+h1 {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  opacity: 0.9;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+.statement {
+  margin-top: 20px;
+  padding: 18px;
+  background: rgba(79,140,255,0.08);
+  border-left: 3px solid #4f8cff;
+  border-radius: 6px;
+}
+
 .box {
   margin-top: 50px;
   padding: 35px;
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.06);
   border-radius: 12px;
+  transition: all 0.3s ease;
 }
-input, select {
-  width: 100%;
-  padding: 12px;
-  margin-top: 12px;
-  background: #0d1117;
-  border: 1px solid #30363d;
-  color: white;
+
+.box:hover {
+  border-color: rgba(79,140,255,0.3);
 }
-button {
-  margin-top: 20px;
-  padding: 14px 28px;
-  background: linear-gradient(90deg, #4f8cff, #7a5cff);
-  border: none;
-  border-radius: 8px;
-  color: white;
-  cursor: pointer;
+
+.highlight {
+  background: rgba(79,140,255,0.10);
+  border: 1px solid rgba(79,140,255,0.4);
+  box-shadow: 0 0 40px rgba(79,140,255,0.15);
 }
-button:hover { opacity: 0.9; }
-.result {
-  margin-top: 25px;
-  padding: 20px;
-  background: rgba(255,255,255,0.04);
-  border-radius: 10px;
-  white-space: pre-wrap;
+
+.tier-label {
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #4f8cff;
+  margin-bottom: 10px;
 }
-.hidden { display:none; }
-.unlock {
-  margin-top: 20px;
-  background: linear-gradient(90deg, #1f6feb, #4f8cff);
+
+.price {
+  font-size: 28px;
+  margin-top: 15px;
+}
+
+.link a {
+  color: #4f8cff;
+  text-decoration: none;
+}
+
+.link a:hover {
+  text-decoration: underline;
+}
+
+.footer {
+  margin-top: 90px;
+  opacity: 0.6;
+  font-size: 14px;
+}
+
+.footer a {
+  color: #4f8cff;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
 }
 </style>
 </head>
 
 <body>
+
 <div class="container">
 
-<h1>SRIM Intelligence Report</h1>
+<h1>Crossing</h1>
+
+<p class="subtitle">
+Sovereign Relocation Intelligence Modeling (SRIM)<br>
+Structured geopolitical, legal and economic modeling for serious cross-border life decisions.
+</p>
+
+<div class="statement">
+SRIM is not advisory opinion. It is structured sovereign decision modeling designed to map jurisdictional risk, optionality and long-term mobility architecture.
+</div>
+
+<!-- 249 -->
 
 <div class="box">
 
-<input id="citizenship" placeholder="Citizenship">
-<input id="target" placeholder="Target Country">
-<input id="income" type="number" placeholder="Monthly Income (€)">
+<h3>SRIM Intelligence Report</h3>
 
-<select id="family">
-<option value="single">Single</option>
-<option value="married">Married</option>
-<option value="married_children">Married with children</option>
-</select>
+<p>
+Structured feasibility modeling for individuals evaluating relocation decisions.
+</p>
 
-<select id="timeline">
-<option value="3_months">Within 3 months</option>
-<option value="6_months">Within 6 months</option>
-<option value="12_months">Within 12 months</option>
-</select>
+<div class="price">€249</div>
 
-<button onclick="generatePreview()">Generate Preview</button>
-
-<div id="preview" class="result hidden"></div>
-
-<button id="unlockBtn" class="unlock hidden" onclick="startCheckout()">
-Unlock Full SRIM Report — €249
-</button>
-
-<div id="fullReport" class="result hidden"></div>
-
+<div class="link">
+<a href="/report.html">Run Feasibility Scan →</a>
 </div>
 
 </div>
 
-<script>
+<!-- 2500 -->
 
-let lastProfile = null;
+<div class="box highlight">
 
-async function generatePreview() {
+<div class="tier-label">Core Tier</div>
 
-  lastProfile = {
-    citizenship: document.getElementById("citizenship").value,
-    targetCountry: document.getElementById("target").value,
-    income: document.getElementById("income").value,
-    familyStatus: document.getElementById("family").value,
-    timeline: document.getElementById("timeline").value,
-    mode: "preview"
-  };
+<h3>SRIM Sovereign Architecture</h3>
 
-  const response = await fetch("/api/generate", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(lastProfile)
-  });
+<p>
+Multi-jurisdiction strategic modeling for long-horizon relocation and mobility planning.
+</p>
 
-  const data = await response.json();
+<div class="price">€2,500</div>
 
-  document.getElementById("preview").style.display = "block";
-  document.getElementById("preview").innerText = data.result;
+<div class="link">
+<a href="/sovereign.html">Explore Sovereign Architecture →</a>
+</div>
 
-  document.getElementById("unlockBtn").style.display = "block";
-}
+</div>
 
-async function startCheckout() {
+<!-- 7500 -->
 
-  const response = await fetch("/api/checkout", {
-    method: "POST"
-  });
+<div class="box">
 
-  const data = await response.json();
-  window.location.href = data.url;
-}
+<h3>SRIM Private Architecture Lab</h3>
 
-</script>
+<p>
+Structural jurisdictional positioning across capital, citizenship and generational continuity.
+</p>
+
+<div class="price">€7,500</div>
+
+<div class="link">
+<a href="/lab.html">Explore Private Architecture Lab →</a>
+</div>
+
+</div>
+
+<!-- ORIGIN -->
+
+<div class="box">
+
+<h3>Origin</h3>
+
+<p>
+Crossing emerged from the intersection of artificial intelligence modeling and sovereign decision theory.
+</p>
+
+<p>
+It was not created as a relocation service, but as a response to structural uncertainty in modern jurisdictional environments.
+</p>
+
+<p>
+The SRIM framework formalizes decision modeling across mobility, capital exposure and long-term geopolitical volatility.
+</p>
+
+</div>
+
+<!-- STRUCTURAL INTEGRITY -->
+
+<div class="box">
+
+<h3>Structural Integrity</h3>
+
+<p>
+Crossing operates under a defined modeling framework.
+It does not provide legal representation, immigration filing, or tax structuring services.
+</p>
+
+<ul>
+<li>Independent analytical modeling</li>
+<li>No commission-based country bias</li>
+<li>No affiliate incentives</li>
+<li>No political positioning</li>
+</ul>
+
+<p>
+All modeling outputs are structured assessments designed to support sovereign decision-making.
+Final implementation remains the responsibility of the client and their chosen legal representatives.
+</p>
+
+</div>
+
+<div class="footer">
+Crossing — Sovereign Relocation Intelligence Modeling Platform<br>
+<a href="/methodology.html">Methodology</a>
+</div>
+
+</div>
 
 </body>
 </html>
