@@ -1,6 +1,15 @@
 import { saveReport } from "./storage.js";
 import crypto from "crypto";
 
+function cleanMarkdown(text) {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, "$1")   // remove bold
+    .replace(/\*(.*?)\*/g, "$1")       // remove italic
+    .replace(/#+\s/g, "")              // remove headings
+    .replace(/---/g, "")               // remove separators
+    .trim();
+}
+
 export default async function handler(req, res) {
 
   if (req.method !== "POST") {
@@ -13,14 +22,13 @@ export default async function handler(req, res) {
 
     const prompt = `
 Generate a structured SRIM relocation assessment.
+Return clean institutional text without markdown, no asterisks, no symbols.
 
 Citizenship: ${citizenship}
 Target Country: ${targetCountry}
 Income: €${income}
 Family Status: ${familyStatus}
 Timeline: ${timeline}
-
-Return structured institutional output.
 `;
 
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -38,10 +46,11 @@ Return structured institutional output.
 
     const data = await response.json();
 
-    const result = data.choices?.[0]?.message?.content || "No output.";
+    let result = data.choices?.[0]?.message?.content || "No output.";
+
+    result = cleanMarkdown(result);
 
     const reportId = crypto.randomUUID();
-
     saveReport(reportId, result);
 
     res.status(200).json({ result, reportId });
