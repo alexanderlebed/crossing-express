@@ -54,21 +54,21 @@ Loading intelligence file...
 
 <script>
 
-function getPortalId() {
+function getReportId() {
   const params = new URLSearchParams(window.location.search);
-  return params.get("id");
+  return params.get("report");   // ← исправлено
 }
 
 async function loadReport() {
 
-  const portalId = getPortalId();
+  const reportId = getReportId();
 
-  if (!portalId) {
+  if (!reportId) {
     document.getElementById("report").innerText = "Invalid access.";
     return;
   }
 
-  const response = await fetch("/api/getPortal?id=" + portalId);
+  const response = await fetch("/api/getPortal?report=" + reportId); // ← исправлено
   const data = await response.json();
 
   if (data.error) {
@@ -76,8 +76,7 @@ async function loadReport() {
     return;
   }
 
-  let formatted = data.report
-    .replace(/\*\*/g, "")
+  let formatted = data.content    // ← исправлено
     .replace(/\n\n/g, "<br><br>");
 
   document.getElementById("report").innerHTML = formatted;
