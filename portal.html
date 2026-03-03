@@ -22,11 +22,6 @@ body {
   padding-bottom: 20px;
   margin-bottom: 40px;
 }
-h1 { font-size: 26px; }
-.meta {
-  opacity: 0.6;
-  font-size: 13px;
-}
 .report {
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.06);
@@ -35,15 +30,9 @@ h1 { font-size: 26px; }
   line-height: 1.8;
   font-size: 15px;
 }
-.section-title {
-  margin-top: 30px;
-  font-weight: 600;
-}
-.confidential {
-  margin-top: 60px;
-  opacity: 0.4;
-  font-size: 12px;
-  text-align: center;
+.meta {
+  opacity: 0.6;
+  font-size: 13px;
 }
 </style>
 </head>
@@ -53,50 +42,33 @@ h1 { font-size: 26px; }
 <div class="container">
 
 <div class="header">
-<h1>SRIM Client Brief</h1>
-<div class="meta">
-Confidential — Restricted Circulation
-</div>
+<h1>SRIM Intelligence File</h1>
+<div class="meta">Confidential</div>
 </div>
 
 <div id="report" class="report">
-Verifying payment and generating intelligence brief...
-</div>
-
-<div class="confidential">
-SRIM — Sovereign Relocation Intelligence Modeling
+Loading intelligence file...
 </div>
 
 </div>
 
 <script>
 
-function getSessionId() {
+function getPortalId() {
   const params = new URLSearchParams(window.location.search);
-  return params.get("session_id");
+  return params.get("id");
 }
 
-async function generatePortal() {
+async function loadReport() {
 
-  const sessionId = getSessionId();
+  const portalId = getPortalId();
 
-  if (!sessionId) {
-    document.getElementById("report").innerText =
-      "Invalid session. Please return to the report page.";
+  if (!portalId) {
+    document.getElementById("report").innerText = "Invalid access.";
     return;
   }
 
-  const profile = JSON.parse(localStorage.getItem("srimProfile"));
-
-  const response = await fetch("/api/createPortal", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      session_id: sessionId,
-      profile
-    })
-  });
-
+  const response = await fetch("/api/getPortal?id=" + portalId);
   const data = await response.json();
 
   if (data.error) {
@@ -111,7 +83,7 @@ async function generatePortal() {
   document.getElementById("report").innerHTML = formatted;
 }
 
-generatePortal();
+loadReport();
 
 </script>
 
