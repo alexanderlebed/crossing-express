@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SVI Comparison Tool — Crossing</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+body{
+margin:0;
+background:#05070f;
+color:#e8ecf1;
+font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:80px 30px;
+}
+
+h1{
+font-size:34px;
+margin-bottom:10px;
+}
+
+.subtitle{
+opacity:0.8;
+margin-bottom:40px;
+}
+
+select{
+width:100%;
+padding:14px;
+background:#0f1623;
+border:1px solid rgba(255,255,255,0.08);
+border-radius:6px;
+color:#e8ecf1;
+font-size:16px;
+margin-top:15px;
+}
+
+.compare{
+margin-top:50px;
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.box{
+flex:1;
+min-width:260px;
+padding:30px;
+border-radius:10px;
+border:1px solid rgba(255,255,255,0.08);
+}
+
+.country{
+font-size:22px;
+}
+
+.score{
+font-size:38px;
+margin-top:10px;
+}
+
+.class{
+margin-top:10px;
+opacity:0.8;
+}
+
+.winner{
+margin-top:40px;
+font-size:20px;
+color:#4f8cff;
+}
+
+.footer{
+margin-top:80px;
+opacity:0.6;
+}
+
+.footer a{
+color:#4f8cff;
+text-decoration:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>SVI Jurisdiction Comparison</h1>
+
+<p class="subtitle">
+Compare Sovereign Volatility Index scores across jurisdictions.
+</p>
+
+<select id="country1">
+<option value="">Select first jurisdiction</option>
+</select>
+
+<select id="country2">
+<option value="">Select second jurisdiction</option>
+</select>
+
+<div class="compare">
+
+<div class="box" id="box1" style="display:none">
+
+<div class="country" id="name1"></div>
+
+<div class="score" id="score1"></div>
+
+<div class="class" id="class1"></div>
+
+</div>
+
+<div class="box" id="box2" style="display:none">
+
+<div class="country" id="name2"></div>
+
+<div class="score" id="score2"></div>
+
+<div class="class" id="class2"></div>
+
+</div>
+
+</div>
+
+<div class="winner" id="winner"></div>
+
+<div class="footer">
+Crossing — Strategic Navigation Laboratory<br>
+<a href="/">Return to Home</a>
+</div>
+
+</div>
+
+<script>
+
+const sviData={
+Spain:44,
+Portugal:36,
+France:41,
+Italy:47,
+Germany:35,
+Netherlands:33,
+Switzerland:28,
+Austria:30,
+Greece:52,
+Cyprus:50,
+Montenegro:63,
+Serbia:58,
+Turkey:68,
+"United Arab Emirates":34,
+Qatar:32,
+Thailand:57,
+Vietnam:61,
+Malaysia:46,
+Singapore:22,
+Indonesia:55,
+Japan:29,
+"South Korea":37,
+"United States":38,
+Canada:34,
+Mexico:60,
+Brazil:65,
+Chile:48,
+Argentina:74,
+Australia:27,
+"New Zealand":24
+};
+
+const countries=Object.keys(sviData);
+
+const select1=document.getElementById("country1");
+const select2=document.getElementById("country2");
+
+countries.forEach(c=>{
+let opt1=new Option(c,c);
+let opt2=new Option(c,c);
+select1.add(opt1);
+select2.add(opt2);
+});
+
+function classify(score){
+
+if(score<=30) return "Structural Stability";
+
+if(score<=45) return "Managed Stability";
+
+if(score<=60) return "Regulatory Fluidity";
+
+if(score<=75) return "Systemic Volatility";
+
+return "Structural Instability";
+
+}
+
+function color(score){
+
+if(score<=30) return "rgba(60,180,120,0.15)";
+
+if(score<=45) return "rgba(100,180,255,0.15)";
+
+if(score<=60) return "rgba(255,200,80,0.15)";
+
+if(score<=75) return "rgba(255,120,80,0.18)";
+
+return "rgba(255,70,70,0.2)";
+
+}
+
+function update(){
+
+const c1=select1.value;
+const c2=select2.value;
+
+if(c1){
+
+const score=sviData[c1];
+
+document.getElementById("box1").style.display="block";
+
+document.getElementById("box1").style.background=color(score);
+
+document.getElementById("name1").innerText=c1;
+
+document.getElementById("score1").innerText=score;
+
+document.getElementById("class1").innerText=classify(score);
+
+}
+
+if(c2){
+
+const score=sviData[c2];
+
+document.getElementById("box2").style.display="block";
+
+document.getElementById("box2").style.background=color(score);
+
+document.getElementById("name2").innerText=c2;
+
+document.getElementById("score2").innerText=score;
+
+document.getElementById("class2").innerText=classify(score);
+
+}
+
+if(c1 && c2){
+
+const s1=sviData[c1];
+const s2=sviData[c2];
+
+if(s1<s2)
+document.getElementById("winner").innerText=c1+" shows lower structural volatility.";
+
+else if(s2<s1)
+document.getElementById("winner").innerText=c2+" shows lower structural volatility.";
+
+else
+document.getElementById("winner").innerText="Both jurisdictions show similar volatility.";
+
+}
+
+}
+
+select1.addEventListener("change",update);
+select2.addEventListener("change",update);
+
+</script>
+
+</body>
+</html>
