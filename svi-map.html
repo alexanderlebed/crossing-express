@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>SVI Jurisdiction Map — Crossing</title>
+<title>SVI Jurisdiction Explorer — Crossing</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -43,15 +43,15 @@ font-size:16px;
 .result{
 margin-top:40px;
 padding:30px;
-background:rgba(255,255,255,0.03);
-border:1px solid rgba(255,255,255,0.08);
 border-radius:10px;
+border:1px solid rgba(255,255,255,0.08);
+transition:all .3s;
 }
 
 .score{
-font-size:36px;
+font-size:40px;
 margin-top:10px;
-color:#4f8cff;
+font-weight:600;
 }
 
 .class{
@@ -67,6 +67,33 @@ opacity:0.6;
 .footer a{
 color:#4f8cff;
 text-decoration:none;
+}
+
+/* COLORS */
+
+.stable{
+background:rgba(60,180,120,0.12);
+border-color:rgba(60,180,120,0.4);
+}
+
+.managed{
+background:rgba(100,180,255,0.12);
+border-color:rgba(100,180,255,0.4);
+}
+
+.fluid{
+background:rgba(255,190,80,0.12);
+border-color:rgba(255,190,80,0.4);
+}
+
+.volatility{
+background:rgba(255,120,80,0.15);
+border-color:rgba(255,120,80,0.45);
+}
+
+.instability{
+background:rgba(255,70,70,0.18);
+border-color:rgba(255,70,70,0.5);
 }
 
 </style>
@@ -86,42 +113,42 @@ Select a jurisdiction to view its indicative Sovereign Volatility Index score.
 
 <option value="">Select jurisdiction</option>
 
-<option value="Spain">Spain</option>
-<option value="Portugal">Portugal</option>
-<option value="France">France</option>
-<option value="Italy">Italy</option>
-<option value="Germany">Germany</option>
-<option value="Netherlands">Netherlands</option>
-<option value="Switzerland">Switzerland</option>
-<option value="Austria">Austria</option>
-<option value="Greece">Greece</option>
-<option value="Cyprus">Cyprus</option>
+<option>Spain</option>
+<option>Portugal</option>
+<option>France</option>
+<option>Italy</option>
+<option>Germany</option>
+<option>Netherlands</option>
+<option>Switzerland</option>
+<option>Austria</option>
+<option>Greece</option>
+<option>Cyprus</option>
 
-<option value="Montenegro">Montenegro</option>
-<option value="Serbia">Serbia</option>
-<option value="Turkey">Turkey</option>
-<option value="UAE">United Arab Emirates</option>
-<option value="Qatar">Qatar</option>
+<option>Montenegro</option>
+<option>Serbia</option>
+<option>Turkey</option>
+<option>United Arab Emirates</option>
+<option>Qatar</option>
 
-<option value="Thailand">Thailand</option>
-<option value="Vietnam">Vietnam</option>
-<option value="Malaysia">Malaysia</option>
-<option value="Singapore">Singapore</option>
-<option value="Indonesia">Indonesia</option>
+<option>Thailand</option>
+<option>Vietnam</option>
+<option>Malaysia</option>
+<option>Singapore</option>
+<option>Indonesia</option>
 
-<option value="Japan">Japan</option>
-<option value="South Korea">South Korea</option>
+<option>Japan</option>
+<option>South Korea</option>
 
-<option value="United States">United States</option>
-<option value="Canada">Canada</option>
-<option value="Mexico">Mexico</option>
+<option>United States</option>
+<option>Canada</option>
+<option>Mexico</option>
 
-<option value="Brazil">Brazil</option>
-<option value="Chile">Chile</option>
-<option value="Argentina">Argentina</option>
+<option>Brazil</option>
+<option>Chile</option>
+<option>Argentina</option>
 
-<option value="Australia">Australia</option>
-<option value="New Zealand">New Zealand</option>
+<option>Australia</option>
+<option>New Zealand</option>
 
 </select>
 
@@ -144,46 +171,60 @@ Crossing — Strategic Navigation Laboratory<br>
 
 <script>
 
-const sviData = {
+const sviData={
 
-Spain:{score:44,class:"Regulatory Fluidity"},
-Portugal:{score:36,class:"Managed Stability"},
-France:{score:41,class:"Regulatory Fluidity"},
-Italy:{score:47,class:"Regulatory Fluidity"},
-Germany:{score:35,class:"Managed Stability"},
-Netherlands:{score:33,class:"Managed Stability"},
-Switzerland:{score:28,class:"Structural Stability"},
-Austria:{score:30,class:"Structural Stability"},
-Greece:{score:52,class:"Regulatory Fluidity"},
-Cyprus:{score:50,class:"Regulatory Fluidity"},
+Spain:44,
+Portugal:36,
+France:41,
+Italy:47,
+Germany:35,
+Netherlands:33,
+Switzerland:28,
+Austria:30,
+Greece:52,
+Cyprus:50,
 
-Montenegro:{score:63,class:"Systemic Volatility"},
-Serbia:{score:58,class:"Regulatory Fluidity"},
-Turkey:{score:68,class:"Systemic Volatility"},
-UAE:{score:34,class:"Managed Stability"},
-Qatar:{score:32,class:"Managed Stability"},
+Montenegro:63,
+Serbia:58,
+Turkey:68,
+"United Arab Emirates":34,
+Qatar:32,
 
-Thailand:{score:57,class:"Regulatory Fluidity"},
-Vietnam:{score:61,class:"Systemic Volatility"},
-Malaysia:{score:46,class:"Regulatory Fluidity"},
-Singapore:{score:22,class:"Structural Stability"},
-Indonesia:{score:55,class:"Regulatory Fluidity"},
+Thailand:57,
+Vietnam:61,
+Malaysia:46,
+Singapore:22,
+Indonesia:55,
 
-Japan:{score:29,class:"Structural Stability"},
-"South Korea":{score:37,class:"Managed Stability"},
+Japan:29,
+"South Korea":37,
 
-"United States":{score:38,class:"Managed Stability"},
-Canada:{score:34,class:"Managed Stability"},
-Mexico:{score:60,class:"Systemic Volatility"},
+"United States":38,
+Canada:34,
+Mexico:60,
 
-Brazil:{score:65,class:"Systemic Volatility"},
-Chile:{score:48,class:"Regulatory Fluidity"},
-Argentina:{score:74,class:"Systemic Volatility"},
+Brazil:65,
+Chile:48,
+Argentina:74,
 
-Australia:{score:27,class:"Structural Stability"},
-"New Zealand":{score:24,class:"Structural Stability"}
+Australia:27,
+"New Zealand":24
 
 };
+
+function classify(score){
+
+if(score<=30) return ["Structural Stability","stable"];
+
+if(score<=45) return ["Managed Stability","managed"];
+
+if(score<=60) return ["Regulatory Fluidity","fluid"];
+
+if(score<=75) return ["Systemic Volatility","volatility"];
+
+return ["Structural Instability","instability"];
+
+}
 
 document.getElementById("countrySelect").addEventListener("change",function(){
 
@@ -191,15 +232,21 @@ const country=this.value;
 
 if(!country) return;
 
-const data=sviData[country];
+const score=sviData[country];
 
-document.getElementById("resultBox").style.display="block";
+const result=document.getElementById("resultBox");
+
+const [label,color]=classify(score);
+
+result.className="result "+color;
+
+result.style.display="block";
 
 document.getElementById("countryName").innerText=country;
 
-document.getElementById("sviScore").innerText=data.score+" / 100";
+document.getElementById("sviScore").innerText=score+" / 100";
 
-document.getElementById("sviClass").innerText=data.class;
+document.getElementById("sviClass").innerText=label;
 
 });
 
