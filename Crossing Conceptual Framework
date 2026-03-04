@@ -1,1 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Crossing Conceptual Framework</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
+<style>
+
+body{
+margin:0;
+background:#05070f;
+color:#e8ecf1;
+font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
+}
+
+.container{
+max-width:950px;
+margin:auto;
+padding:70px 30px;
+}
+
+h1{
+font-size:40px;
+margin-bottom:10px;
+}
+
+h2{
+margin-top:50px;
+font-size:20px;
+color:#4f8cff;
+}
+
+p{
+line-height:1.8;
+opacity:0.9;
+margin-top:16px;
+}
+
+.term{
+margin-top:35px;
+padding:22px;
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(255,255,255,0.07);
+border-radius:10px;
+}
+
+.term-title{
+font-size:18px;
+color:#4f8cff;
+margin-bottom:8px;
+}
+
+.footer{
+margin-top:100px;
+opacity:0.6;
+font-size:14px;
+}
+
+.footer a{
+color:#4f8cff;
+text-decoration:none;
+}
+
+.footer a:hover{
+text-decoration:underline;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Crossing Conceptual Framework</h1>
+
+<p>
+The Crossing conceptual framework formalizes analytical structures used to evaluate
+sovereign mobility, jurisdictional volatility and cross-border life architecture.
+</p>
+
+<p>
+It integrates two primary systems:
+</p>
+
+<p>
+<strong>SRIM — Sovereign Relocation Intelligence Modeling</strong><br>
+<strong>SVI — Sovereign Volatility Index</strong>
+</p>
+
+<h2>Sovereign Mobility</h2>
+
+<div class="term">
+<div class="term-title">Sovereign Mobility</div>
+
+<p>
+A conceptual approach treating relocation as a strategic jurisdictional positioning decision
+rather than a simple migration event.
+</p>
+
+<p>
+Sovereign mobility involves the management of legal status,
+tax exposure and geopolitical risk through jurisdictional choice.
+</p>
+</div>
+
+<h2>SRIM Concepts</h2>
+
+<div class="term">
+<div class="term-title">SRIM — Sovereign Relocation Intelligence Modeling</div>
+
+<p>
+An analytical modeling framework designed to evaluate relocation decisions
+through multi-layer jurisdictional analysis.
+</p>
+
+<p>
+SRIM integrates legal pathways, economic sustainability,
+geopolitical exposure and long-term mobility optionality.
+</p>
+</div>
+
+<div class="term">
+<div class="term-title">Jurisdictional Architecture</div>
+
+<p>
+The structured distribution of life functions across multiple jurisdictions.
+</p>
+
+<p>
+Examples include separation of residence,
+taxation, asset holding and citizenship.
+</p>
+</div>
+
+<div class="term">
+<div class="term-title">Mobility Optionality</div>
+
+<p>
+The degree to which an individual maintains the ability
+to legally reposition between jurisdictions.
+</p>
+</div>
+
+<div class="term">
+<div class="term-title">Exit Architecture</div>
+
+<p>
+Strategic preparation of alternative relocation pathways
+in response to jurisdictional instability.
+</p>
+</div>
+
+<h2>SVI Concepts</h2>
+
+<div class="term">
+<div class="term-title">SVI — Sovereign Volatility Index</div>
+
+<p>
+A structured analytical index measuring jurisdictional instability
+across regulatory, migration, fiscal and geopolitical domains.
+</p>
+</div>
+
+<div class="term">
+<div class="term-title">Regulatory Acceleration (RA)</div>
+
+<p>
+The speed and intensity of legislative change affecting residents and capital.
+</p>
+</div>
+
+<div class="term">
+<div class="term-title">Migration Policy Stability (MPS)</div>
+
+<p>
+The long-term predictability of residency, visa and citizenship regimes.
+</p>
+</div>
+
+<div class="term">
+<div class="term-title">Capital Transparency Exposure (CTE)</div>
+
+<p>
+The degree of financial disclosure and reporting obligations
+imposed on individuals operating across borders.
+</p>
+</div>
+
+<div class="term">
+<div class="term-title">Tax Regime Fluidity (TRF)</div>
+
+<p>
+The frequency and structural depth of taxation reforms
+affecting international income and residency.
+</p>
+</div>
+
+<div class="term">
+<div class="term-title">Geopolitical Discontinuity Risk (GDR)</div>
+
+<p>
+The probability of geopolitical disruption affecting
+mobility, capital flows or legal stability.
+</p>
+</div>
+
+<h2>Structural Volatility</h2>
+
+<div class="term">
+<div class="term-title">Jurisdictional Volatility</div>
+
+<p>
+The systemic instability of a jurisdiction arising from regulatory,
+political or economic change.
+</p>
+</div>
+
+<div class="term">
+<div class="term-title">Structural Mobility Risk</div>
+
+<p>
+The vulnerability created when an individual is structurally dependent
+on a single jurisdiction.
+</p>
+</div>
+
+<h2>Framework Position</h2>
+
+<p>
+The Crossing conceptual framework does not provide legal advice
+or immigration services.
+</p>
+
+<p>
+Its purpose is analytical: to structure complex cross-border decisions
+through modeling, comparison and risk mapping.
+</p>
+
+<div class="footer">
+Crossing — Strategic Navigation Laboratory<br>
+<a href="/">Return to Home</a>
+</div>
+
+</div>
+
+</body>
+</html>
