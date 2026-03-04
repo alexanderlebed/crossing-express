@@ -32,6 +32,7 @@ background:#0f1623;
 border:1px solid rgba(255,255,255,0.08);
 color:white;
 border-radius:6px;
+width:320px;
 }
 
 .profile{
@@ -40,10 +41,6 @@ padding:30px;
 background:rgba(255,255,255,0.03);
 border:1px solid rgba(255,255,255,0.06);
 border-radius:8px;
-}
-
-.vector{
-margin-top:20px;
 }
 
 .footer{
@@ -67,25 +64,62 @@ text-decoration:none;
 <h1>SVI Country Observatory</h1>
 
 <p>
-Select a jurisdiction to view its Sovereign Volatility Index profile.
+Select a jurisdiction to view its Sovereign Volatility Index analytical profile.
 </p>
 
 <select id="countrySelect" onchange="loadCountry()">
 
 <option value="">Select Country</option>
+
 <option value="spain">Spain</option>
 <option value="portugal">Portugal</option>
 <option value="france">France</option>
+<option value="italy">Italy</option>
+<option value="germany">Germany</option>
+<option value="netherlands">Netherlands</option>
+<option value="greece">Greece</option>
+<option value="malta">Malta</option>
+<option value="cyprus">Cyprus</option>
+
+<option value="switzerland">Switzerland</option>
+<option value="austria">Austria</option>
+<option value="czechia">Czech Republic</option>
+<option value="hungary">Hungary</option>
+<option value="poland">Poland</option>
+
+<option value="montenegro">Montenegro</option>
+<option value="serbia">Serbia</option>
+<option value="uae">United Arab Emirates</option>
+<option value="turkey">Turkey</option>
+<option value="georgia">Georgia</option>
+
 <option value="thailand">Thailand</option>
 <option value="vietnam">Vietnam</option>
+<option value="malaysia">Malaysia</option>
+<option value="indonesia">Indonesia</option>
+<option value="philippines">Philippines</option>
+
+<option value="singapore">Singapore</option>
+<option value="japan">Japan</option>
+<option value="southkorea">South Korea</option>
+
 <option value="usa">United States</option>
+<option value="canada">Canada</option>
+<option value="mexico">Mexico</option>
+<option value="panama">Panama</option>
+<option value="costarica">Costa Rica</option>
+
+<option value="brazil">Brazil</option>
+<option value="argentina">Argentina</option>
+
+<option value="australia">Australia</option>
 <option value="nz">New Zealand</option>
 
 </select>
 
 <div id="profile" class="profile">
 
-Select a country to view the analytical profile.
+Select a country to display SVI profile.
 
 </div>
 
@@ -102,47 +136,77 @@ Crossing — Strategic Navigation Laboratory<br>
 
 const data = {
 
-spain: {
-score:44,
-class:"Regulatory Fluidity",
-text:"Spain combines EU institutional stability with evolving tax and financial disclosure frameworks.",
-},
+spain:{score:44,class:"Regulatory Fluidity",text:"EU jurisdiction with increasing tax transparency and evolving fiscal frameworks."},
 
-portugal: {
-score:36,
-class:"Managed Stability",
-text:"Portugal maintains relatively stable regulatory structures with competitive residency pathways.",
-},
+portugal:{score:36,class:"Managed Stability",text:"Stable EU environment with favorable residency pathways and moderate regulatory change."},
 
-france: {
-score:41,
-class:"Managed Stability",
-text:"France demonstrates stable governance but increasing fiscal pressure and compliance complexity.",
-},
+france:{score:41,class:"Managed Stability",text:"Institutionally stable but characterized by complex fiscal structures."},
 
-thailand: {
-score:57,
-class:"Regulatory Fluidity",
-text:"Thailand presents moderate regulatory volatility with evolving residency frameworks.",
-},
+italy:{score:46,class:"Regulatory Fluidity",text:"High administrative complexity with evolving fiscal incentives for relocation."},
 
-vietnam: {
-score:61,
-class:"Systemic Volatility",
-text:"Vietnam demonstrates high economic dynamism but institutional regulatory unpredictability.",
-},
+germany:{score:39,class:"Managed Stability",text:"Stable regulatory framework with strong institutional predictability."},
 
-usa: {
-score:38,
-class:"Managed Stability",
-text:"The United States offers institutional stability with complex regulatory and tax reporting structures.",
-},
+netherlands:{score:34,class:"Managed Stability",text:"Predictable governance with structured tax reforms affecting expats."},
 
-nz: {
-score:24,
-class:"Structural Stability",
-text:"New Zealand ranks among the most structurally stable jurisdictions in the SVI framework.",
-}
+greece:{score:48,class:"Regulatory Fluidity",text:"Recovery-phase regulatory system with increasing investment incentives."},
+
+malta:{score:40,class:"Managed Stability",text:"Small jurisdiction with flexible residency frameworks."},
+
+cyprus:{score:43,class:"Regulatory Fluidity",text:"Investment-friendly but with evolving compliance obligations."},
+
+switzerland:{score:28,class:"Structural Stability",text:"Highly predictable regulatory environment with strong institutional continuity."},
+
+austria:{score:35,class:"Managed Stability",text:"Stable EU regulatory framework with conservative policy changes."},
+
+czechia:{score:38,class:"Managed Stability",text:"Predictable regulatory environment within EU structures."},
+
+hungary:{score:52,class:"Regulatory Fluidity",text:"Frequent regulatory adjustments within domestic policy shifts."},
+
+poland:{score:45,class:"Regulatory Fluidity",text:"Moderate volatility driven by political and fiscal reforms."},
+
+montenegro:{score:63,class:"Systemic Volatility",text:"Emerging jurisdiction with developing regulatory institutions."},
+
+serbia:{score:60,class:"Systemic Volatility",text:"Rapid economic change combined with regulatory unpredictability."},
+
+uae:{score:29,class:"Structural Stability",text:"Highly competitive tax and residency environment with strong strategic governance."},
+
+turkey:{score:70,class:"Structural Instability",text:"High macroeconomic volatility and regulatory unpredictability."},
+
+georgia:{score:47,class:"Regulatory Fluidity",text:"Flexible regulatory environment with pro-business orientation."},
+
+thailand:{score:57,class:"Regulatory Fluidity",text:"Moderate institutional volatility combined with evolving visa frameworks."},
+
+vietnam:{score:61,class:"Systemic Volatility",text:"Rapid economic expansion with evolving regulatory institutions."},
+
+malaysia:{score:49,class:"Regulatory Fluidity",text:"Stable infrastructure with shifting residency policy."},
+
+indonesia:{score:54,class:"Regulatory Fluidity",text:"Large emerging economy with evolving compliance structures."},
+
+philippines:{score:55,class:"Regulatory Fluidity",text:"Institutional volatility combined with accessible residency frameworks."},
+
+singapore:{score:22,class:"Structural Stability",text:"One of the most predictable regulatory environments globally."},
+
+japan:{score:30,class:"Structural Stability",text:"Highly stable regulatory and political structures."},
+
+southkorea:{score:33,class:"Managed Stability",text:"Predictable institutional environment with technological economic base."},
+
+usa:{score:38,class:"Managed Stability",text:"Stable governance with complex tax and reporting obligations."},
+
+canada:{score:34,class:"Managed Stability",text:"Highly predictable regulatory structures and transparent institutions."},
+
+mexico:{score:50,class:"Regulatory Fluidity",text:"Moderate institutional volatility combined with accessible migration pathways."},
+
+panama:{score:42,class:"Regulatory Fluidity",text:"Competitive residency framework with evolving transparency obligations."},
+
+costarica:{score:40,class:"Managed Stability",text:"Stable democratic system with moderate regulatory changes."},
+
+brazil:{score:58,class:"Regulatory Fluidity",text:"Large emerging economy with evolving fiscal and regulatory frameworks."},
+
+argentina:{score:72,class:"Structural Instability",text:"High macroeconomic volatility and policy unpredictability."},
+
+australia:{score:32,class:"Managed Stability",text:"Stable regulatory system with structured migration programs."},
+
+nz:{score:24,class:"Structural Stability",text:"Highly stable institutional environment with predictable governance."}
 
 };
 
@@ -156,7 +220,7 @@ const d = data[c];
 
 document.getElementById("profile").innerHTML =
 
-"<h2>"+c.toUpperCase()+"</h2>" +
+"<h2>"+c.replace(/^\w/, m => m.toUpperCase())+"</h2>" +
 
 "<p><strong>SVI Score:</strong> "+d.score+"</p>" +
 
