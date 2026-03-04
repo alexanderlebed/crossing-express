@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SVI Analytical Tool — Crossing</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+body{
+margin:0;
+background:#05070f;
+color:#e8ecf1;
+font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
+}
+
+.container{
+max-width:1000px;
+margin:auto;
+padding:80px 30px;
+}
+
+h1{
+font-size:36px;
+margin-bottom:10px;
+}
+
+.subtitle{
+opacity:0.8;
+margin-bottom:40px;
+}
+
+.section{
+margin-top:70px;
+}
+
+select{
+width:100%;
+padding:14px;
+background:#0f1623;
+border:1px solid rgba(255,255,255,0.08);
+border-radius:6px;
+color:#e8ecf1;
+font-size:16px;
+margin-top:15px;
+}
+
+.result{
+margin-top:30px;
+padding:25px;
+border-radius:10px;
+border:1px solid rgba(255,255,255,0.08);
+}
+
+.score{
+font-size:38px;
+}
+
+.compare{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+margin-top:20px;
+}
+
+.box{
+flex:1;
+min-width:260px;
+padding:25px;
+border-radius:10px;
+border:1px solid rgba(255,255,255,0.08);
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:30px;
+}
+
+th,td{
+padding:10px;
+text-align:left;
+}
+
+th{
+opacity:0.7;
+}
+
+tr:nth-child(even){
+background:rgba(255,255,255,0.03);
+}
+
+.footer{
+margin-top:100px;
+opacity:0.6;
+}
+
+.footer a{
+color:#4f8cff;
+text-decoration:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Sovereign Volatility Index</h1>
+
+<p class="subtitle">
+Analytical tool for evaluating jurisdictional structural volatility.
+</p>
+
+<!-- EXPLORER -->
+
+<div class="section">
+
+<h2>SVI Explorer</h2>
+
+<select id="explorer">
+
+<option value="">Select jurisdiction</option>
+
+</select>
+
+<div class="result" id="explorerResult" style="display:none">
+
+<h3 id="explorerCountry"></h3>
+
+<div class="score" id="explorerScore"></div>
+
+<div id="explorerClass"></div>
+
+</div>
+
+</div>
+
+<!-- COMPARISON -->
+
+<div class="section">
+
+<h2>SVI Comparison</h2>
+
+<select id="compare1">
+<option value="">First jurisdiction</option>
+</select>
+
+<select id="compare2">
+<option value="">Second jurisdiction</option>
+</select>
+
+<div class="compare">
+
+<div class="box" id="box1" style="display:none"></div>
+
+<div class="box" id="box2" style="display:none"></div>
+
+</div>
+
+<div id="winner" style="margin-top:20px;"></div>
+
+</div>
+
+<!-- RANKING -->
+
+<div class="section">
+
+<h2>SVI Global Ranking</h2>
+
+<table id="rankingTable">
+
+<tr>
+<th>Jurisdiction</th>
+<th>SVI</th>
+<th>Class</th>
+</tr>
+
+</table>
+
+</div>
+
+<div class="footer">
+Crossing — Strategic Navigation Laboratory<br>
+<a href="/">Return to Home</a>
+</div>
+
+</div>
+
+<script>
+
+const sviData={
+Spain:44,
+Portugal:36,
+France:41,
+Italy:47,
+Germany:35,
+Netherlands:33,
+Switzerland:28,
+Austria:30,
+Greece:52,
+Cyprus:50,
+Montenegro:63,
+Serbia:58,
+Turkey:68,
+"United Arab Emirates":34,
+Qatar:32,
+Thailand:57,
+Vietnam:61,
+Malaysia:46,
+Singapore:22,
+Indonesia:55,
+Japan:29,
+"South Korea":37,
+"United States":38,
+Canada:34,
+Mexico:60,
+Brazil:65,
+Chile:48,
+Argentina:74,
+Australia:27,
+"New Zealand":24
+};
+
+function classify(score){
+
+if(score<=30) return "Structural Stability";
+
+if(score<=45) return "Managed Stability";
+
+if(score<=60) return "Regulatory Fluidity";
+
+if(score<=75) return "Systemic Volatility";
+
+return "Structural Instability";
+
+}
+
+function color(score){
+
+if(score<=30) return "rgba(60,180,120,0.15)";
+
+if(score<=45) return "rgba(100,180,255,0.15)";
+
+if(score<=60) return "rgba(255,200,80,0.15)";
+
+if(score<=75) return "rgba(255,120,80,0.18)";
+
+return "rgba(255,70,70,0.2)";
+
+}
+
+const countries=Object.keys(sviData);
+
+countries.forEach(c=>{
+
+document.getElementById("explorer").add(new Option(c,c));
+
+document.getElementById("compare1").add(new Option(c,c));
+
+document.getElementById("compare2").add(new Option(c,c));
+
+});
+
+document.getElementById("explorer").addEventListener("change",function(){
+
+const c=this.value;
+
+if(!c) return;
+
+const score=sviData[c];
+
+const box=document.getElementById("explorerResult");
+
+box.style.display="block";
+
+box.style.background=color(score);
+
+document.getElementById("explorerCountry").innerText=c;
+
+document.getElementById("explorerScore").innerText=score;
+
+document.getElementById("explorerClass").innerText=classify(score);
+
+});
+
+function updateCompare(){
+
+const c1=document.getElementById("compare1").value;
+
+const c2=document.getElementById("compare2").value;
+
+if(c1){
+
+const s=sviData[c1];
+
+const box=document.getElementById("box1");
+
+box.style.display="block";
+
+box.style.background=color(s);
+
+box.innerHTML=c1+"<br><b>"+s+"</b><br>"+classify(s);
+
+}
+
+if(c2){
+
+const s=sviData[c2];
+
+const box=document.getElementById("box2");
+
+box.style.display="block";
+
+box.style.background=color(s);
+
+box.innerHTML=c2+"<br><b>"+s+"</b><br>"+classify(s);
+
+}
+
+if(c1 && c2){
+
+const s1=sviData[c1];
+
+const s2=sviData[c2];
+
+let w="";
+
+if(s1<s2) w=c1+" shows lower structural volatility.";
+
+else if(s2<s1) w=c2+" shows lower structural volatility.";
+
+else w="Both jurisdictions show similar volatility.";
+
+document.getElementById("winner").innerText=w;
+
+}
+
+}
+
+document.getElementById("compare1").addEventListener("change",updateCompare);
+document.getElementById("compare2").addEventListener("change",updateCompare);
+
+const ranking=Object.entries(sviData).sort((a,b)=>a[1]-b[1]);
+
+ranking.forEach(r=>{
+
+const tr=document.createElement("tr");
+
+tr.innerHTML="<td>"+r[0]+"</td><td>"+r[1]+"</td><td>"+classify(r[1])+"</td>";
+
+document.getElementById("rankingTable").appendChild(tr);
+
+});
+
+</script>
+
+</body>
+</html>
