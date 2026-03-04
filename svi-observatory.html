@@ -26,61 +26,34 @@ margin-bottom:10px;
 }
 
 .subtitle{
-opacity:0.8;
+opacity:0.85;
 margin-bottom:40px;
+line-height:1.7;
 }
 
-select{
-width:100%;
-padding:12px;
-background:#0f1623;
-border:1px solid rgba(255,255,255,0.1);
-color:white;
-border-radius:6px;
-}
-
-.profile{
-margin-top:40px;
-padding:30px;
+.panel{
+margin-top:30px;
+padding:28px;
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(255,255,255,0.08);
 border-radius:10px;
 }
 
-/* COLOR CLASSES */
-
-.stable{
-background:#123d2a;
-color:#3cff9b;
+.panel h3{
+margin-top:0;
 }
 
-.managed{
-background:#0f2e4a;
-color:#6cc3ff;
+.link{
+margin-top:15px;
 }
 
-.fluid{
-background:#4a3a0f;
-color:#ffd166;
+.link a{
+color:#4f8cff;
+text-decoration:none;
 }
 
-.volatility{
-background:#4a250f;
-color:#ff9b66;
-}
-
-.instability{
-background:#4a0f0f;
-color:#ff6666;
-}
-
-.score{
-font-size:28px;
-margin-top:10px;
-font-weight:600;
-}
-
-.description{
-margin-top:10px;
-opacity:0.85;
+.link a:hover{
+text-decoration:underline;
 }
 
 .footer{
@@ -104,37 +77,29 @@ text-decoration:none;
 <h1>SVI Country Observatory</h1>
 
 <p class="subtitle">
-Select a jurisdiction to view its Sovereign Volatility Index analytical profile.
+The Sovereign Volatility Index Observatory provides structured analytical monitoring of jurisdictional volatility across global mobility destinations.
 </p>
 
-<select onchange="showCountry(this.value)">
+<div class="panel">
 
-<option value="portugal">Portugal</option>
-<option value="spain">Spain</option>
-<option value="france">France</option>
-<option value="usa">United States</option>
-<option value="thailand">Thailand</option>
-<option value="vietnam">Vietnam</option>
-<option value="montenegro">Montenegro</option>
-<option value="newzealand">New Zealand</option>
+<h3>Jurisdiction Profiles</h3>
 
-</select>
-
-<div id="countryProfile" class="profile managed">
-
-<h2>Portugal</h2>
-
-<div class="score">
-SVI Score: 36
-</div>
-
-<div>
-Managed Stability
-</div>
-
-<p class="description">
-Stable EU environment with relatively predictable migration pathways and moderate regulatory change dynamics.
+<p>
+The Observatory provides analytical profiles of jurisdictions evaluated through the Sovereign Volatility Index framework.
+Each profile analyzes regulatory acceleration, migration policy stability, capital transparency exposure and geopolitical discontinuity risk.
 </p>
+
+<div class="link">
+<a href="/svi-ranking.html">Explore Global SVI Ranking →</a>
+</div>
+
+<div class="link">
+<a href="/svi-map.html">View SVI Global Map →</a>
+</div>
+
+<div class="link">
+<a href="/svi-scan.html">Run SVI Jurisdiction Scan →</a>
+</div>
 
 </div>
 
@@ -147,96 +112,6 @@ Crossing — Strategic Navigation Laboratory<br>
 </div>
 
 </div>
-
-<script>
-
-const countries = {
-
-portugal:{
-score:36,
-class:"managed",
-text:"Managed Stability",
-desc:"Stable EU environment with relatively predictable migration pathways and moderate regulatory change dynamics."
-},
-
-spain:{
-score:44,
-class:"fluid",
-text:"Regulatory Fluidity",
-desc:"Frequent regulatory adjustments and tax policy evolution within EU frameworks."
-},
-
-france:{
-score:41,
-class:"managed",
-text:"Managed Stability",
-desc:"Institutionally stable but characterized by regulatory complexity and administrative layers."
-},
-
-usa:{
-score:38,
-class:"managed",
-text:"Managed Stability",
-desc:"Stable federal framework with moderate policy volatility across immigration and taxation."
-},
-
-thailand:{
-score:57,
-class:"fluid",
-text:"Regulatory Fluidity",
-desc:"Visa policy flexibility combined with periodic regulatory adjustments."
-},
-
-vietnam:{
-score:61,
-class:"volatility",
-text:"Systemic Volatility",
-desc:"Rapid economic reform environment with evolving regulatory architecture."
-},
-
-montenegro:{
-score:63,
-class:"volatility",
-text:"Systemic Volatility",
-desc:"Emerging regulatory framework with geopolitical exposure in Balkan region."
-},
-
-newzealand:{
-score:24,
-class:"stable",
-text:"Structural Stability",
-desc:"Highly predictable governance and migration frameworks."
-}
-
-}
-
-function showCountry(country){
-
-const data=countries[country]
-
-const box=document.getElementById("countryProfile")
-
-box.className="profile "+data.class
-
-box.innerHTML=`
-<h2>${country.charAt(0).toUpperCase()+country.slice(1)}</h2>
-
-<div class="score">
-SVI Score: ${data.score}
-</div>
-
-<div>
-${data.text}
-</div>
-
-<p class="description">
-${data.desc}
-</p>
-`
-
-}
-
-</script>
 
 </body>
 </html>
