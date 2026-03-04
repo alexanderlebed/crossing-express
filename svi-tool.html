@@ -45,7 +45,7 @@ font-size:16px;
 margin-top:15px;
 }
 
-.result, .box{
+.result,.box{
 margin-top:30px;
 padding:25px;
 border-radius:10px;
@@ -88,6 +88,24 @@ tr:nth-child(even){
 background:rgba(255,255,255,0.03);
 }
 
+.vector{
+margin-top:15px;
+font-size:14px;
+}
+
+.bar{
+height:10px;
+background:#0f1623;
+border-radius:5px;
+margin-top:6px;
+}
+
+.bar div{
+height:10px;
+background:#4f8cff;
+border-radius:5px;
+}
+
 .footer{
 margin-top:100px;
 opacity:0.6;
@@ -111,6 +129,8 @@ text-decoration:none;
 Analytical tool for evaluating jurisdictional structural volatility.
 </p>
 
+<!-- EXPLORER -->
+
 <div class="section">
 
 <h2>SVI Explorer</h2>
@@ -129,7 +149,40 @@ Analytical tool for evaluating jurisdictional structural volatility.
 
 </div>
 
+<div id="vectorBox" style="margin-top:30px;display:none">
+
+<h3>SVI Vector Breakdown</h3>
+
+<div class="vector">
+RA — Regulatory Acceleration
+<div class="bar"><div id="ra"></div></div>
 </div>
+
+<div class="vector">
+MPS — Migration Policy Stability
+<div class="bar"><div id="mps"></div></div>
+</div>
+
+<div class="vector">
+CTE — Capital Transparency Exposure
+<div class="bar"><div id="cte"></div></div>
+</div>
+
+<div class="vector">
+TRF — Tax Regime Fluidity
+<div class="bar"><div id="trf"></div></div>
+</div>
+
+<div class="vector">
+GDR — Geopolitical Discontinuity Risk
+<div class="bar"><div id="gdr"></div></div>
+</div>
+
+</div>
+
+</div>
+
+<!-- COMPARISON -->
 
 <div class="section">
 
@@ -154,6 +207,8 @@ Analytical tool for evaluating jurisdictional structural volatility.
 <div id="winner" style="margin-top:20px;"></div>
 
 </div>
+
+<!-- RANKING -->
 
 <div class="section">
 
@@ -213,16 +268,27 @@ Australia:27,
 "New Zealand":24
 };
 
+const sviVectors={
+Spain:{ra:45,mps:40,cte:55,trf:50,gdr:30},
+Portugal:{ra:35,mps:38,cte:42,trf:40,gdr:25},
+France:{ra:48,mps:42,cte:60,trf:55,gdr:30},
+Germany:{ra:32,mps:30,cte:48,trf:45,gdr:25},
+Italy:{ra:52,mps:45,cte:50,trf:58,gdr:30},
+Montenegro:{ra:70,mps:62,cte:55,trf:60,gdr:65},
+Thailand:{ra:60,mps:55,cte:45,trf:50,gdr:55},
+Vietnam:{ra:65,mps:60,cte:52,trf:58,gdr:60},
+"United States":{ra:42,mps:40,cte:55,trf:50,gdr:35},
+Canada:{ra:38,mps:36,cte:48,trf:45,gdr:30},
+Singapore:{ra:20,mps:18,cte:30,trf:25,gdr:20},
+"New Zealand":{ra:22,mps:20,cte:28,trf:26,gdr:18}
+};
+
 function classify(score){
 
 if(score<=30) return ["Structural Stability","#3cc878"];
-
 if(score<=45) return ["Managed Stability","#5fb3ff"];
-
 if(score<=60) return ["Regulatory Fluidity","#ffc857"];
-
 if(score<=75) return ["Systemic Volatility","#ff8a4c"];
-
 return ["Structural Instability","#ff4d4d"];
 
 }
@@ -243,15 +309,27 @@ if(!c) return;
 const score=sviData[c];
 const [label,color]=classify(score);
 
-const box=document.getElementById("explorerResult");
+explorerResult.style.display="block";
+explorerResult.style.borderColor=color;
 
-box.style.display="block";
-box.style.borderColor=color;
+explorerCountry.innerText=c;
+explorerScore.innerText=score;
+explorerScore.style.color=color;
+explorerClass.innerText=label;
 
-document.getElementById("explorerCountry").innerText=c;
-document.getElementById("explorerScore").innerText=score;
-document.getElementById("explorerScore").style.color=color;
-document.getElementById("explorerClass").innerText=label;
+const v=sviVectors[c];
+
+if(v){
+
+vectorBox.style.display="block";
+
+ra.style.width=v.ra+"%";
+mps.style.width=v.mps+"%";
+cte.style.width=v.cte+"%";
+trf.style.width=v.trf+"%";
+gdr.style.width=v.gdr+"%";
+
+}
 
 });
 
