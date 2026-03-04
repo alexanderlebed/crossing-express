@@ -43,6 +43,31 @@ border:1px solid rgba(255,255,255,0.06);
 border-radius:8px;
 }
 
+.gauge{
+margin-top:20px;
+height:16px;
+background:#111827;
+border-radius:8px;
+overflow:hidden;
+}
+
+.gauge-fill{
+height:100%;
+background:#4f8cff;
+width:0%;
+transition:width 0.6s ease;
+}
+
+.score{
+font-size:26px;
+margin-top:10px;
+}
+
+.class{
+opacity:0.8;
+margin-top:4px;
+}
+
 .footer{
 margin-top:100px;
 opacity:0.6;
@@ -137,96 +162,75 @@ Crossing — Strategic Navigation Laboratory<br>
 const data = {
 
 spain:{score:44,class:"Regulatory Fluidity",text:"EU jurisdiction with increasing tax transparency and evolving fiscal frameworks."},
-
-portugal:{score:36,class:"Managed Stability",text:"Stable EU environment with favorable residency pathways and moderate regulatory change."},
-
-france:{score:41,class:"Managed Stability",text:"Institutionally stable but characterized by complex fiscal structures."},
-
-italy:{score:46,class:"Regulatory Fluidity",text:"High administrative complexity with evolving fiscal incentives for relocation."},
-
-germany:{score:39,class:"Managed Stability",text:"Stable regulatory framework with strong institutional predictability."},
-
-netherlands:{score:34,class:"Managed Stability",text:"Predictable governance with structured tax reforms affecting expats."},
-
-greece:{score:48,class:"Regulatory Fluidity",text:"Recovery-phase regulatory system with increasing investment incentives."},
-
+portugal:{score:36,class:"Managed Stability",text:"Stable EU environment with favorable residency pathways."},
+france:{score:41,class:"Managed Stability",text:"Institutionally stable but with complex fiscal structures."},
+italy:{score:46,class:"Regulatory Fluidity",text:"Administrative complexity with evolving relocation incentives."},
+germany:{score:39,class:"Managed Stability",text:"Highly predictable institutional environment."},
+netherlands:{score:34,class:"Managed Stability",text:"Stable governance with structured tax reform."},
+greece:{score:48,class:"Regulatory Fluidity",text:"Recovery-phase regulatory system with investor incentives."},
 malta:{score:40,class:"Managed Stability",text:"Small jurisdiction with flexible residency frameworks."},
+cyprus:{score:43,class:"Regulatory Fluidity",text:"Investment-friendly environment with evolving compliance."},
 
-cyprus:{score:43,class:"Regulatory Fluidity",text:"Investment-friendly but with evolving compliance obligations."},
-
-switzerland:{score:28,class:"Structural Stability",text:"Highly predictable regulatory environment with strong institutional continuity."},
-
-austria:{score:35,class:"Managed Stability",text:"Stable EU regulatory framework with conservative policy changes."},
-
-czechia:{score:38,class:"Managed Stability",text:"Predictable regulatory environment within EU structures."},
-
-hungary:{score:52,class:"Regulatory Fluidity",text:"Frequent regulatory adjustments within domestic policy shifts."},
-
-poland:{score:45,class:"Regulatory Fluidity",text:"Moderate volatility driven by political and fiscal reforms."},
+switzerland:{score:28,class:"Structural Stability",text:"Highly predictable regulatory environment."},
+austria:{score:35,class:"Managed Stability",text:"Stable EU regulatory environment."},
+czechia:{score:38,class:"Managed Stability",text:"Predictable regulatory system within EU."},
+hungary:{score:52,class:"Regulatory Fluidity",text:"Frequent domestic regulatory adjustments."},
+poland:{score:45,class:"Regulatory Fluidity",text:"Moderate volatility driven by political reforms."},
 
 montenegro:{score:63,class:"Systemic Volatility",text:"Emerging jurisdiction with developing regulatory institutions."},
+serbia:{score:60,class:"Systemic Volatility",text:"Rapid economic changes with regulatory unpredictability."},
+uae:{score:29,class:"Structural Stability",text:"Highly competitive tax and residency environment."},
+turkey:{score:70,class:"Structural Instability",text:"Macroeconomic volatility and regulatory unpredictability."},
+georgia:{score:47,class:"Regulatory Fluidity",text:"Flexible pro-business regulatory environment."},
 
-serbia:{score:60,class:"Systemic Volatility",text:"Rapid economic change combined with regulatory unpredictability."},
-
-uae:{score:29,class:"Structural Stability",text:"Highly competitive tax and residency environment with strong strategic governance."},
-
-turkey:{score:70,class:"Structural Instability",text:"High macroeconomic volatility and regulatory unpredictability."},
-
-georgia:{score:47,class:"Regulatory Fluidity",text:"Flexible regulatory environment with pro-business orientation."},
-
-thailand:{score:57,class:"Regulatory Fluidity",text:"Moderate institutional volatility combined with evolving visa frameworks."},
-
-vietnam:{score:61,class:"Systemic Volatility",text:"Rapid economic expansion with evolving regulatory institutions."},
-
-malaysia:{score:49,class:"Regulatory Fluidity",text:"Stable infrastructure with shifting residency policy."},
-
-indonesia:{score:54,class:"Regulatory Fluidity",text:"Large emerging economy with evolving compliance structures."},
-
-philippines:{score:55,class:"Regulatory Fluidity",text:"Institutional volatility combined with accessible residency frameworks."},
+thailand:{score:57,class:"Regulatory Fluidity",text:"Moderate institutional volatility with evolving visa policy."},
+vietnam:{score:61,class:"Systemic Volatility",text:"Rapid economic growth with regulatory unpredictability."},
+malaysia:{score:49,class:"Regulatory Fluidity",text:"Stable infrastructure with evolving migration policy."},
+indonesia:{score:54,class:"Regulatory Fluidity",text:"Large emerging economy with changing compliance frameworks."},
+philippines:{score:55,class:"Regulatory Fluidity",text:"Institutional volatility with accessible residency options."},
 
 singapore:{score:22,class:"Structural Stability",text:"One of the most predictable regulatory environments globally."},
+japan:{score:30,class:"Structural Stability",text:"Highly stable governance and policy environment."},
+southkorea:{score:33,class:"Managed Stability",text:"Predictable institutional framework."},
 
-japan:{score:30,class:"Structural Stability",text:"Highly stable regulatory and political structures."},
+usa:{score:38,class:"Managed Stability",text:"Stable governance with complex tax reporting systems."},
+canada:{score:34,class:"Managed Stability",text:"Highly transparent regulatory structures."},
+mexico:{score:50,class:"Regulatory Fluidity",text:"Moderate institutional volatility."},
+panama:{score:42,class:"Regulatory Fluidity",text:"Competitive residency frameworks."},
+costarica:{score:40,class:"Managed Stability",text:"Stable democratic system."},
 
-southkorea:{score:33,class:"Managed Stability",text:"Predictable institutional environment with technological economic base."},
+brazil:{score:58,class:"Regulatory Fluidity",text:"Large emerging economy with evolving regulation."},
+argentina:{score:72,class:"Structural Instability",text:"High macroeconomic volatility."},
 
-usa:{score:38,class:"Managed Stability",text:"Stable governance with complex tax and reporting obligations."},
-
-canada:{score:34,class:"Managed Stability",text:"Highly predictable regulatory structures and transparent institutions."},
-
-mexico:{score:50,class:"Regulatory Fluidity",text:"Moderate institutional volatility combined with accessible migration pathways."},
-
-panama:{score:42,class:"Regulatory Fluidity",text:"Competitive residency framework with evolving transparency obligations."},
-
-costarica:{score:40,class:"Managed Stability",text:"Stable democratic system with moderate regulatory changes."},
-
-brazil:{score:58,class:"Regulatory Fluidity",text:"Large emerging economy with evolving fiscal and regulatory frameworks."},
-
-argentina:{score:72,class:"Structural Instability",text:"High macroeconomic volatility and policy unpredictability."},
-
-australia:{score:32,class:"Managed Stability",text:"Stable regulatory system with structured migration programs."},
-
-nz:{score:24,class:"Structural Stability",text:"Highly stable institutional environment with predictable governance."}
+australia:{score:32,class:"Managed Stability",text:"Stable regulatory environment."},
+nz:{score:24,class:"Structural Stability",text:"Highly predictable institutional governance."}
 
 };
 
 function loadCountry(){
 
-const c = document.getElementById("countrySelect").value;
+const c=document.getElementById("countrySelect").value;
+if(!c)return;
 
-if(!c){return;}
+const d=data[c];
+const width=d.score;
 
-const d = data[c];
+document.getElementById("profile").innerHTML=
 
-document.getElementById("profile").innerHTML =
+"<h2>"+c.replace(/^\w/,m=>m.toUpperCase())+"</h2>"+
 
-"<h2>"+c.replace(/^\w/, m => m.toUpperCase())+"</h2>" +
+"<div class='score'>SVI Score: "+d.score+"</div>"+
+"<div class='class'>"+d.class+"</div>"+
 
-"<p><strong>SVI Score:</strong> "+d.score+"</p>" +
+"<div class='gauge'><div class='gauge-fill' id='gauge'></div></div>"+
 
-"<p><strong>Class:</strong> "+d.class+"</p>" +
+"<p style='margin-top:20px'>"+d.text+"</p>";
 
-"<p>"+d.text+"</p>";
+setTimeout(()=>{
+
+document.getElementById("gauge").style.width=width+"%";
+
+},100);
 
 }
 
