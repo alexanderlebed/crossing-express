@@ -45,15 +45,16 @@ font-size:16px;
 margin-top:15px;
 }
 
-.result{
+.result, .box{
 margin-top:30px;
 padding:25px;
 border-radius:10px;
-border:1px solid rgba(255,255,255,0.08);
+border:2px solid rgba(255,255,255,0.08);
 }
 
 .score{
-font-size:38px;
+font-size:42px;
+font-weight:700;
 }
 
 .compare{
@@ -66,9 +67,6 @@ margin-top:20px;
 .box{
 flex:1;
 min-width:260px;
-padding:25px;
-border-radius:10px;
-border:1px solid rgba(255,255,255,0.08);
 }
 
 table{
@@ -113,16 +111,12 @@ text-decoration:none;
 Analytical tool for evaluating jurisdictional structural volatility.
 </p>
 
-<!-- EXPLORER -->
-
 <div class="section">
 
 <h2>SVI Explorer</h2>
 
 <select id="explorer">
-
 <option value="">Select jurisdiction</option>
-
 </select>
 
 <div class="result" id="explorerResult" style="display:none">
@@ -136,8 +130,6 @@ Analytical tool for evaluating jurisdictional structural volatility.
 </div>
 
 </div>
-
-<!-- COMPARISON -->
 
 <div class="section">
 
@@ -162,8 +154,6 @@ Analytical tool for evaluating jurisdictional structural volatility.
 <div id="winner" style="margin-top:20px;"></div>
 
 </div>
-
-<!-- RANKING -->
 
 <div class="section">
 
@@ -225,132 +215,91 @@ Australia:27,
 
 function classify(score){
 
-if(score<=30) return "Structural Stability";
+if(score<=30) return ["Structural Stability","#3cc878"];
 
-if(score<=45) return "Managed Stability";
+if(score<=45) return ["Managed Stability","#5fb3ff"];
 
-if(score<=60) return "Regulatory Fluidity";
+if(score<=60) return ["Regulatory Fluidity","#ffc857"];
 
-if(score<=75) return "Systemic Volatility";
+if(score<=75) return ["Systemic Volatility","#ff8a4c"];
 
-return "Structural Instability";
-
-}
-
-function color(score){
-
-if(score<=30) return "rgba(60,180,120,0.15)";
-
-if(score<=45) return "rgba(100,180,255,0.15)";
-
-if(score<=60) return "rgba(255,200,80,0.15)";
-
-if(score<=75) return "rgba(255,120,80,0.18)";
-
-return "rgba(255,70,70,0.2)";
+return ["Structural Instability","#ff4d4d"];
 
 }
 
 const countries=Object.keys(sviData);
 
 countries.forEach(c=>{
-
-document.getElementById("explorer").add(new Option(c,c));
-
-document.getElementById("compare1").add(new Option(c,c));
-
-document.getElementById("compare2").add(new Option(c,c));
-
+explorer.add(new Option(c,c));
+compare1.add(new Option(c,c));
+compare2.add(new Option(c,c));
 });
 
-document.getElementById("explorer").addEventListener("change",function(){
+explorer.addEventListener("change",function(){
 
 const c=this.value;
-
 if(!c) return;
 
 const score=sviData[c];
+const [label,color]=classify(score);
 
 const box=document.getElementById("explorerResult");
 
 box.style.display="block";
-
-box.style.background=color(score);
+box.style.borderColor=color;
 
 document.getElementById("explorerCountry").innerText=c;
-
 document.getElementById("explorerScore").innerText=score;
-
-document.getElementById("explorerClass").innerText=classify(score);
+document.getElementById("explorerScore").style.color=color;
+document.getElementById("explorerClass").innerText=label;
 
 });
 
 function updateCompare(){
 
-const c1=document.getElementById("compare1").value;
-
-const c2=document.getElementById("compare2").value;
+const c1=compare1.value;
+const c2=compare2.value;
 
 if(c1){
 
 const s=sviData[c1];
+const [label,color]=classify(s);
 
-const box=document.getElementById("box1");
+box1.style.display="block";
+box1.style.borderColor=color;
 
-box.style.display="block";
-
-box.style.background=color(s);
-
-box.innerHTML=c1+"<br><b>"+s+"</b><br>"+classify(s);
+box1.innerHTML="<b>"+c1+"</b><br><span style='color:"+color+";font-size:34px'>"+s+"</span><br>"+label;
 
 }
 
 if(c2){
 
 const s=sviData[c2];
+const [label,color]=classify(s);
 
-const box=document.getElementById("box2");
+box2.style.display="block";
+box2.style.borderColor=color;
 
-box.style.display="block";
-
-box.style.background=color(s);
-
-box.innerHTML=c2+"<br><b>"+s+"</b><br>"+classify(s);
-
-}
-
-if(c1 && c2){
-
-const s1=sviData[c1];
-
-const s2=sviData[c2];
-
-let w="";
-
-if(s1<s2) w=c1+" shows lower structural volatility.";
-
-else if(s2<s1) w=c2+" shows lower structural volatility.";
-
-else w="Both jurisdictions show similar volatility.";
-
-document.getElementById("winner").innerText=w;
+box2.innerHTML="<b>"+c2+"</b><br><span style='color:"+color+";font-size:34px'>"+s+"</span><br>"+label;
 
 }
 
 }
 
-document.getElementById("compare1").addEventListener("change",updateCompare);
-document.getElementById("compare2").addEventListener("change",updateCompare);
+compare1.addEventListener("change",updateCompare);
+compare2.addEventListener("change",updateCompare);
 
 const ranking=Object.entries(sviData).sort((a,b)=>a[1]-b[1]);
 
 ranking.forEach(r=>{
 
+const [label,color]=classify(r[1]);
+
 const tr=document.createElement("tr");
 
-tr.innerHTML="<td>"+r[0]+"</td><td>"+r[1]+"</td><td>"+classify(r[1])+"</td>";
+tr.innerHTML="<td>"+r[0]+"</td><td style='color:"+color+"'>"+r[1]+"</td><td>"+label+"</td>";
 
-document.getElementById("rankingTable").appendChild(tr);
+rankingTable.appendChild(tr);
 
 });
 
