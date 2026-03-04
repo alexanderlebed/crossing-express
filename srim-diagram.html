@@ -6,86 +6,89 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-
 body{
-margin:0;
-background:#05070f;
-color:#e8ecf1;
-font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
+  margin:0;
+  background:#05070f;
+  color:#e8ecf1;
+  font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
 }
 
 .container{
-max-width:1000px;
-margin:auto;
-padding:80px 30px;
-text-align:center;
+  max-width:1000px;
+  margin:auto;
+  padding:80px 30px;
+  text-align:center;
 }
 
 h1{
-font-size:36px;
-margin-bottom:40px;
+  font-size:36px;
+  margin-bottom:20px;
 }
 
 .subtitle{
-opacity:0.8;
-margin-bottom:60px;
-}
-
-.layer{
-padding:18px 26px;
-border-radius:8px;
-border:1px solid rgba(255,255,255,0.08);
-display:inline-block;
-margin:10px;
-min-width:220px;
-}
-
-.platform{
-background:rgba(79,140,255,0.18);
-border-color:rgba(79,140,255,0.5);
-font-weight:500;
-}
-
-.research{
-background:rgba(79,140,255,0.12);
-border-color:rgba(79,140,255,0.35);
-}
-
-.scan{
-background:rgba(255,255,255,0.03);
-}
-
-.core{
-background:rgba(79,140,255,0.08);
-border-color:rgba(79,140,255,0.25);
-}
-
-.lab{
-background:rgba(255,255,255,0.05);
+  opacity:0.8;
+  margin-bottom:60px;
 }
 
 .row{
-margin:20px 0;
+  margin:20px 0;
+}
+
+.layer{
+  padding:18px 26px;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,0.08);
+  display:inline-block;
+  margin:10px;
+  min-width:220px;
+  cursor:pointer;
+  transition:all .25s ease;
+}
+
+.layer:hover{
+  transform:translateY(-3px);
+  border-color:#4f8cff;
+  box-shadow:0 0 20px rgba(79,140,255,0.2);
+}
+
+.platform{
+  background:rgba(79,140,255,0.18);
+  border-color:rgba(79,140,255,0.5);
+}
+
+.research{
+  background:rgba(79,140,255,0.12);
+}
+
+.scan{
+  background:rgba(255,255,255,0.03);
+}
+
+.core{
+  background:rgba(79,140,255,0.08);
+}
+
+.lab{
+  background:rgba(255,255,255,0.05);
 }
 
 .arrow{
-opacity:0.5;
-margin:10px;
-font-size:20px;
+  opacity:0.4;
+  font-size:22px;
+  margin:10px;
 }
 
 .footer{
-margin-top:80px;
-opacity:0.6;
+  margin-top:80px;
+  opacity:0.6;
 }
 
 .footer a{
-color:#4f8cff;
-text-decoration:none;
+  color:#4f8cff;
+  text-decoration:none;
 }
 
 </style>
-
 </head>
 
 <body>
@@ -95,101 +98,83 @@ text-decoration:none;
 <h1>SRIM Analytical Architecture</h1>
 
 <p class="subtitle">
-Structural architecture of the Crossing analytical platform and the SRIM decision modeling framework.
+Interactive architecture of the Crossing analytical platform. Click any layer to access the corresponding analytical instrument.
 </p>
 
 <div class="row">
-
-<div class="layer platform">
+<div class="layer platform" onclick="go('/')">
 Crossing Analytical Platform
 </div>
-
 </div>
 
 <div class="arrow">↓</div>
 
 <div class="row">
-
-<div class="layer research">
-SVI Research Layer
-</div>
-
-</div>
-
-<div class="arrow">↓</div>
-
-<div class="row">
-
-<div class="layer research">
+<div class="layer research" onclick="go('/svi-observatory.html')">
 SVI Observatory
 </div>
 
-<div class="layer research">
+<div class="layer research" onclick="go('/svi-crisis-monitor.html')">
 SVI Crisis Monitor
 </div>
 
-<div class="layer research">
+<div class="layer research" onclick="go('/svi-ranking.html')">
 SVI Global Ranking
 </div>
 
-<div class="layer research">
+<div class="layer research" onclick="go('/svi-map.html')">
 SVI Global Map
 </div>
-
 </div>
 
 <div class="arrow">↓</div>
 
 <div class="row">
-
-<div class="layer scan">
+<div class="layer scan" onclick="go('/svi-scan.html')">
 SVI Jurisdiction Scan
 </div>
-
 </div>
 
 <div class="arrow">↓</div>
 
 <div class="row">
-
-<div class="layer core">
+<div class="layer core" onclick="go('/report.html')">
 SRIM Intelligence Brief
 </div>
-
 </div>
 
 <div class="arrow">↓</div>
 
 <div class="row">
-
-<div class="layer core">
+<div class="layer core" onclick="go('/report.html')">
 Entry Sovereign Scan
 </div>
 
-<div class="layer core">
+<div class="layer core" onclick="go('/sovereign.html')">
 SRIM Sovereign Architecture
 </div>
-
 </div>
 
 <div class="arrow">↓</div>
 
 <div class="row">
-
-<div class="layer lab">
+<div class="layer lab" onclick="go('/lab.html')">
 Private Architecture Lab
 </div>
-
 </div>
 
 <div class="footer">
-
 Crossing — Strategic Navigation Laboratory<br>
 <a href="/">Return to Home</a>
-
 </div>
 
 </div>
+
+<script>
+function go(url){
+  window.location.href=url;
+}
+</script>
 
 </body>
 </html>
