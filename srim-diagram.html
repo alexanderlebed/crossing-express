@@ -38,20 +38,45 @@ margin:20px 0;
 .layer{
 display:inline-block;
 padding:18px 26px;
-margin:10px;
-min-width:220px;
+margin:12px;
+min-width:230px;
 border-radius:8px;
 border:1px solid rgba(255,255,255,0.08);
 text-decoration:none;
 color:#e8ecf1;
+position:relative;
 transition:all .25s ease;
 }
 
 .layer:hover{
 transform:translateY(-3px);
 border-color:#4f8cff;
-box-shadow:0 0 20px rgba(79,140,255,0.25);
+box-shadow:0 0 25px rgba(79,140,255,0.25);
 }
+
+/* tooltip */
+
+.tooltip{
+position:absolute;
+bottom:-65px;
+left:50%;
+transform:translateX(-50%);
+background:#0f1623;
+border:1px solid rgba(255,255,255,0.08);
+padding:10px 14px;
+font-size:13px;
+border-radius:6px;
+opacity:0;
+pointer-events:none;
+white-space:nowrap;
+transition:opacity .25s;
+}
+
+.layer:hover .tooltip{
+opacity:1;
+}
+
+/* colors */
 
 .platform{
 background:rgba(79,140,255,0.18);
@@ -81,7 +106,7 @@ margin:10px;
 }
 
 .footer{
-margin-top:80px;
+margin-top:90px;
 opacity:0.6;
 }
 
@@ -104,9 +129,14 @@ Interactive architecture of the Crossing analytical platform.
 </p>
 
 <div class="row">
+
 <a class="layer platform" href="/">
-Crossing Analytical Platform
+Crossing Platform
+<div class="tooltip">
+Core analytical navigation interface
+</div>
 </a>
+
 </div>
 
 <div class="arrow">↓</div>
@@ -115,18 +145,30 @@ Crossing Analytical Platform
 
 <a class="layer research" href="/svi-observatory.html">
 SVI Observatory
+<div class="tooltip">
+Monitor jurisdiction volatility scores
+</div>
 </a>
 
 <a class="layer research" href="/svi-crisis-monitor.html">
 SVI Crisis Monitor
+<div class="tooltip">
+Track geopolitical escalation signals
+</div>
 </a>
 
 <a class="layer research" href="/svi-ranking.html">
 SVI Global Ranking
+<div class="tooltip">
+Compare jurisdictions by volatility index
+</div>
 </a>
 
 <a class="layer research" href="/svi-map.html">
 SVI Global Map
+<div class="tooltip">
+Geographical visualization of SVI scores
+</div>
 </a>
 
 </div>
@@ -137,6 +179,9 @@ SVI Global Map
 
 <a class="layer scan" href="/svi-scan.html">
 SVI Jurisdiction Scan
+<div class="tooltip">
+Run volatility analysis for a selected country
+</div>
 </a>
 
 </div>
@@ -147,6 +192,9 @@ SVI Jurisdiction Scan
 
 <a class="layer core" href="/report.html">
 SRIM Intelligence Brief
+<div class="tooltip">
+Personalized jurisdiction strategy report
+</div>
 </a>
 
 </div>
@@ -157,10 +205,16 @@ SRIM Intelligence Brief
 
 <a class="layer core" href="/report.html">
 Entry Sovereign Scan
+<div class="tooltip">
+Initial relocation feasibility analysis
+</div>
 </a>
 
 <a class="layer core" href="/sovereign.html">
 SRIM Sovereign Architecture
+<div class="tooltip">
+Multi-jurisdiction life architecture modeling
+</div>
 </a>
 
 </div>
@@ -171,6 +225,9 @@ SRIM Sovereign Architecture
 
 <a class="layer lab" href="/lab.html">
 Private Architecture Lab
+<div class="tooltip">
+High-complexity jurisdiction structuring
+</div>
 </a>
 
 </div>
