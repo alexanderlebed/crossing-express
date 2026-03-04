@@ -2,54 +2,97 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>SRIM Entry Sovereign Scan — Crossing</title>
+<title>SRIM Jurisdiction Intelligence Brief — Crossing</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-body {
-  margin: 0;
-  background: #05070f;
-  color: #e8ecf1;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+
+body{
+margin:0;
+background:#05070f;
+color:#e8ecf1;
+font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
 }
 
-.container {
-  max-width: 800px;
-  margin: auto;
-  padding: 60px 30px;
+.container{
+max-width:850px;
+margin:auto;
+padding:80px 30px;
 }
 
-input, select {
-  width: 100%;
-  padding: 12px;
-  background: #0d1117;
-  border: 1px solid #30363d;
-  color: white;
-  margin-top: 10px;
+h1{
+font-size:36px;
+margin-bottom:20px;
 }
 
-button {
-  margin-top: 30px;
-  padding: 14px 28px;
-  background: linear-gradient(90deg, #4f8cff, #7a5cff);
-  border: none;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
+.subtitle{
+opacity:0.9;
+line-height:1.7;
+margin-bottom:40px;
 }
 
-.result {
-  margin-top: 40px;
-  padding: 25px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 10px;
-  white-space: pre-wrap;
+.box{
+margin-top:40px;
+padding:35px;
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(255,255,255,0.06);
+border-radius:10px;
 }
 
-.loader {
-  margin-top: 20px;
+ul{
+margin-top:20px;
+line-height:1.9;
 }
+
+.price{
+font-size:28px;
+margin-top:25px;
+font-weight:500;
+}
+
+.delivery{
+opacity:0.7;
+margin-top:5px;
+}
+
+.button{
+margin-top:30px;
+}
+
+.button a{
+color:#4f8cff;
+text-decoration:none;
+font-weight:500;
+font-size:16px;
+}
+
+.button a:hover{
+text-decoration:underline;
+}
+
+.statement{
+margin-top:40px;
+padding:18px;
+background:rgba(79,140,255,0.08);
+border-left:3px solid #4f8cff;
+border-radius:6px;
+}
+
+.footer{
+margin-top:100px;
+opacity:0.6;
+font-size:14px;
+}
+
+.footer a{
+color:#4f8cff;
+text-decoration:none;
+}
+
+.footer a:hover{
+text-decoration:underline;
+}
+
 </style>
 </head>
 
@@ -57,81 +100,63 @@ button {
 
 <div class="container">
 
-<h1>SRIM Entry Sovereign Scan</h1>
+<h1>SRIM Jurisdiction Intelligence Brief</h1>
 
-<input id="citizenship" placeholder="Citizenship">
-<input id="target" placeholder="Target Country">
-<input id="income" type="number" placeholder="Monthly Income (€)">
-<select id="family">
-<option value="single">Single</option>
-<option value="married">Married</option>
-<option value="married_children">Married with children</option>
-</select>
-<select id="timeline">
-<option value="3_months">Within 3 months</option>
-<option value="6_months">Within 6 months</option>
-<option value="12_months">Within 12 months</option>
-</select>
+<p class="subtitle">
+Receive a structured jurisdictional intelligence assessment based on your personal profile.
+This analytical brief evaluates mobility pathways, regulatory exposure and relocation feasibility within the SRIM modeling framework.
+</p>
 
-<button onclick="generate()">Generate Preview</button>
+<div class="box">
 
-<div id="loading" class="loader" style="display:none;">
-Computing sovereign model...
+<h3>What the Intelligence Brief Includes</h3>
+
+<ul>
+
+<li>Best jurisdictions aligned with your personal and financial profile</li>
+
+<li>Residency and visa pathway overview</li>
+
+<li>Jurisdictional stability and regulatory exposure assessment</li>
+
+<li>Strategic relocation scenarios</li>
+
+<li>Legal and practical considerations for execution</li>
+
+<li>High-level risk mapping across selected jurisdictions</li>
+
+</ul>
+
+<div class="price">
+€90
 </div>
 
-<div id="result" class="result" style="display:none;"></div>
+<div class="delivery">
+Delivery: 24–48 hours
+</div>
+
+<div class="button">
+<a href="/purchase.html">Generate Intelligence Brief →</a>
+</div>
 
 </div>
 
-<script>
+<div class="statement">
+The SRIM Intelligence Brief is an analytical modeling output designed to assist sovereign decision-making.
+It does not constitute legal advice or immigration services.
+</div>
 
-async function generate() {
+<div class="footer">
 
-  const loading = document.getElementById("loading");
-  const resultBox = document.getElementById("result");
+Crossing — Strategic Navigation Laboratory<br>
 
-  loading.style.display = "block";
-  resultBox.style.display = "none";
+<a href="/">Return to Home</a><br>
+<a href="/svi.html">Sovereign Volatility Index</a><br>
+<a href="/research.html">Research</a>
 
-  try {
+</div>
 
-    const response = await fetch("/api/generate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        citizenship: document.getElementById("citizenship").value,
-        targetCountry: document.getElementById("target").value,
-        income: document.getElementById("income").value,
-        familyStatus: document.getElementById("family").value,
-        timeline: document.getElementById("timeline").value
-      })
-    });
-
-    const data = await response.json();
-
-    loading.style.display = "none";
-    resultBox.style.display = "block";
-
-    resultBox.innerText = data.result;
-
-    if (data.reportId) {
-      const link = document.createElement("a");
-      link.href = `/portal.html?report=${data.reportId}`;
-      link.innerText = "Open Full Report →";
-      link.style.display = "block";
-      link.style.marginTop = "20px";
-      link.style.color = "#4f8cff";
-      resultBox.appendChild(link);
-    }
-
-  } catch (err) {
-    loading.style.display = "none";
-    resultBox.style.display = "block";
-    resultBox.innerText = "Error:\n\n" + err.message;
-  }
-}
-
-</script>
+</div>
 
 </body>
 </html>
