@@ -54,11 +54,11 @@ border-color:#4f8cff;
 box-shadow:0 0 25px rgba(79,140,255,0.25);
 }
 
-/* tooltip */
+/* TOOLTIP FIX */
 
 .tooltip{
 position:absolute;
-bottom:-65px;
+bottom:110%;
 left:50%;
 transform:translateX(-50%);
 background:#0f1623;
@@ -70,13 +70,14 @@ opacity:0;
 pointer-events:none;
 white-space:nowrap;
 transition:opacity .25s;
+z-index:10;
 }
 
 .layer:hover .tooltip{
 opacity:1;
 }
 
-/* colors */
+/* COLORS */
 
 .platform{
 background:rgba(79,140,255,0.18);
@@ -233,10 +234,8 @@ High-complexity jurisdiction structuring
 </div>
 
 <div class="footer">
-
 Crossing — Strategic Navigation Laboratory<br>
 <a href="/">Return to Home</a>
-
 </div>
 
 </div>
