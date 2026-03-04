@@ -21,56 +21,72 @@ padding:80px 30px;
 }
 
 h1{
-font-size:36px;
-margin-bottom:20px;
+font-size:34px;
+margin-bottom:10px;
+}
+
+.subtitle{
+opacity:0.8;
+margin-bottom:40px;
 }
 
 select{
-margin-top:20px;
+width:100%;
 padding:12px;
 background:#0f1623;
-border:1px solid rgba(255,255,255,0.08);
+border:1px solid rgba(255,255,255,0.1);
 color:white;
 border-radius:6px;
-width:320px;
 }
 
 .profile{
 margin-top:40px;
 padding:30px;
-background:rgba(255,255,255,0.03);
-border:1px solid rgba(255,255,255,0.06);
-border-radius:8px;
+border-radius:10px;
 }
 
-.gauge{
-margin-top:20px;
-height:16px;
-background:#111827;
-border-radius:8px;
-overflow:hidden;
+/* COLOR CLASSES */
+
+.stable{
+background:#123d2a;
+color:#3cff9b;
 }
 
-.gauge-fill{
-height:100%;
-background:#4f8cff;
-width:0%;
-transition:width 0.6s ease;
+.managed{
+background:#0f2e4a;
+color:#6cc3ff;
+}
+
+.fluid{
+background:#4a3a0f;
+color:#ffd166;
+}
+
+.volatility{
+background:#4a250f;
+color:#ff9b66;
+}
+
+.instability{
+background:#4a0f0f;
+color:#ff6666;
 }
 
 .score{
-font-size:26px;
+font-size:28px;
 margin-top:10px;
+font-weight:600;
 }
 
-.class{
-opacity:0.8;
-margin-top:4px;
+.description{
+margin-top:10px;
+opacity:0.85;
 }
 
 .footer{
 margin-top:100px;
 opacity:0.6;
+font-size:14px;
 }
 
 .footer a{
@@ -79,7 +95,6 @@ text-decoration:none;
 }
 
 </style>
-
 </head>
 
 <body>
@@ -88,69 +103,45 @@ text-decoration:none;
 
 <h1>SVI Country Observatory</h1>
 
-<p>
+<p class="subtitle">
 Select a jurisdiction to view its Sovereign Volatility Index analytical profile.
 </p>
 
-<select id="countrySelect" onchange="loadCountry()">
+<select onchange="showCountry(this.value)">
 
-<option value="">Select Country</option>
-
-<option value="spain">Spain</option>
 <option value="portugal">Portugal</option>
+<option value="spain">Spain</option>
 <option value="france">France</option>
-<option value="italy">Italy</option>
-<option value="germany">Germany</option>
-<option value="netherlands">Netherlands</option>
-<option value="greece">Greece</option>
-<option value="malta">Malta</option>
-<option value="cyprus">Cyprus</option>
-
-<option value="switzerland">Switzerland</option>
-<option value="austria">Austria</option>
-<option value="czechia">Czech Republic</option>
-<option value="hungary">Hungary</option>
-<option value="poland">Poland</option>
-
-<option value="montenegro">Montenegro</option>
-<option value="serbia">Serbia</option>
-<option value="uae">United Arab Emirates</option>
-<option value="turkey">Turkey</option>
-<option value="georgia">Georgia</option>
-
+<option value="usa">United States</option>
 <option value="thailand">Thailand</option>
 <option value="vietnam">Vietnam</option>
-<option value="malaysia">Malaysia</option>
-<option value="indonesia">Indonesia</option>
-<option value="philippines">Philippines</option>
-
-<option value="singapore">Singapore</option>
-<option value="japan">Japan</option>
-<option value="southkorea">South Korea</option>
-
-<option value="usa">United States</option>
-<option value="canada">Canada</option>
-<option value="mexico">Mexico</option>
-<option value="panama">Panama</option>
-<option value="costarica">Costa Rica</option>
-
-<option value="brazil">Brazil</option>
-<option value="argentina">Argentina</option>
-
-<option value="australia">Australia</option>
-<option value="nz">New Zealand</option>
+<option value="montenegro">Montenegro</option>
+<option value="newzealand">New Zealand</option>
 
 </select>
 
-<div id="profile" class="profile">
+<div id="countryProfile" class="profile managed">
 
-Select a country to display SVI profile.
+<h2>Portugal</h2>
+
+<div class="score">
+SVI Score: 36
+</div>
+
+<div>
+Managed Stability
+</div>
+
+<p class="description">
+Stable EU environment with relatively predictable migration pathways and moderate regulatory change dynamics.
+</p>
 
 </div>
 
 <div class="footer">
 
 Crossing — Strategic Navigation Laboratory<br>
+
 <a href="/">Return to Home</a>
 
 </div>
@@ -159,78 +150,89 @@ Crossing — Strategic Navigation Laboratory<br>
 
 <script>
 
-const data = {
+const countries = {
 
-spain:{score:44,class:"Regulatory Fluidity",text:"EU jurisdiction with increasing tax transparency and evolving fiscal frameworks."},
-portugal:{score:36,class:"Managed Stability",text:"Stable EU environment with favorable residency pathways."},
-france:{score:41,class:"Managed Stability",text:"Institutionally stable but with complex fiscal structures."},
-italy:{score:46,class:"Regulatory Fluidity",text:"Administrative complexity with evolving relocation incentives."},
-germany:{score:39,class:"Managed Stability",text:"Highly predictable institutional environment."},
-netherlands:{score:34,class:"Managed Stability",text:"Stable governance with structured tax reform."},
-greece:{score:48,class:"Regulatory Fluidity",text:"Recovery-phase regulatory system with investor incentives."},
-malta:{score:40,class:"Managed Stability",text:"Small jurisdiction with flexible residency frameworks."},
-cyprus:{score:43,class:"Regulatory Fluidity",text:"Investment-friendly environment with evolving compliance."},
+portugal:{
+score:36,
+class:"managed",
+text:"Managed Stability",
+desc:"Stable EU environment with relatively predictable migration pathways and moderate regulatory change dynamics."
+},
 
-switzerland:{score:28,class:"Structural Stability",text:"Highly predictable regulatory environment."},
-austria:{score:35,class:"Managed Stability",text:"Stable EU regulatory environment."},
-czechia:{score:38,class:"Managed Stability",text:"Predictable regulatory system within EU."},
-hungary:{score:52,class:"Regulatory Fluidity",text:"Frequent domestic regulatory adjustments."},
-poland:{score:45,class:"Regulatory Fluidity",text:"Moderate volatility driven by political reforms."},
+spain:{
+score:44,
+class:"fluid",
+text:"Regulatory Fluidity",
+desc:"Frequent regulatory adjustments and tax policy evolution within EU frameworks."
+},
 
-montenegro:{score:63,class:"Systemic Volatility",text:"Emerging jurisdiction with developing regulatory institutions."},
-serbia:{score:60,class:"Systemic Volatility",text:"Rapid economic changes with regulatory unpredictability."},
-uae:{score:29,class:"Structural Stability",text:"Highly competitive tax and residency environment."},
-turkey:{score:70,class:"Structural Instability",text:"Macroeconomic volatility and regulatory unpredictability."},
-georgia:{score:47,class:"Regulatory Fluidity",text:"Flexible pro-business regulatory environment."},
+france:{
+score:41,
+class:"managed",
+text:"Managed Stability",
+desc:"Institutionally stable but characterized by regulatory complexity and administrative layers."
+},
 
-thailand:{score:57,class:"Regulatory Fluidity",text:"Moderate institutional volatility with evolving visa policy."},
-vietnam:{score:61,class:"Systemic Volatility",text:"Rapid economic growth with regulatory unpredictability."},
-malaysia:{score:49,class:"Regulatory Fluidity",text:"Stable infrastructure with evolving migration policy."},
-indonesia:{score:54,class:"Regulatory Fluidity",text:"Large emerging economy with changing compliance frameworks."},
-philippines:{score:55,class:"Regulatory Fluidity",text:"Institutional volatility with accessible residency options."},
+usa:{
+score:38,
+class:"managed",
+text:"Managed Stability",
+desc:"Stable federal framework with moderate policy volatility across immigration and taxation."
+},
 
-singapore:{score:22,class:"Structural Stability",text:"One of the most predictable regulatory environments globally."},
-japan:{score:30,class:"Structural Stability",text:"Highly stable governance and policy environment."},
-southkorea:{score:33,class:"Managed Stability",text:"Predictable institutional framework."},
+thailand:{
+score:57,
+class:"fluid",
+text:"Regulatory Fluidity",
+desc:"Visa policy flexibility combined with periodic regulatory adjustments."
+},
 
-usa:{score:38,class:"Managed Stability",text:"Stable governance with complex tax reporting systems."},
-canada:{score:34,class:"Managed Stability",text:"Highly transparent regulatory structures."},
-mexico:{score:50,class:"Regulatory Fluidity",text:"Moderate institutional volatility."},
-panama:{score:42,class:"Regulatory Fluidity",text:"Competitive residency frameworks."},
-costarica:{score:40,class:"Managed Stability",text:"Stable democratic system."},
+vietnam:{
+score:61,
+class:"volatility",
+text:"Systemic Volatility",
+desc:"Rapid economic reform environment with evolving regulatory architecture."
+},
 
-brazil:{score:58,class:"Regulatory Fluidity",text:"Large emerging economy with evolving regulation."},
-argentina:{score:72,class:"Structural Instability",text:"High macroeconomic volatility."},
+montenegro:{
+score:63,
+class:"volatility",
+text:"Systemic Volatility",
+desc:"Emerging regulatory framework with geopolitical exposure in Balkan region."
+},
 
-australia:{score:32,class:"Managed Stability",text:"Stable regulatory environment."},
-nz:{score:24,class:"Structural Stability",text:"Highly predictable institutional governance."}
+newzealand:{
+score:24,
+class:"stable",
+text:"Structural Stability",
+desc:"Highly predictable governance and migration frameworks."
+}
 
-};
+}
 
-function loadCountry(){
+function showCountry(country){
 
-const c=document.getElementById("countrySelect").value;
-if(!c)return;
+const data=countries[country]
 
-const d=data[c];
-const width=d.score;
+const box=document.getElementById("countryProfile")
 
-document.getElementById("profile").innerHTML=
+box.className="profile "+data.class
 
-"<h2>"+c.replace(/^\w/,m=>m.toUpperCase())+"</h2>"+
+box.innerHTML=`
+<h2>${country.charAt(0).toUpperCase()+country.slice(1)}</h2>
 
-"<div class='score'>SVI Score: "+d.score+"</div>"+
-"<div class='class'>"+d.class+"</div>"+
+<div class="score">
+SVI Score: ${data.score}
+</div>
 
-"<div class='gauge'><div class='gauge-fill' id='gauge'></div></div>"+
+<div>
+${data.text}
+</div>
 
-"<p style='margin-top:20px'>"+d.text+"</p>";
-
-setTimeout(()=>{
-
-document.getElementById("gauge").style.width=width+"%";
-
-},100);
+<p class="description">
+${data.desc}
+</p>
+`
 
 }
 
