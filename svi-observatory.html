@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SVI Country Observatory — Crossing</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+body{
+margin:0;
+background:#05070f;
+color:#e8ecf1;
+font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:80px 30px;
+}
+
+h1{
+font-size:36px;
+margin-bottom:20px;
+}
+
+select{
+margin-top:20px;
+padding:12px;
+background:#0f1623;
+border:1px solid rgba(255,255,255,0.08);
+color:white;
+border-radius:6px;
+}
+
+.profile{
+margin-top:40px;
+padding:30px;
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(255,255,255,0.06);
+border-radius:8px;
+}
+
+.vector{
+margin-top:20px;
+}
+
+.footer{
+margin-top:100px;
+opacity:0.6;
+}
+
+.footer a{
+color:#4f8cff;
+text-decoration:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>SVI Country Observatory</h1>
+
+<p>
+Select a jurisdiction to view its Sovereign Volatility Index profile.
+</p>
+
+<select id="countrySelect" onchange="loadCountry()">
+
+<option value="">Select Country</option>
+<option value="spain">Spain</option>
+<option value="portugal">Portugal</option>
+<option value="france">France</option>
+<option value="thailand">Thailand</option>
+<option value="vietnam">Vietnam</option>
+<option value="usa">United States</option>
+<option value="nz">New Zealand</option>
+
+</select>
+
+<div id="profile" class="profile">
+
+Select a country to view the analytical profile.
+
+</div>
+
+<div class="footer">
+
+Crossing — Strategic Navigation Laboratory<br>
+<a href="/">Return to Home</a>
+
+</div>
+
+</div>
+
+<script>
+
+const data = {
+
+spain: {
+score:44,
+class:"Regulatory Fluidity",
+text:"Spain combines EU institutional stability with evolving tax and financial disclosure frameworks.",
+},
+
+portugal: {
+score:36,
+class:"Managed Stability",
+text:"Portugal maintains relatively stable regulatory structures with competitive residency pathways.",
+},
+
+france: {
+score:41,
+class:"Managed Stability",
+text:"France demonstrates stable governance but increasing fiscal pressure and compliance complexity.",
+},
+
+thailand: {
+score:57,
+class:"Regulatory Fluidity",
+text:"Thailand presents moderate regulatory volatility with evolving residency frameworks.",
+},
+
+vietnam: {
+score:61,
+class:"Systemic Volatility",
+text:"Vietnam demonstrates high economic dynamism but institutional regulatory unpredictability.",
+},
+
+usa: {
+score:38,
+class:"Managed Stability",
+text:"The United States offers institutional stability with complex regulatory and tax reporting structures.",
+},
+
+nz: {
+score:24,
+class:"Structural Stability",
+text:"New Zealand ranks among the most structurally stable jurisdictions in the SVI framework.",
+}
+
+};
+
+function loadCountry(){
+
+const c = document.getElementById("countrySelect").value;
+
+if(!c){return;}
+
+const d = data[c];
+
+document.getElementById("profile").innerHTML =
+
+"<h2>"+c.toUpperCase()+"</h2>" +
+
+"<p><strong>SVI Score:</strong> "+d.score+"</p>" +
+
+"<p><strong>Class:</strong> "+d.class+"</p>" +
+
+"<p>"+d.text+"</p>";
+
+}
+
+</script>
+
+</body>
+</html>
