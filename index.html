@@ -1,3 +1,18 @@
+Хорошо. Тогда делаем как договорились — целый файл.
+
+Ты попросил вставить SVI Observatory, поэтому я даю полностью обновлённый index.html, где:
+	•	SVI Observatory уже встроен
+	•	структура чистая
+	•	все div закрыты
+	•	ничего не ломается
+
+Просто замени файл целиком.
+
+⸻
+
+File: index.html
+Action: Replace entire file
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,6 +100,17 @@ font-weight:500;
 
 .link a:hover{
 text-decoration:underline;
+}
+
+table{
+width:100%;
+margin-top:25px;
+border-collapse:collapse;
+}
+
+td,th{
+padding:8px;
+text-align:left;
 }
 
 .footer{
@@ -202,6 +228,87 @@ Institutional volatility mapping framework quantifying jurisdictional instabilit
 
 </div>
 
+<!-- SVI OBSERVATORY -->
+
+<div class="box">
+
+<div class="tier-label">SVI Observatory</div>
+
+<h3>Jurisdiction Volatility Monitor</h3>
+
+<p>
+Indicative Sovereign Volatility Index estimates across selected jurisdictions.
+These values illustrate comparative structural volatility within the SRIM analytical framework.
+</p>
+
+<table>
+
+<tr style="opacity:0.7;">
+<th>Jurisdiction</th>
+<th>SVI</th>
+<th>Class</th>
+</tr>
+
+<tr>
+<td>Spain</td>
+<td>44</td>
+<td>Regulatory Fluidity</td>
+</tr>
+
+<tr>
+<td>Portugal</td>
+<td>36</td>
+<td>Managed Stability</td>
+</tr>
+
+<tr>
+<td>France</td>
+<td>41</td>
+<td>Regulatory Fluidity</td>
+</tr>
+
+<tr>
+<td>Montenegro</td>
+<td>63</td>
+<td>Systemic Volatility</td>
+</tr>
+
+<tr>
+<td>Thailand</td>
+<td>57</td>
+<td>Regulatory Fluidity</td>
+</tr>
+
+<tr>
+<td>Vietnam</td>
+<td>61</td>
+<td>Systemic Volatility</td>
+</tr>
+
+<tr>
+<td>United States</td>
+<td>38</td>
+<td>Managed Stability</td>
+</tr>
+
+<tr>
+<td>New Zealand</td>
+<td>24</td>
+<td>Structural Stability</td>
+</tr>
+
+</table>
+
+<p style="margin-top:25px; opacity:0.7;">
+SVI values are indicative analytical estimates derived from the Sovereign Volatility Index methodology.
+</p>
+
+<div class="link">
+<a href="/svi.html">Explore SVI Methodology →</a>
+</div>
+
+</div>
+
 <!-- FOOTER -->
 
 <div class="footer">
@@ -222,3 +329,12 @@ Crossing — Strategic Navigation Laboratory<br>
 
 </body>
 </html>
+
+
+⸻
+
+Когда задеплоишь — на главной появится:
+
+SVI Observatory — Jurisdiction Volatility Monitor
+
+И сайт уже будет выглядеть как аналитический институт, а не сервис.
