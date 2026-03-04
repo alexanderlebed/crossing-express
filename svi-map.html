@@ -45,7 +45,6 @@ margin-top:40px;
 padding:30px;
 border-radius:10px;
 border:1px solid rgba(255,255,255,0.08);
-transition:all .3s;
 }
 
 .score{
@@ -67,33 +66,6 @@ opacity:0.6;
 .footer a{
 color:#4f8cff;
 text-decoration:none;
-}
-
-/* COLORS */
-
-.stable{
-background:rgba(60,180,120,0.12);
-border-color:rgba(60,180,120,0.4);
-}
-
-.managed{
-background:rgba(100,180,255,0.12);
-border-color:rgba(100,180,255,0.4);
-}
-
-.fluid{
-background:rgba(255,190,80,0.12);
-border-color:rgba(255,190,80,0.4);
-}
-
-.volatility{
-background:rgba(255,120,80,0.15);
-border-color:rgba(255,120,80,0.45);
-}
-
-.instability{
-background:rgba(255,70,70,0.18);
-border-color:rgba(255,70,70,0.5);
 }
 
 </style>
@@ -172,7 +144,6 @@ Crossing — Strategic Navigation Laboratory<br>
 <script>
 
 const sviData={
-
 Spain:44,
 Portugal:36,
 France:41,
@@ -183,46 +154,53 @@ Switzerland:28,
 Austria:30,
 Greece:52,
 Cyprus:50,
-
 Montenegro:63,
 Serbia:58,
 Turkey:68,
 "United Arab Emirates":34,
 Qatar:32,
-
 Thailand:57,
 Vietnam:61,
 Malaysia:46,
 Singapore:22,
 Indonesia:55,
-
 Japan:29,
 "South Korea":37,
-
 "United States":38,
 Canada:34,
 Mexico:60,
-
 Brazil:65,
 Chile:48,
 Argentina:74,
-
 Australia:27,
 "New Zealand":24
-
 };
 
-function classify(score){
+function getClass(score){
 
-if(score<=30) return ["Structural Stability","stable"];
+if(score<=30) return "Structural Stability";
 
-if(score<=45) return ["Managed Stability","managed"];
+if(score<=45) return "Managed Stability";
 
-if(score<=60) return ["Regulatory Fluidity","fluid"];
+if(score<=60) return "Regulatory Fluidity";
 
-if(score<=75) return ["Systemic Volatility","volatility"];
+if(score<=75) return "Systemic Volatility";
 
-return ["Structural Instability","instability"];
+return "Structural Instability";
+
+}
+
+function getColor(score){
+
+if(score<=30) return "rgba(60,180,120,0.15)";
+
+if(score<=45) return "rgba(100,180,255,0.15)";
+
+if(score<=60) return "rgba(255,200,80,0.15)";
+
+if(score<=75) return "rgba(255,120,80,0.18)";
+
+return "rgba(255,70,70,0.2)";
 
 }
 
@@ -236,17 +214,15 @@ const score=sviData[country];
 
 const result=document.getElementById("resultBox");
 
-const [label,color]=classify(score);
-
-result.className="result "+color;
-
 result.style.display="block";
+
+result.style.background=getColor(score);
 
 document.getElementById("countryName").innerText=country;
 
 document.getElementById("sviScore").innerText=score+" / 100";
 
-document.getElementById("sviClass").innerText=label;
+document.getElementById("sviClass").innerText=getClass(score);
 
 });
 
