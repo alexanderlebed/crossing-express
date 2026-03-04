@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>SVI Global Ranking — Crossing</title>
+<title>SVI Global Jurisdiction Ranking — Crossing</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -21,49 +21,70 @@ padding:80px 30px;
 }
 
 h1{
-font-size:36px;
+font-size:34px;
 margin-bottom:20px;
 }
 
-.subtitle{
-opacity:0.9;
-line-height:1.8;
-margin-bottom:40px;
+p{
+opacity:0.85;
+line-height:1.6;
 }
 
 table{
 width:100%;
-border-collapse:collapse;
 margin-top:40px;
+border-collapse:collapse;
 }
 
 th,td{
 padding:12px;
-border-bottom:1px solid rgba(255,255,255,0.06);
-}
-
-th{
-opacity:0.7;
 text-align:left;
 }
 
-.rank{
+th{
+opacity:0.6;
+}
+
+/* VERY CLEAR COLORS */
+
+.stable{
+background:#123d2a;
+color:#3cff9b;
+font-weight:600;
+}
+
+.managed{
+background:#0f2e4a;
+color:#6cc3ff;
+font-weight:600;
+}
+
+.fluid{
+background:#4a3a0f;
+color:#ffd166;
+font-weight:600;
+}
+
+.volatility{
+background:#4a250f;
+color:#ff9b66;
+font-weight:600;
+}
+
+.instability{
+background:#4a0f0f;
+color:#ff6666;
 font-weight:600;
 }
 
 .footer{
-margin-top:100px;
+margin-top:80px;
 opacity:0.6;
-font-size:14px;
 }
 
 .footer a{
 color:#4f8cff;
 text-decoration:none;
-}
-
-.footer a:hover{
-text-decoration:underline;
 }
 
 </style>
@@ -75,8 +96,9 @@ text-decoration:underline;
 
 <h1>SVI Global Jurisdiction Ranking</h1>
 
-<p class="subtitle">
-The Sovereign Volatility Index (SVI) ranks jurisdictions according to structural regulatory volatility, migration policy stability and geopolitical discontinuity risk.
+<p>
+The Sovereign Volatility Index (SVI) ranks jurisdictions according to regulatory volatility,
+migration policy stability and geopolitical discontinuity risk.
 </p>
 
 <table>
@@ -84,65 +106,49 @@ The Sovereign Volatility Index (SVI) ranks jurisdictions according to structural
 <tr>
 <th>Rank</th>
 <th>Jurisdiction</th>
-<th>SVI Score</th>
+<th>SVI</th>
 <th>Class</th>
 </tr>
 
-<tr>
-<td class="rank">1</td>
-<td>New Zealand</td>
-<td>24</td>
-<td>Structural Stability</td>
-</tr>
+<tr><td>1</td><td>Singapore</td><td class="stable">22</td><td>Structural Stability</td></tr>
+<tr><td>2</td><td>New Zealand</td><td class="stable">24</td><td>Structural Stability</td></tr>
+<tr><td>3</td><td>Switzerland</td><td class="stable">28</td><td>Structural Stability</td></tr>
+<tr><td>4</td><td>Japan</td><td class="stable">29</td><td>Structural Stability</td></tr>
+<tr><td>5</td><td>Austria</td><td class="stable">30</td><td>Structural Stability</td></tr>
 
-<tr>
-<td class="rank">2</td>
-<td>Portugal</td>
-<td>36</td>
-<td>Managed Stability</td>
-</tr>
+<tr><td>6</td><td>Netherlands</td><td class="managed">33</td><td>Managed Stability</td></tr>
+<tr><td>7</td><td>Canada</td><td class="managed">34</td><td>Managed Stability</td></tr>
+<tr><td>8</td><td>Germany</td><td class="managed">35</td><td>Managed Stability</td></tr>
+<tr><td>9</td><td>Portugal</td><td class="managed">36</td><td>Managed Stability</td></tr>
+<tr><td>10</td><td>South Korea</td><td class="managed">37</td><td>Managed Stability</td></tr>
+<tr><td>11</td><td>United States</td><td class="managed">38</td><td>Managed Stability</td></tr>
+<tr><td>12</td><td>France</td><td class="managed">41</td><td>Managed Stability</td></tr>
 
-<tr>
-<td class="rank">3</td>
-<td>United States</td>
-<td>38</td>
-<td>Managed Stability</td>
-</tr>
+<tr><td>13</td><td>Spain</td><td class="fluid">44</td><td>Regulatory Fluidity</td></tr>
+<tr><td>14</td><td>Malaysia</td><td class="fluid">46</td><td>Regulatory Fluidity</td></tr>
+<tr><td>15</td><td>Italy</td><td class="fluid">47</td><td>Regulatory Fluidity</td></tr>
+<tr><td>16</td><td>Chile</td><td class="fluid">48</td><td>Regulatory Fluidity</td></tr>
+<tr><td>17</td><td>Cyprus</td><td class="fluid">50</td><td>Regulatory Fluidity</td></tr>
+<tr><td>18</td><td>Greece</td><td class="fluid">52</td><td>Regulatory Fluidity</td></tr>
+<tr><td>19</td><td>Indonesia</td><td class="fluid">55</td><td>Regulatory Fluidity</td></tr>
+<tr><td>20</td><td>Thailand</td><td class="fluid">57</td><td>Regulatory Fluidity</td></tr>
 
-<tr>
-<td class="rank">4</td>
-<td>France</td>
-<td>41</td>
-<td>Managed Stability</td>
-</tr>
+<tr><td>21</td><td>Serbia</td><td class="volatility">58</td><td>Systemic Volatility</td></tr>
+<tr><td>22</td><td>Mexico</td><td class="volatility">60</td><td>Systemic Volatility</td></tr>
+<tr><td>23</td><td>Vietnam</td><td class="volatility">61</td><td>Systemic Volatility</td></tr>
+<tr><td>24</td><td>Montenegro</td><td class="volatility">63</td><td>Systemic Volatility</td></tr>
+<tr><td>25</td><td>Brazil</td><td class="volatility">65</td><td>Systemic Volatility</td></tr>
+<tr><td>26</td><td>Turkey</td><td class="volatility">68</td><td>Systemic Volatility</td></tr>
 
-<tr>
-<td class="rank">5</td>
-<td>Spain</td>
-<td>44</td>
-<td>Regulatory Fluidity</td>
-</tr>
-
-<tr>
-<td class="rank">6</td>
-<td>Thailand</td>
-<td>57</td>
-<td>Regulatory Fluidity</td>
-</tr>
-
-<tr>
-<td class="rank">7</td>
-<td>Vietnam</td>
-<td>61</td>
-<td>Systemic Volatility</td>
-</tr>
-
-<tr>
-<td class="rank">8</td>
-<td>Montenegro</td>
-<td>63</td>
-<td>Systemic Volatility</td>
-</tr>
+<tr><td>27</td><td>Argentina</td><td class="instability">74</td><td>Structural Instability</td></tr>
+<tr><td>28</td><td>South Africa</td><td class="instability">76</td><td>Structural Instability</td></tr>
+<tr><td>29</td><td>Egypt</td><td class="instability">78</td><td>Structural Instability</td></tr>
+<tr><td>30</td><td>Nigeria</td><td class="instability">80</td><td>Structural Instability</td></tr>
+<tr><td>31</td><td>Pakistan</td><td class="instability">82</td><td>Structural Instability</td></tr>
+<tr><td>32</td><td>Iran</td><td class="instability">85</td><td>Structural Instability</td></tr>
+<tr><td>33</td><td>Russia</td><td class="instability">88</td><td>Structural Instability</td></tr>
+<tr><td>34</td><td>Venezuela</td><td class="instability">90</td><td>Structural Instability</td></tr>
+<tr><td>35</td><td>Lebanon</td><td class="instability">92</td><td>Structural Instability</td></tr>
 
 </table>
 
@@ -151,6 +157,7 @@ The Sovereign Volatility Index (SVI) ranks jurisdictions according to structural
 Crossing — Strategic Navigation Laboratory<br>
 
 <a href="/">Return to Home</a><br>
+
 <a href="/svi.html">SVI Methodology</a>
 
 </div>
