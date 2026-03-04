@@ -1,22 +1,209 @@
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SVI Jurisdiction Map — Crossing</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<div class="legend">
+<style>
 
-<div><div class="box" style="background:#2ecc71"></div>Structural Stability</div>
-<div><div class="box" style="background:#f1c40f"></div>Managed Stability</div>
-<div><div class="box" style="background:#e67e22"></div>Regulatory Fluidity</div>
-<div><div class="box" style="background:#e74c3c"></div>Structural Instability</div>
+body{
+margin:0;
+background:#05070f;
+color:#e8ecf1;
+font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:80px 30px;
+}
+
+h1{
+font-size:34px;
+margin-bottom:10px;
+}
+
+.subtitle{
+opacity:0.8;
+margin-bottom:40px;
+}
+
+select{
+width:100%;
+padding:14px;
+background:#0f1623;
+border:1px solid rgba(255,255,255,0.08);
+border-radius:6px;
+color:#e8ecf1;
+font-size:16px;
+}
+
+.result{
+margin-top:40px;
+padding:30px;
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:10px;
+}
+
+.score{
+font-size:36px;
+margin-top:10px;
+color:#4f8cff;
+}
+
+.class{
+margin-top:10px;
+opacity:0.9;
+}
+
+.footer{
+margin-top:80px;
+opacity:0.6;
+}
+
+.footer a{
+color:#4f8cff;
+text-decoration:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>SVI Jurisdiction Explorer</h1>
+
+<p class="subtitle">
+Select a jurisdiction to view its indicative Sovereign Volatility Index score.
+</p>
+
+<select id="countrySelect">
+
+<option value="">Select jurisdiction</option>
+
+<option value="Spain">Spain</option>
+<option value="Portugal">Portugal</option>
+<option value="France">France</option>
+<option value="Italy">Italy</option>
+<option value="Germany">Germany</option>
+<option value="Netherlands">Netherlands</option>
+<option value="Switzerland">Switzerland</option>
+<option value="Austria">Austria</option>
+<option value="Greece">Greece</option>
+<option value="Cyprus">Cyprus</option>
+
+<option value="Montenegro">Montenegro</option>
+<option value="Serbia">Serbia</option>
+<option value="Turkey">Turkey</option>
+<option value="UAE">United Arab Emirates</option>
+<option value="Qatar">Qatar</option>
+
+<option value="Thailand">Thailand</option>
+<option value="Vietnam">Vietnam</option>
+<option value="Malaysia">Malaysia</option>
+<option value="Singapore">Singapore</option>
+<option value="Indonesia">Indonesia</option>
+
+<option value="Japan">Japan</option>
+<option value="South Korea">South Korea</option>
+
+<option value="United States">United States</option>
+<option value="Canada">Canada</option>
+<option value="Mexico">Mexico</option>
+
+<option value="Brazil">Brazil</option>
+<option value="Chile">Chile</option>
+<option value="Argentina">Argentina</option>
+
+<option value="Australia">Australia</option>
+<option value="New Zealand">New Zealand</option>
+
+</select>
+
+<div class="result" id="resultBox" style="display:none">
+
+<h2 id="countryName"></h2>
+
+<div class="score" id="sviScore"></div>
+
+<div class="class" id="sviClass"></div>
 
 </div>
 
 <div class="footer">
-
 Crossing — Strategic Navigation Laboratory<br>
 <a href="/">Return to Home</a>
-
 </div>
 
 </div>
+
+<script>
+
+const sviData = {
+
+Spain:{score:44,class:"Regulatory Fluidity"},
+Portugal:{score:36,class:"Managed Stability"},
+France:{score:41,class:"Regulatory Fluidity"},
+Italy:{score:47,class:"Regulatory Fluidity"},
+Germany:{score:35,class:"Managed Stability"},
+Netherlands:{score:33,class:"Managed Stability"},
+Switzerland:{score:28,class:"Structural Stability"},
+Austria:{score:30,class:"Structural Stability"},
+Greece:{score:52,class:"Regulatory Fluidity"},
+Cyprus:{score:50,class:"Regulatory Fluidity"},
+
+Montenegro:{score:63,class:"Systemic Volatility"},
+Serbia:{score:58,class:"Regulatory Fluidity"},
+Turkey:{score:68,class:"Systemic Volatility"},
+UAE:{score:34,class:"Managed Stability"},
+Qatar:{score:32,class:"Managed Stability"},
+
+Thailand:{score:57,class:"Regulatory Fluidity"},
+Vietnam:{score:61,class:"Systemic Volatility"},
+Malaysia:{score:46,class:"Regulatory Fluidity"},
+Singapore:{score:22,class:"Structural Stability"},
+Indonesia:{score:55,class:"Regulatory Fluidity"},
+
+Japan:{score:29,class:"Structural Stability"},
+"South Korea":{score:37,class:"Managed Stability"},
+
+"United States":{score:38,class:"Managed Stability"},
+Canada:{score:34,class:"Managed Stability"},
+Mexico:{score:60,class:"Systemic Volatility"},
+
+Brazil:{score:65,class:"Systemic Volatility"},
+Chile:{score:48,class:"Regulatory Fluidity"},
+Argentina:{score:74,class:"Systemic Volatility"},
+
+Australia:{score:27,class:"Structural Stability"},
+"New Zealand":{score:24,class:"Structural Stability"}
+
+};
+
+document.getElementById("countrySelect").addEventListener("change",function(){
+
+const country=this.value;
+
+if(!country) return;
+
+const data=sviData[country];
+
+document.getElementById("resultBox").style.display="block";
+
+document.getElementById("countryName").innerText=country;
+
+document.getElementById("sviScore").innerText=data.score+" / 100";
+
+document.getElementById("sviClass").innerText=data.class;
+
+});
+
+</script>
 
 </body>
 </html>
