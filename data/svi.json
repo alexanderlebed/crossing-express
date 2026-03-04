@@ -1,42 +1,89 @@
 {
   "spain": {
     "country": "Spain",
-    "svi": 54,
-    "summary": "Moderate structural stability within EU framework. Predictable regulatory system with rising tax transparency exposure and gradual fiscal tightening."
+    "vectors": {
+      "RA": { "F": 5, "S": 6, "P": 7 },
+      "MPS": { "F": 4, "S": 5, "P": 7 },
+      "CTE": { "F": 6, "S": 6, "P": 6 },
+      "TRF": { "F": 5, "S": 5, "P": 6 },
+      "GDR": { "F": 3, "S": 4, "P": 8 }
+    }
   },
+
   "portugal": {
     "country": "Portugal",
-    "svi": 51,
-    "summary": "Relatively stable mobility environment with evolving tax incentives and moderate policy recalibration following NHR reforms."
+    "vectors": {
+      "RA": { "F": 4, "S": 5, "P": 7 },
+      "MPS": { "F": 4, "S": 5, "P": 7 },
+      "CTE": { "F": 5, "S": 6, "P": 6 },
+      "TRF": { "F": 6, "S": 6, "P": 5 },
+      "GDR": { "F": 3, "S": 4, "P": 8 }
+    }
   },
+
   "france": {
     "country": "France",
-    "svi": 58,
-    "summary": "High regulatory density with strong institutional stability. Elevated tax complexity and social policy rigidity increase compliance exposure."
+    "vectors": {
+      "RA": { "F": 6, "S": 7, "P": 6 },
+      "MPS": { "F": 5, "S": 6, "P": 6 },
+      "CTE": { "F": 7, "S": 7, "P": 6 },
+      "TRF": { "F": 6, "S": 7, "P": 5 },
+      "GDR": { "F": 4, "S": 5, "P": 7 }
+    }
   },
+
   "montenegro": {
     "country": "Montenegro",
-    "svi": 63,
-    "summary": "Emerging jurisdiction with flexible entry pathways but elevated geopolitical sensitivity and evolving EU-alignment risks."
+    "vectors": {
+      "RA": { "F": 6, "S": 6, "P": 5 },
+      "MPS": { "F": 6, "S": 6, "P": 5 },
+      "CTE": { "F": 5, "S": 5, "P": 6 },
+      "TRF": { "F": 5, "S": 5, "P": 6 },
+      "GDR": { "F": 6, "S": 7, "P": 5 }
+    }
   },
+
   "thailand": {
     "country": "Thailand",
-    "svi": 60,
-    "summary": "Accessible mobility hub with periodic visa policy shifts and moderate political volatility. Regulatory shifts tend to be episodic rather than systemic."
+    "vectors": {
+      "RA": { "F": 6, "S": 6, "P": 5 },
+      "MPS": { "F": 6, "S": 6, "P": 5 },
+      "CTE": { "F": 5, "S": 6, "P": 6 },
+      "TRF": { "F": 5, "S": 5, "P": 6 },
+      "GDR": { "F": 6, "S": 6, "P": 5 }
+    }
   },
+
   "vietnam": {
     "country": "Vietnam",
-    "svi": 65,
-    "summary": "Rapidly developing jurisdiction with controlled regulatory framework and higher structural unpredictability for foreign capital and residency pathways."
+    "vectors": {
+      "RA": { "F": 7, "S": 7, "P": 5 },
+      "MPS": { "F": 6, "S": 6, "P": 5 },
+      "CTE": { "F": 6, "S": 6, "P": 5 },
+      "TRF": { "F": 6, "S": 6, "P": 5 },
+      "GDR": { "F": 6, "S": 6, "P": 5 }
+    }
   },
+
   "united states": {
     "country": "United States",
-    "svi": 57,
-    "summary": "Strong institutional framework with high regulatory density. Elevated compliance complexity and tax exposure for global income holders."
+    "vectors": {
+      "RA": { "F": 6, "S": 7, "P": 6 },
+      "MPS": { "F": 5, "S": 6, "P": 6 },
+      "CTE": { "F": 8, "S": 8, "P": 6 },
+      "TRF": { "F": 6, "S": 7, "P": 5 },
+      "GDR": { "F": 4, "S": 6, "P": 6 }
+    }
   },
+
   "new zealand": {
     "country": "New Zealand",
-    "svi": 46,
-    "summary": "High institutional stability with relatively predictable regulatory environment. Geographic isolation reduces geopolitical volatility exposure."
+    "vectors": {
+      "RA": { "F": 3, "S": 4, "P": 8 },
+      "MPS": { "F": 3, "S": 4, "P": 8 },
+      "CTE": { "F": 4, "S": 5, "P": 7 },
+      "TRF": { "F": 4, "S": 5, "P": 7 },
+      "GDR": { "F": 3, "S": 4, "P": 8 }
+    }
   }
 }
