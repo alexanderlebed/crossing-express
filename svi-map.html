@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>SVI Interactive Map — Crossing</title>
+<title>SVI Global Map — Crossing</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -17,59 +17,105 @@ font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
 .container{
 max-width:1100px;
 margin:auto;
-padding:80px 30px;
+padding:60px 30px;
 }
 
 h1{
-font-size:34px;
+font-size:36px;
 margin-bottom:10px;
 }
 
 .subtitle{
-opacity:0.8;
+opacity:0.85;
 margin-bottom:40px;
+line-height:1.6;
 }
+
+/* map grid */
 
 .map{
 display:grid;
-grid-template-columns:repeat(6,1fr);
-gap:12px;
+grid-template-columns:repeat(4,1fr);
+gap:14px;
+margin-top:40px;
 }
 
 .country{
-padding:14px;
-border-radius:6px;
+padding:18px;
+border-radius:8px;
 cursor:pointer;
 text-align:center;
-font-size:14px;
+font-weight:500;
+border:1px solid rgba(255,255,255,0.08);
 transition:0.2s;
 }
 
 .country:hover{
-transform:scale(1.05);
+transform:translateY(-2px);
 }
 
-.stable{ background:#123d2a; }
-.managed{ background:#0f2e4a; }
-.fluid{ background:#4a3a0f; }
-.volatility{ background:#4a250f; }
-.instability{ background:#4a0f0f; }
+/* SVI colors */
 
-.result{
-margin-top:40px;
-padding:25px;
+.stable{
+background:#123d2a;
+color:#3cff9b;
+}
+
+.managed{
+background:#0f2e4a;
+color:#6cc3ff;
+}
+
+.fluid{
+background:#4a3a0f;
+color:#ffd166;
+}
+
+.volatility{
+background:#4a250f;
+color:#ff9b66;
+}
+
+.instability{
+background:#4a0f0f;
+color:#ff6666;
+}
+
+/* popup */
+
+.popup{
+position:fixed;
+top:120px;
+right:40px;
+width:260px;
+background:#0f1623;
 border:1px solid rgba(255,255,255,0.1);
-border-radius:8px;
+border-radius:10px;
+padding:20px;
+box-shadow:0 10px 40px rgba(0,0,0,0.6);
 display:none;
+z-index:1000;
+}
+
+.popup h3{
+margin-top:0;
 }
 
 .score{
-font-size:36px;
+font-size:26px;
 margin-top:10px;
 }
 
+.close{
+position:absolute;
+top:8px;
+right:12px;
+cursor:pointer;
+opacity:0.6;
+}
+
 .footer{
-margin-top:80px;
+margin-top:100px;
 opacity:0.6;
 }
 
@@ -85,21 +131,34 @@ text-decoration:none;
 
 <div class="container">
 
-<h1>SVI Interactive Map</h1>
+<h1>SVI Global Map</h1>
 
 <p class="subtitle">
-Click a jurisdiction to view its Sovereign Volatility Index classification.
+Indicative Sovereign Volatility Index classification across selected jurisdictions.
+Click a jurisdiction to view its structural volatility score.
 </p>
 
-<div class="map" id="map"></div>
+<div class="map">
 
-<div class="result" id="result">
+<div class="country stable" onclick="showSVI('Singapore',22,'Structural Stability')">Singapore</div>
+<div class="country stable" onclick="showSVI('New Zealand',24,'Structural Stability')">New Zealand</div>
+<div class="country stable" onclick="showSVI('Switzerland',28,'Structural Stability')">Switzerland</div>
+<div class="country stable" onclick="showSVI('Japan',29,'Structural Stability')">Japan</div>
 
-<h2 id="country"></h2>
+<div class="country managed" onclick="showSVI('Portugal',36,'Managed Stability')">Portugal</div>
+<div class="country managed" onclick="showSVI('United States',38,'Managed Stability')">United States</div>
+<div class="country managed" onclick="showSVI('Germany',35,'Managed Stability')">Germany</div>
+<div class="country managed" onclick="showSVI('France',41,'Managed Stability')">France</div>
 
-<div class="score" id="score"></div>
+<div class="country fluid" onclick="showSVI('Spain',44,'Regulatory Fluidity')">Spain</div>
+<div class="country fluid" onclick="showSVI('Italy',47,'Regulatory Fluidity')">Italy</div>
+<div class="country fluid" onclick="showSVI('Thailand',57,'Regulatory Fluidity')">Thailand</div>
+<div class="country fluid" onclick="showSVI('Malaysia',46,'Regulatory Fluidity')">Malaysia</div>
 
-<div id="class"></div>
+<div class="country volatility" onclick="showSVI('Vietnam',61,'Systemic Volatility')">Vietnam</div>
+<div class="country volatility" onclick="showSVI('Montenegro',63,'Systemic Volatility')">Montenegro</div>
+<div class="country volatility" onclick="showSVI('Brazil',65,'Systemic Volatility')">Brazil</div>
+<div class="country volatility" onclick="showSVI('Turkey',68,'Systemic Volatility')">Turkey</div>
 
 </div>
 
@@ -110,89 +169,34 @@ Crossing — Strategic Navigation Laboratory<br>
 
 </div>
 
+
+<div id="popup" class="popup">
+
+<div class="close" onclick="closePopup()">✕</div>
+
+<h3 id="countryName"></h3>
+
+<div class="score" id="sviScore"></div>
+
+<div id="sviClass"></div>
+
+</div>
+
+
 <script>
 
-const countries={
+function showSVI(country,score,className){
 
-Portugal:{score:36},
-Spain:{score:44},
-France:{score:41},
-Italy:{score:47},
-Germany:{score:35},
-Netherlands:{score:33},
-Switzerland:{score:28},
-Austria:{score:30},
-Greece:{score:52},
-Cyprus:{score:50},
-Malta:{score:39},
-Montenegro:{score:63},
-Serbia:{score:58},
+document.getElementById("countryName").innerText=country
+document.getElementById("sviScore").innerText="SVI Score: "+score
+document.getElementById("sviClass").innerText=className
 
-"United Arab Emirates":{score:34},
-Qatar:{score:32},
-
-Singapore:{score:22},
-Japan:{score:29},
-"South Korea":{score:37},
-Thailand:{score:57},
-Vietnam:{score:61},
-Malaysia:{score:46},
-Indonesia:{score:55},
-
-"United States":{score:38},
-Canada:{score:34},
-Mexico:{score:60},
-Chile:{score:48},
-Brazil:{score:65},
-Argentina:{score:74},
-"Costa Rica":{score:43},
-Panama:{score:45},
-Uruguay:{score:40},
-
-Australia:{score:27},
-"New Zealand":{score:24}
-
-};
-
-function getClass(score){
-
-if(score<=30) return ["Structural Stability","stable"];
-if(score<=40) return ["Managed Stability","managed"];
-if(score<=55) return ["Regulatory Fluidity","fluid"];
-if(score<=70) return ["Systemic Volatility","volatility"];
-
-return ["Structural Instability","instability"];
+document.getElementById("popup").style.display="block"
 
 }
 
-const map=document.getElementById("map");
-
-for(const country in countries){
-
-const score=countries[country].score;
-
-const cls=getClass(score);
-
-const div=document.createElement("div");
-
-div.className="country "+cls[1];
-
-div.innerText=country;
-
-div.onclick=function(){
-
-document.getElementById("result").style.display="block";
-
-document.getElementById("country").innerText=country;
-
-document.getElementById("score").innerText="SVI Score: "+score;
-
-document.getElementById("class").innerText=cls[0];
-
-};
-
-map.appendChild(div);
-
+function closePopup(){
+document.getElementById("popup").style.display="none"
 }
 
 </script>
