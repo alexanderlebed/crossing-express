@@ -43,7 +43,7 @@ display:block;
 margin-top:15px;
 }
 
-input,select{
+input{
 width:100%;
 padding:12px;
 margin-top:8px;
@@ -76,6 +76,11 @@ margin-top:10px;
 font-size:18px;
 }
 
+.metric{
+margin-top:15px;
+opacity:0.85;
+}
+
 .warning{
 color:#ff9b66;
 font-weight:600;
@@ -92,7 +97,6 @@ text-decoration:none;
 }
 
 </style>
-
 </head>
 
 <body>
@@ -102,16 +106,16 @@ text-decoration:none;
 <h1>AI Relocation Advisor</h1>
 
 <p class="subtitle">
-Evaluate realistic relocation options based on income, capital and jurisdictional accessibility.
+Evaluate realistic relocation options based on financial capacity and jurisdictional accessibility.
 </p>
 
 <div class="box">
 
 <label>Annual Income (€)</label>
-<input id="income" type="number" value="50000">
+<input id="income" type="number" value="60000">
 
 <label>Net Worth (€)</label>
-<input id="wealth" type="number" value="100000">
+<input id="wealth" type="number" value="120000">
 
 <button id="runButton">Run Analysis</button>
 
@@ -128,87 +132,87 @@ Crossing — Strategic Navigation Laboratory<br>
 
 <script>
 
-const countries = [
+const countries=[
 
-{name:"Serbia",minIncome:15000,minWealth:20000},
-{name:"Montenegro",minIncome:20000,minWealth:30000},
-{name:"Bulgaria",minIncome:20000,minWealth:30000},
-{name:"Romania",minIncome:20000,minWealth:30000},
+{name:"Serbia",tax:"Low",risk:"Moderate",difficulty:"Easy",income:15000,wealth:20000},
+{name:"Montenegro",tax:"Low",risk:"Moderate",difficulty:"Easy",income:20000,wealth:30000},
+{name:"Bulgaria",tax:"Low",risk:"Low",difficulty:"Easy",income:20000,wealth:30000},
+{name:"Romania",tax:"Low",risk:"Low",difficulty:"Easy",income:20000,wealth:30000},
 
-{name:"Thailand",minIncome:30000,minWealth:50000},
-{name:"Mexico",minIncome:30000,minWealth:50000},
-{name:"Panama",minIncome:35000,minWealth:60000},
+{name:"Thailand",tax:"Moderate",risk:"Moderate",difficulty:"Moderate",income:30000,wealth:50000},
+{name:"Mexico",tax:"Moderate",risk:"Moderate",difficulty:"Moderate",income:30000,wealth:50000},
 
-{name:"Portugal",minIncome:45000,minWealth:80000},
-{name:"Spain",minIncome:50000,minWealth:100000},
-{name:"Greece",minIncome:45000,minWealth:80000},
+{name:"Portugal",tax:"High",risk:"Low",difficulty:"Moderate",income:45000,wealth:80000},
+{name:"Spain",tax:"High",risk:"Low",difficulty:"Moderate",income:50000,wealth:100000},
+{name:"Greece",tax:"Moderate",risk:"Moderate",difficulty:"Moderate",income:45000,wealth:80000},
 
-{name:"Italy",minIncome:60000,minWealth:150000},
-{name:"France",minIncome:65000,minWealth:200000},
+{name:"Italy",tax:"High",risk:"Low",difficulty:"Moderate",income:60000,wealth:150000},
+{name:"France",tax:"High",risk:"Low",difficulty:"Hard",income:65000,wealth:200000},
 
-{name:"Canada",minIncome:80000,minWealth:300000},
-{name:"Netherlands",minIncome:90000,minWealth:300000},
+{name:"Canada",tax:"High",risk:"Low",difficulty:"Hard",income:80000,wealth:300000},
+{name:"Netherlands",tax:"High",risk:"Low",difficulty:"Hard",income:90000,wealth:300000},
 
-{name:"UAE",minIncome:100000,minWealth:500000},
-{name:"Switzerland",minIncome:200000,minWealth:2000000},
-{name:"Singapore",minIncome:250000,minWealth:3000000}
+{name:"UAE",tax:"Very Low",risk:"Moderate",difficulty:"Moderate",income:100000,wealth:500000},
+{name:"Switzerland",tax:"Moderate",risk:"Very Low",difficulty:"Hard",income:200000,wealth:2000000},
+{name:"Singapore",tax:"Low",risk:"Very Low",difficulty:"Hard",income:250000,wealth:3000000}
 
 ]
 
 function runAdvisor(){
 
-const income = parseInt(document.getElementById("income").value) || 0
-const wealth = parseInt(document.getElementById("wealth").value) || 0
+let income=parseInt(document.getElementById("income").value)||0
+let wealth=parseInt(document.getElementById("wealth").value)||0
+let result=document.getElementById("result")
 
-const resultBox = document.getElementById("result")
+result.style.display="block"
 
-resultBox.style.display = "block"
+if(income<15000 && wealth<20000){
 
-if(income < 15000 && wealth < 20000){
-
-resultBox.innerHTML = `
-<h3 class="warning">Relocation currently not financially feasible</h3>
-<p>
-Current income and savings are below the minimum threshold required for sustainable relocation.
-</p>
-<p>
-Estimated minimum financial base for relocation: <strong>€50k–€100k</strong> depending on jurisdiction.
-</p>
-`
+result.innerHTML=
+"<h3 class='warning'>Relocation currently unrealistic</h3>"+
+"<p>Current income and capital are below minimum levels required for sustainable relocation.</p>"+
+"<p>Estimated minimum relocation capital: €50k–€100k.</p>"
 
 return
 }
 
-let available = countries.filter(c =>
-income >= c.minIncome && wealth >= c.minWealth
-)
+let possible=countries.filter(c=>income>=c.income && wealth>=c.wealth)
 
-if(available.length === 0){
+if(possible.length===0){
 
-resultBox.innerHTML = `
-<h3 class="warning">Limited relocation feasibility</h3>
-<p>
-Current financial profile restricts relocation options.
-Consider building additional savings before relocating.
-</p>
-`
+result.innerHTML=
+"<h3 class='warning'>Limited relocation feasibility</h3>"+
+"<p>Your current financial profile restricts relocation options.</p>"+
+"<p>Recommended strategy: build savings and increase income before relocating.</p>"
 
 return
 }
 
-available.sort((a,b)=>a.minIncome - b.minIncome)
+possible.sort((a,b)=>a.income-b.income)
 
-let html = "<h3>Accessible Jurisdictions</h3>"
+let html="<h3>Accessible Jurisdictions</h3>"
 
-available.slice(0,5).forEach((c,i)=>{
-html += "<div class='country'>" + (i+1) + ". " + c.name + "</div>"
+possible.slice(0,5).forEach((c,i)=>{
+
+html+="<div class='country'>"+(i+1)+". "+c.name+"</div>"+
+"<div class='metric'>Tax Pressure: "+c.tax+"</div>"+
+"<div class='metric'>SVI Risk: "+c.risk+"</div>"+
+"<div class='metric'>Residency Difficulty: "+c.difficulty+"</div><br>"
+
 })
 
-resultBox.innerHTML = html
+let mobility="Limited"
+
+if(income>80000 && wealth>300000) mobility="Moderate"
+if(income>200000 && wealth>2000000) mobility="High"
+
+html+="<h3>Mobility Class</h3><div class='country'>"+mobility+"</div>"
+
+result.innerHTML=html
 
 }
 
-document.getElementById("runButton").addEventListener("click", runAdvisor)
+document.getElementById("runButton").addEventListener("click",runAdvisor)
 
 </script>
 
