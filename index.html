@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Crossing — Sovereign Volatility Intelligence Platform</title>
+<title>Country Observatory — Crossing</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -15,95 +15,57 @@ font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
 }
 
 .container{
-max-width:950px;
+max-width:900px;
 margin:auto;
-padding:60px 30px;
+padding:80px 30px;
 }
 
 h1{
-font-size:42px;
+font-size:36px;
 margin-bottom:10px;
 }
 
 .subtitle{
-opacity:0.9;
-margin-bottom:25px;
-line-height:1.6;
-}
-
-.statement{
-margin-top:20px;
-padding:18px;
-background:rgba(79,140,255,0.08);
-border-left:3px solid #4f8cff;
-border-radius:6px;
+opacity:0.8;
+margin-bottom:30px;
 }
 
 .box{
-margin-top:50px;
-padding:35px;
+margin-top:30px;
+padding:30px;
 background:rgba(255,255,255,0.03);
-border:1px solid rgba(255,255,255,0.06);
-border-radius:12px;
-}
-
-.box-platform{
-background:rgba(79,140,255,0.05);
-border:1px solid rgba(79,140,255,0.25);
-}
-
-.tier-label{
-font-size:12px;
-letter-spacing:1px;
-text-transform:uppercase;
-color:#4f8cff;
-margin-bottom:10px;
-}
-
-.link{
-margin-top:10px;
-}
-
-.link a{
-color:#4f8cff;
-text-decoration:none;
-}
-
-.link a:hover{
-text-decoration:underline;
-}
-
-select{
-width:100%;
-padding:12px;
-margin-top:15px;
-background:#0f1623;
-border:1px solid rgba(255,255,255,0.1);
-color:white;
-border-radius:6px;
-}
-
-.result{
-margin-top:20px;
-padding:20px;
-border-radius:8px;
-background:#0f1623;
+border:1px solid rgba(255,255,255,0.08);
+border-radius:10px;
 }
 
 .score{
-font-size:28px;
+font-size:40px;
+margin-top:10px;
+color:#4f8cff;
+}
+
+.vector{
 margin-top:10px;
 }
 
 .footer{
-margin-top:100px;
+margin-top:80px;
 opacity:0.6;
-font-size:14px;
 }
 
 .footer a{
 color:#4f8cff;
 text-decoration:none;
+}
+
+select{
+width:100%;
+padding:12px;
+margin-top:20px;
+background:#0f1623;
+border:1px solid rgba(255,255,255,0.1);
+color:white;
+border-radius:6px;
 }
 
 </style>
@@ -113,98 +75,24 @@ text-decoration:none;
 
 <div class="container">
 
-<h1>Sovereign Volatility Intelligence Platform</h1>
+<h1 id="countryName">Country</h1>
 
 <p class="subtitle">
-Crossing is an independent analytical laboratory studying jurisdictional stability,
-global mobility and sovereign regulatory risk.  
-The platform publishes open intelligence tools designed to support cross-border decision making.
+SVI analytical country profile within the SRIM jurisdiction modeling framework.
 </p>
 
-<div class="statement">
-SRIM — Sovereign Relocation Intelligence Modeling — maps jurisdictional volatility,
-migration accessibility and regulatory exposure across global mobility destinations.
-</div>
+
+<select id="countrySelect"></select>
 
 
 
 <div class="box">
 
-<div class="tier-label">SVI Live Dashboard</div>
+<h3>Sovereign Volatility Index</h3>
 
-<h3>Global Volatility Indicators</h3>
+<div class="score" id="sviScore"></div>
 
-<div class="result">
-
-<div><strong>Global Average SVI</strong><br>42 — Moderate Volatility</div>
-
-<br>
-
-<div><strong>Structural Stability Leaders</strong><br>
-Singapore · New Zealand · Switzerland · Japan
-</div>
-
-<br>
-
-<div><strong>Elevated Volatility Jurisdictions</strong><br>
-Turkey · Brazil · Vietnam · Montenegro
-</div>
-
-<br>
-
-<div><strong>Active Crisis Signals</strong><br>
-Middle East escalation · Red Sea corridor disruption
-</div>
-
-</div>
-
-</div>
-
-
-
-<div class="box box-platform">
-
-<div class="tier-label">SVI Platform</div>
-
-<h3>Jurisdiction Volatility Explorer</h3>
-
-<p>
-Select a jurisdiction to view its indicative Sovereign Volatility Index classification.
-</p>
-
-<select onchange="showSVI(this.value)">
-<option value="">Select jurisdiction</option>
-<option value="Spain">Spain</option>
-<option value="Portugal">Portugal</option>
-<option value="France">France</option>
-<option value="United States">United States</option>
-<option value="Thailand">Thailand</option>
-<option value="Vietnam">Vietnam</option>
-<option value="Montenegro">Montenegro</option>
-<option value="New Zealand">New Zealand</option>
-</select>
-
-<div id="result" class="result" style="display:none;"></div>
-
-<div class="link">
-<a href="/svi-ranking.html">SVI Global Ranking →</a>
-</div>
-
-<div class="link">
-<a href="/svi-map.html">SVI Global Map →</a>
-</div>
-
-<div class="link">
-<a href="/svi-explorer.html">Jurisdiction Explorer →</a>
-</div>
-
-<div class="link">
-<a href="/svi-crisis-monitor.html">SVI Crisis Monitor →</a>
-</div>
-
-<div class="link">
-<a href="/dashboard.html">Global Mobility Dashboard →</a>
-</div>
+<div id="sviClass"></div>
 
 </div>
 
@@ -212,18 +100,17 @@ Select a jurisdiction to view its indicative Sovereign Volatility Index classifi
 
 <div class="box">
 
-<div class="tier-label">Country Observatory</div>
+<h3>Core Vectors</h3>
 
-<h3>Jurisdiction Intelligence Profiles</h3>
+<div class="vector"><strong>Tax Pressure:</strong> <span id="tax"></span></div>
 
-<p>
-Country Observatory provides structured analytical profiles across tax exposure,
-migration accessibility, geopolitical risk and regulatory stability.
-</p>
+<div class="vector"><strong>Migration Accessibility:</strong> <span id="migration"></span></div>
 
-<div class="link">
-<a href="/country.html">Open Country Observatory →</a>
-</div>
+<div class="vector"><strong>Residency Path:</strong> <span id="residency"></span></div>
+
+<div class="vector"><strong>Geopolitical Risk:</strong> <span id="geo"></span></div>
+
+<div class="vector"><strong>Crime & Safety:</strong> <span id="crime"></span></div>
 
 </div>
 
@@ -231,26 +118,9 @@ migration accessibility, geopolitical risk and regulatory stability.
 
 <div class="box">
 
-<div class="tier-label">Research Division</div>
+<h3>Mobility Score</h3>
 
-<h3>Sovereign Mobility Research</h3>
-
-<p>
-Crossing publishes analytical materials studying global capital mobility,
-jurisdictional competition and sovereign regulatory risk.
-</p>
-
-<div class="link">
-<a href="/svi.html">Sovereign Volatility Index Methodology →</a>
-</div>
-
-<div class="link">
-<a href="/conceptual-framework.html">Crossing Conceptual Framework →</a>
-</div>
-
-<div class="link">
-<a href="/methodology.html">SRIM Modeling Methodology →</a>
-</div>
+<div class="score" id="mobility"></div>
 
 </div>
 
@@ -260,55 +130,99 @@ jurisdictional competition and sovereign regulatory risk.
 
 Crossing — Strategic Navigation Laboratory<br>
 
-<a href="/research.html">Research</a><br>
-<a href="/svi.html">Sovereign Volatility Index</a><br>
-<a href="/conceptual-framework.html">Conceptual Framework</a><br>
-<a href="/methodology.html">Methodology</a><br>
-<a href="/identity.html">Identity</a><br>
-<a href="/origin.html">Origin</a><br>
-<a href="/principles.html">Operating Principles</a><br>
-<a href="/doctrine.html">Foundational Doctrine</a><br>
-<a href="/charter.html">Charter of Analytical Neutrality</a><br>
-<a href="/council.html">Strategic Advisory Council</a><br>
-<a href="/institute.html">Institutional Structure</a>
+<a href="/">Return to Home</a>
 
 </div>
 
 </div>
 
 
+
+<script src="/data/countries.js"></script>
 
 <script>
 
-const sviData = {
+function getCountryFromURL(){
 
-"Spain": {score:44, class:"Regulatory Fluidity"},
-"Portugal": {score:36, class:"Managed Stability"},
-"France": {score:41, class:"Managed Stability"},
-"United States": {score:38, class:"Managed Stability"},
-"Thailand": {score:57, class:"Regulatory Fluidity"},
-"Vietnam": {score:61, class:"Systemic Volatility"},
-"Montenegro": {score:63, class:"Systemic Volatility"},
-"New Zealand": {score:24, class:"Structural Stability"}
+let params=new URLSearchParams(window.location.search)
+
+return params.get("c")
 
 }
 
-function showSVI(country){
 
-if(!country)return
 
-let data=sviData[country]
+function loadCountry(key){
 
-let result=document.getElementById("result")
+let c=COUNTRIES[key]
 
-result.style.display="block"
+if(!c)return
 
-result.innerHTML=
-"<h3>"+country+"</h3>"+
-"<div class='score'>SVI Score: "+data.score+"</div>"+
-"<div>"+data.class+"</div>"
+document.getElementById("countryName").innerText=c.name
+
+document.getElementById("sviScore").innerText=c.svi
+
+document.getElementById("sviClass").innerText=c.class
+
+document.getElementById("tax").innerText=c.tax
+
+document.getElementById("migration").innerText=c.migration
+
+document.getElementById("residency").innerText=c.residency
+
+document.getElementById("geo").innerText=c.geo
+
+document.getElementById("crime").innerText=c.crime
+
+document.getElementById("mobility").innerText=(100-c.svi)+"/100"
 
 }
+
+
+
+function populateCountries(){
+
+let select=document.getElementById("countrySelect")
+
+for(let key in COUNTRIES){
+
+let option=document.createElement("option")
+
+option.value=key
+
+option.text=COUNTRIES[key].name
+
+select.appendChild(option)
+
+}
+
+}
+
+
+
+populateCountries()
+
+
+
+let key=getCountryFromURL() || "spain"
+
+
+
+document.getElementById("countrySelect").value=key
+
+loadCountry(key)
+
+
+
+document.getElementById("countrySelect").addEventListener("change",function(){
+
+let k=this.value
+
+loadCountry(k)
+
+history.replaceState(null,null,"?c="+k)
+
+})
 
 </script>
 
