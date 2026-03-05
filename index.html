@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Crossing — Strategic Navigation for Cross-Border Decisions</title>
+<title>Crossing — Sovereign Volatility Intelligence Platform</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -47,14 +47,9 @@ border:1px solid rgba(255,255,255,0.06);
 border-radius:12px;
 }
 
-.box-entry{
+.box-platform{
 background:rgba(79,140,255,0.05);
 border:1px solid rgba(79,140,255,0.25);
-}
-
-.box-core{
-background:rgba(79,140,255,0.12);
-border:1px solid rgba(79,140,255,0.45);
 }
 
 .tier-label{
@@ -65,11 +60,6 @@ color:#4f8cff;
 margin-bottom:10px;
 }
 
-.price{
-font-size:30px;
-margin-top:15px;
-}
-
 .link{
 margin-top:10px;
 }
@@ -77,7 +67,22 @@ margin-top:10px;
 .link a{
 color:#4f8cff;
 text-decoration:none;
-font-weight:500;
+}
+
+.link a:hover{
+text-decoration:underline;
+}
+
+.result{
+margin-top:20px;
+padding:20px;
+border-radius:8px;
+background:#0f1623;
+}
+
+.score{
+font-size:28px;
+margin-top:10px;
 }
 
 .footer{
@@ -101,39 +106,6 @@ color:white;
 border-radius:6px;
 }
 
-/* popup */
-
-.popup{
-position:fixed;
-top:120px;
-right:40px;
-width:260px;
-background:#0f1623;
-border:1px solid rgba(255,255,255,0.1);
-border-radius:10px;
-padding:20px;
-box-shadow:0 10px 40px rgba(0,0,0,0.5);
-display:none;
-z-index:1000;
-}
-
-.popup h3{
-margin-top:0;
-}
-
-.score{
-font-size:24px;
-margin-top:10px;
-}
-
-.close{
-position:absolute;
-top:8px;
-right:12px;
-cursor:pointer;
-opacity:0.6;
-}
-
 </style>
 </head>
 
@@ -141,16 +113,17 @@ opacity:0.6;
 
 <div class="container">
 
-<h1>Strategic Navigation for Cross-Border Decisions</h1>
+<h1>Sovereign Volatility Intelligence Platform</h1>
 
 <p class="subtitle">
-Crossing models jurisdictional feasibility, regulatory exposure and long-term mobility positioning for individuals evaluating relocation.
-If you are choosing a country, assessing structural risk, or planning cross-border life architecture — this laboratory provides analytical navigation.
+Crossing is an independent analytical laboratory studying jurisdictional stability, global mobility and sovereign regulatory risk.  
+The platform publishes open intelligence tools designed to support cross-border decision making.
 </p>
 
 <div class="statement">
-SRIM is an internal sovereign modeling instrument designed to map jurisdictional risk, optionality and long-term mobility architecture.
+SRIM — Sovereign Relocation Intelligence Modeling — is an analytical framework mapping jurisdictional volatility, migration accessibility and regulatory exposure across global mobility destinations.
 </div>
+
 
 
 <div class="box">
@@ -159,19 +132,19 @@ SRIM is an internal sovereign modeling instrument designed to map jurisdictional
 
 <h3>Global Volatility Indicators</h3>
 
-<div>
+<div class="result">
 
 <div><strong>Global Average SVI</strong><br>42 — Moderate Volatility</div>
 
 <br>
 
-<div><strong>Stability Leaders</strong><br>
+<div><strong>Structural Stability Leaders</strong><br>
 Singapore · New Zealand · Switzerland · Japan
 </div>
 
 <br>
 
-<div><strong>Elevated Volatility</strong><br>
+<div><strong>Elevated Volatility Jurisdictions</strong><br>
 Turkey · Brazil · Vietnam · Montenegro
 </div>
 
@@ -187,14 +160,14 @@ Middle East escalation · Red Sea corridor disruption
 
 
 
-<div class="box box-entry">
+<div class="box box-platform">
 
 <div class="tier-label">SVI Platform</div>
 
-<h3>Run Jurisdiction Volatility Analysis</h3>
+<h3>Jurisdiction Volatility Explorer</h3>
 
 <p>
-Select a jurisdiction to view its Sovereign Volatility Index classification.
+Select a jurisdiction to view its indicative Sovereign Volatility Index classification.
 </p>
 
 <select onchange="showSVI(this.value)">
@@ -209,24 +182,22 @@ Select a jurisdiction to view its Sovereign Volatility Index classification.
 <option value="New Zealand">New Zealand</option>
 </select>
 
+<div id="result" class="result" style="display:none;"></div>
+
 <div class="link">
-<a href="/svi-ranking.html">Explore Global Ranking →</a>
+<a href="/svi-ranking.html">SVI Global Ranking →</a>
 </div>
 
 <div class="link">
-<a href="/svi-observatory.html">Open Country Observatory →</a>
+<a href="/svi-map.html">SVI Global Map →</a>
 </div>
 
 <div class="link">
-<a href="/svi-map.html">Open SVI Map →</a>
+<a href="/svi-explorer.html">Jurisdiction Explorer →</a>
 </div>
 
 <div class="link">
-<a href="/svi-explorer.html">Explore Jurisdictions →</a>
-</div>
-
-<div class="link">
-<a href="/svi-crisis-monitor.html">Open Crisis Monitor →</a>
+<a href="/svi-crisis-monitor.html">SVI Crisis Monitor →</a>
 </div>
 
 </div>
@@ -235,77 +206,28 @@ Select a jurisdiction to view its Sovereign Volatility Index classification.
 
 <div class="box">
 
-<div class="tier-label">Country Profiles</div>
+<div class="tier-label">Country Observatory</div>
 
-<h3>SVI Jurisdiction Profiles</h3>
+<h3>Jurisdiction Intelligence Profiles</h3>
 
 <p>
-Explore analytical profiles of global mobility jurisdictions within the SRIM framework.
+Country Observatory provides structured analytical profiles across tax exposure, migration accessibility, geopolitical risk and regulatory stability.
 </p>
 
 <div class="link">
-<a href="/countries.html">Explore Country Profiles →</a>
+<a href="/country.html?c=spain">Spain Profile →</a>
 </div>
-
-</div>
-
-
-
-<div class="box box-entry">
-
-<div class="tier-label">Entry Instrument</div>
-
-<h3>Entry Sovereign Scan</h3>
-
-<p>
-Structured feasibility modeling for individuals evaluating jurisdictional relocation decisions.
-Initial sovereign positioning analysis powered by SRIM.
-</p>
-
-<div class="price">€249</div>
 
 <div class="link">
-<a href="/report.html">Access Entry Sovereign Scan →</a>
+<a href="/country.html?c=portugal">Portugal Profile →</a>
 </div>
-
-</div>
-
-
-
-<div class="box box-core">
-
-<div class="tier-label">Core Tier</div>
-
-<h3>SRIM Sovereign Architecture</h3>
-
-<p>
-Multi-jurisdiction strategic modeling for long-horizon mobility, regulatory exposure mapping and structural positioning.
-</p>
-
-<div class="price">€2,500</div>
 
 <div class="link">
-<a href="/sovereign.html">Explore Sovereign Architecture →</a>
+<a href="/country.html?c=singapore">Singapore Profile →</a>
 </div>
-
-</div>
-
-
-
-<div class="box">
-
-<div class="tier-label">Laboratory Tier</div>
-
-<h3>SRIM Private Architecture Lab</h3>
-
-<p>
-Structural jurisdictional positioning across capital, citizenship and generational continuity under geopolitical volatility.
-</p>
-
-<div class="price">€7,500</div>
 
 <div class="link">
-<a href="/lab.html">Explore Private Architecture Lab →</a>
+<a href="/country.html?c=newzealand">New Zealand Profile →</a>
 </div>
 
 </div>
@@ -316,14 +238,14 @@ Structural jurisdictional positioning across capital, citizenship and generation
 
 <div class="tier-label">Research Division</div>
 
-<h3>Sovereign Volatility Index (SVI)</h3>
+<h3>Sovereign Mobility Research</h3>
 
 <p>
-Institutional volatility mapping framework quantifying jurisdictional instability across regulatory, migration and geopolitical vectors.
+Crossing publishes analytical materials studying global capital mobility, jurisdictional competition and sovereign regulatory risk.
 </p>
 
 <div class="link">
-<a href="/svi.html">Explore SVI Research Division →</a>
+<a href="/svi.html">Sovereign Volatility Index Methodology →</a>
 </div>
 
 <div class="link">
@@ -331,7 +253,7 @@ Institutional volatility mapping framework quantifying jurisdictional instabilit
 </div>
 
 <div class="link">
-<a href="/srim-core-vectors.html">SRIM Core Vectors →</a>
+<a href="/methodology.html">SRIM Modeling Methodology →</a>
 </div>
 
 </div>
@@ -345,7 +267,6 @@ Crossing — Strategic Navigation Laboratory<br>
 <a href="/research.html">Research</a><br>
 <a href="/svi.html">Sovereign Volatility Index</a><br>
 <a href="/conceptual-framework.html">Conceptual Framework</a><br>
-<a href="/srim-core-vectors.html">SRIM Core Vectors</a><br>
 <a href="/methodology.html">Methodology</a><br>
 <a href="/identity.html">Identity</a><br>
 <a href="/origin.html">Origin</a><br>
@@ -356,20 +277,6 @@ Crossing — Strategic Navigation Laboratory<br>
 <a href="/institute.html">Institutional Structure</a>
 
 </div>
-
-</div>
-
-
-
-<div id="popup" class="popup">
-
-<div class="close" onclick="closePopup()">✕</div>
-
-<h3 id="popupCountry"></h3>
-
-<div class="score" id="popupScore"></div>
-
-<div id="popupClass"></div>
 
 </div>
 
@@ -396,17 +303,14 @@ if(!country)return
 
 let data=sviData[country]
 
-document.getElementById("popupCountry").innerText=country
-document.getElementById("popupScore").innerText="SVI Score: "+data.score
-document.getElementById("popupClass").innerText=data.class
+let result=document.getElementById("result")
 
-document.getElementById("popup").style.display="block"
+result.style.display="block"
 
-}
-
-function closePopup(){
-
-document.getElementById("popup").style.display="none"
+result.innerHTML=
+"<h3>"+country+"</h3>"+
+"<div class='score'>SVI Score: "+data.score+"</div>"+
+"<div>"+data.class+"</div>"
 
 }
 
