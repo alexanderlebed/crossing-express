@@ -43,7 +43,7 @@ display:block;
 margin-top:15px;
 }
 
-input{
+input,select{
 width:100%;
 padding:12px;
 margin-top:8px;
@@ -72,13 +72,13 @@ border-radius:8px;
 }
 
 .country{
-margin-top:10px;
+margin-top:12px;
 font-size:18px;
 }
 
 .metric{
-margin-top:15px;
 opacity:0.85;
+margin-top:4px;
 }
 
 .warning{
@@ -106,10 +106,18 @@ text-decoration:none;
 <h1>AI Relocation Advisor</h1>
 
 <p class="subtitle">
-Evaluate realistic relocation options based on financial capacity and jurisdictional accessibility.
+Evaluate relocation feasibility based on mobility model, income and capital.
 </p>
 
 <div class="box">
+
+<label>Mobility Mode</label>
+<select id="mode">
+<option value="nomad">Digital Nomad</option>
+<option value="professional">Skilled Professional</option>
+<option value="capital">Capital Relocation</option>
+<option value="wealth">Wealth Preservation</option>
+</select>
 
 <label>Annual Income (€)</label>
 <input id="income" type="number" value="60000">
@@ -132,67 +140,91 @@ Crossing — Strategic Navigation Laboratory<br>
 
 <script>
 
-const countries=[
+const countries = {
 
-{name:"Serbia",tax:"Low",risk:"Moderate",difficulty:"Easy",income:15000,wealth:20000},
-{name:"Montenegro",tax:"Low",risk:"Moderate",difficulty:"Easy",income:20000,wealth:30000},
-{name:"Bulgaria",tax:"Low",risk:"Low",difficulty:"Easy",income:20000,wealth:30000},
-{name:"Romania",tax:"Low",risk:"Low",difficulty:"Easy",income:20000,wealth:30000},
+nomad:[
+{name:"Portugal",tax:"Moderate",risk:"Low",difficulty:"Moderate"},
+{name:"Spain",tax:"Moderate",risk:"Low",difficulty:"Moderate"},
+{name:"Greece",tax:"Moderate",risk:"Moderate",difficulty:"Moderate"},
+{name:"Thailand",tax:"Moderate",risk:"Moderate",difficulty:"Moderate"},
+{name:"Mexico",tax:"Moderate",risk:"Moderate",difficulty:"Moderate"}
+],
 
-{name:"Thailand",tax:"Moderate",risk:"Moderate",difficulty:"Moderate",income:30000,wealth:50000},
-{name:"Mexico",tax:"Moderate",risk:"Moderate",difficulty:"Moderate",income:30000,wealth:50000},
+professional:[
+{name:"Netherlands",tax:"High",risk:"Low",difficulty:"Hard"},
+{name:"Germany",tax:"High",risk:"Low",difficulty:"Hard"},
+{name:"Canada",tax:"High",risk:"Low",difficulty:"Hard"},
+{name:"Portugal",tax:"Moderate",risk:"Low",difficulty:"Moderate"},
+{name:"Spain",tax:"Moderate",risk:"Low",difficulty:"Moderate"}
+],
 
-{name:"Portugal",tax:"High",risk:"Low",difficulty:"Moderate",income:45000,wealth:80000},
-{name:"Spain",tax:"High",risk:"Low",difficulty:"Moderate",income:50000,wealth:100000},
-{name:"Greece",tax:"Moderate",risk:"Moderate",difficulty:"Moderate",income:45000,wealth:80000},
+capital:[
+{name:"UAE",tax:"Very Low",risk:"Moderate",difficulty:"Moderate"},
+{name:"Switzerland",tax:"Moderate",risk:"Very Low",difficulty:"Hard"},
+{name:"Singapore",tax:"Low",risk:"Very Low",difficulty:"Hard"},
+{name:"Netherlands",tax:"High",risk:"Low",difficulty:"Hard"},
+{name:"Canada",tax:"High",risk:"Low",difficulty:"Hard"}
+],
 
-{name:"Italy",tax:"High",risk:"Low",difficulty:"Moderate",income:60000,wealth:150000},
-{name:"France",tax:"High",risk:"Low",difficulty:"Hard",income:65000,wealth:200000},
-
-{name:"Canada",tax:"High",risk:"Low",difficulty:"Hard",income:80000,wealth:300000},
-{name:"Netherlands",tax:"High",risk:"Low",difficulty:"Hard",income:90000,wealth:300000},
-
-{name:"UAE",tax:"Very Low",risk:"Moderate",difficulty:"Moderate",income:100000,wealth:500000},
-{name:"Switzerland",tax:"Moderate",risk:"Very Low",difficulty:"Hard",income:200000,wealth:2000000},
-{name:"Singapore",tax:"Low",risk:"Very Low",difficulty:"Hard",income:250000,wealth:3000000}
-
+wealth:[
+{name:"Switzerland",tax:"Moderate",risk:"Very Low",difficulty:"Hard"},
+{name:"Singapore",tax:"Low",risk:"Very Low",difficulty:"Hard"},
+{name:"UAE",tax:"Very Low",risk:"Moderate",difficulty:"Moderate"},
+{name:"New Zealand",tax:"Moderate",risk:"Very Low",difficulty:"Hard"},
+{name:"Monaco",tax:"Very Low",risk:"Very Low",difficulty:"Hard"}
 ]
+
+}
 
 function runAdvisor(){
 
 let income=parseInt(document.getElementById("income").value)||0
 let wealth=parseInt(document.getElementById("wealth").value)||0
-let result=document.getElementById("result")
+let mode=document.getElementById("mode").value
 
+let result=document.getElementById("result")
 result.style.display="block"
 
-if(income<15000 && wealth<20000){
+if(mode==="nomad" && income<25000){
 
 result.innerHTML=
-"<h3 class='warning'>Relocation currently unrealistic</h3>"+
-"<p>Current income and capital are below minimum levels required for sustainable relocation.</p>"+
-"<p>Estimated minimum relocation capital: €50k–€100k.</p>"
+"<h3 class='warning'>Income below typical digital nomad visa thresholds</h3>"+
+"<p>Most nomad programs require ~€2k–€3k monthly income.</p>"
 
 return
 }
 
-let possible=countries.filter(c=>income>=c.income && wealth>=c.wealth)
-
-if(possible.length===0){
+if(mode==="professional" && income<50000){
 
 result.innerHTML=
-"<h3 class='warning'>Limited relocation feasibility</h3>"+
-"<p>Your current financial profile restricts relocation options.</p>"+
-"<p>Recommended strategy: build savings and increase income before relocating.</p>"
+"<h3 class='warning'>Income below skilled migration thresholds</h3>"+
+"<p>Professional migration programs typically require €50k+ income.</p>"
 
 return
 }
 
-possible.sort((a,b)=>a.income-b.income)
+if(mode==="capital" && wealth<300000){
 
-let html="<h3>Accessible Jurisdictions</h3>"
+result.innerHTML=
+"<h3 class='warning'>Insufficient capital for investment-based relocation</h3>"+
+"<p>Most programs require €300k–€500k capital.</p>"
 
-possible.slice(0,5).forEach((c,i)=>{
+return
+}
+
+if(mode==="wealth" && wealth<2000000){
+
+result.innerHTML=
+"<h3 class='warning'>Wealth preservation relocation usually requires €2M+</h3>"
+
+return
+}
+
+let list=countries[mode]
+
+let html="<h3>Recommended Jurisdictions</h3>"
+
+list.forEach((c,i)=>{
 
 html+="<div class='country'>"+(i+1)+". "+c.name+"</div>"+
 "<div class='metric'>Tax Pressure: "+c.tax+"</div>"+
@@ -200,13 +232,6 @@ html+="<div class='country'>"+(i+1)+". "+c.name+"</div>"+
 "<div class='metric'>Residency Difficulty: "+c.difficulty+"</div><br>"
 
 })
-
-let mobility="Limited"
-
-if(income>80000 && wealth>300000) mobility="Moderate"
-if(income>200000 && wealth>2000000) mobility="High"
-
-html+="<h3>Mobility Class</h3><div class='country'>"+mobility+"</div>"
 
 result.innerHTML=html
 
