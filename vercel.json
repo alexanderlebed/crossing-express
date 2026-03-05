@@ -11,10 +11,10 @@
     }
   ],
 
-  "routes": [
+  "rewrites": [
     {
-      "src": "/country/(.*)",
-      "dest": "/country.html?c=$1"
+      "source": "/country/:name",
+      "destination": "/country.html?c=:name"
     }
   ]
 }
