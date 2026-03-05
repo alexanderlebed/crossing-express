@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>SVI Country Profile — Crossing</title>
+<title>Country Observatory — Crossing</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -27,25 +27,25 @@ margin-bottom:10px;
 
 .subtitle{
 opacity:0.8;
-margin-bottom:40px;
+margin-bottom:30px;
 }
 
-.card{
-margin-top:25px;
-padding:25px;
-background:#0f1623;
+.box{
+margin-top:30px;
+padding:30px;
+background:rgba(255,255,255,0.03);
 border:1px solid rgba(255,255,255,0.08);
 border-radius:10px;
 }
 
 .score{
-font-size:34px;
+font-size:40px;
 margin-top:10px;
+color:#4f8cff;
 }
 
 .vector{
-margin-top:12px;
-opacity:0.9;
+margin-top:10px;
 }
 
 .footer{
@@ -59,7 +59,6 @@ text-decoration:none;
 }
 
 </style>
-
 </head>
 
 <body>
@@ -72,112 +71,102 @@ text-decoration:none;
 SVI analytical country profile within the SRIM jurisdiction modeling framework.
 </p>
 
-<div class="card">
+
+<div class="box">
 
 <h3>Sovereign Volatility Index</h3>
 
 <div class="score" id="sviScore"></div>
+
 <div id="sviClass"></div>
 
 </div>
 
-<div class="card">
+
+
+<div class="box">
 
 <h3>Core Vectors</h3>
 
 <div class="vector"><strong>Tax Pressure:</strong> <span id="tax"></span></div>
+
 <div class="vector"><strong>Migration Accessibility:</strong> <span id="migration"></span></div>
+
 <div class="vector"><strong>Residency Path:</strong> <span id="residency"></span></div>
+
 <div class="vector"><strong>Geopolitical Risk:</strong> <span id="geo"></span></div>
+
 <div class="vector"><strong>Crime & Safety:</strong> <span id="crime"></span></div>
 
 </div>
 
-<div class="card">
+
+
+<div class="box">
 
 <h3>Mobility Score</h3>
 
-<div class="score" id="mobilityScore"></div>
+<div class="score" id="mobility"></div>
 
 </div>
+
+
 
 <div class="footer">
 
 Crossing — Strategic Navigation Laboratory<br>
+
 <a href="/">Return to Home</a>
 
 </div>
 
 </div>
 
+
+
+<script src="/data/countries.js"></script>
+
 <script>
 
-const database={
+function getCountryFromURL(){
 
-spain:{name:"Spain",score:44,class:"Regulatory Fluidity",tax:2,migration:3,residency:3,geo:4,crime:4},
+let params=new URLSearchParams(window.location.search)
 
-portugal:{name:"Portugal",score:36,class:"Managed Stability",tax:3,migration:4,residency:4,geo:4,crime:4},
-
-france:{name:"France",score:41,class:"Managed Stability",tax:2,migration:3,residency:3,geo:4,crime:4},
-
-italy:{name:"Italy",score:47,class:"Regulatory Fluidity",tax:2,migration:3,residency:3,geo:4,crime:3},
-
-germany:{name:"Germany",score:35,class:"Managed Stability",tax:2,migration:3,residency:3,geo:4,crime:4},
-
-netherlands:{name:"Netherlands",score:33,class:"Managed Stability",tax:2,migration:3,residency:3,geo:4,crime:4},
-
-switzerland:{name:"Switzerland",score:28,class:"Structural Stability",tax:3,migration:2,residency:2,geo:5,crime:5},
-
-austria:{name:"Austria",score:30,class:"Structural Stability",tax:3,migration:2,residency:2,geo:5,crime:5},
-
-singapore:{name:"Singapore",score:22,class:"Structural Stability",tax:4,migration:2,residency:2,geo:5,crime:5},
-
-uae:{name:"United Arab Emirates",score:34,class:"Managed Stability",tax:5,migration:4,residency:4,geo:3,crime:5},
-
-newzealand:{name:"New Zealand",score:24,class:"Structural Stability",tax:3,migration:2,residency:2,geo:5,crime:5},
-
-japan:{name:"Japan",score:29,class:"Structural Stability",tax:3,migration:2,residency:2,geo:4,crime:5},
-
-thailand:{name:"Thailand",score:57,class:"Regulatory Fluidity",tax:3,migration:4,residency:4,geo:3,crime:3},
-
-vietnam:{name:"Vietnam",score:61,class:"Systemic Volatility",tax:3,migration:3,residency:3,geo:3,crime:3}
+return params.get("c")
 
 }
 
-function getParam(name){
-let url=new URL(window.location.href)
-return url.searchParams.get(name)
-}
+let key=getCountryFromURL()
 
-let key=getParam("c") || "spain"
+if(!key || !COUNTRIES[key]){
 
-key=key.toLowerCase()
+document.getElementById("countryName").innerText="Country not found"
 
-function scoreText(v){
+}else{
 
-if(v==5)return "Very Low / Excellent"
-if(v==4)return "Low"
-if(v==3)return "Moderate"
-if(v==2)return "High"
-return "Very High"
-
-}
-
-let c=database[key]
+let c=COUNTRIES[key]
 
 document.getElementById("countryName").innerText=c.name
-document.getElementById("sviScore").innerText=c.score
+
+document.getElementById("sviScore").innerText=c.svi
+
 document.getElementById("sviClass").innerText=c.class
 
-document.getElementById("tax").innerText=scoreText(c.tax)
-document.getElementById("migration").innerText=scoreText(c.migration)
-document.getElementById("residency").innerText=scoreText(c.residency)
-document.getElementById("geo").innerText=scoreText(c.geo)
-document.getElementById("crime").innerText=scoreText(c.crime)
+document.getElementById("tax").innerText=c.tax
 
-let mobility=(c.tax+c.migration+c.residency+c.geo+c.crime)/5*20
+document.getElementById("migration").innerText=c.migration
 
-document.getElementById("mobilityScore").innerText=Math.round(mobility)+"/100"
+document.getElementById("residency").innerText=c.residency
+
+document.getElementById("geo").innerText=c.geo
+
+document.getElementById("crime").innerText=c.crime
+
+let mobility=100-c.svi
+
+document.getElementById("mobility").innerText=mobility+"/100"
+
+}
 
 </script>
 
