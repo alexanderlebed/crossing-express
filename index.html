@@ -150,6 +150,14 @@ Turkey · Brazil · Vietnam · Montenegro</div>
 <div id="riskSignals"></div>
 </div>
 
+<div style="margin-top:20px;font-size:13px;opacity:0.6;">
+Sources: IMF · World Bank · OECD · Eurostat · GDELT · FRED
+</div>
+
+<div class="link">
+<a href="/methodology.html">SVI Data Methodology →</a>
+</div>
+
 </div>
 
 </div>
@@ -326,11 +334,8 @@ let marketSignals=[
 let html=""
 
 html+="Geopolitical: "+geoSignals[Math.floor(Math.random()*geoSignals.length)]+"<br><br>"
-
 html+="Economic: "+econSignals[Math.floor(Math.random()*econSignals.length)]+"<br><br>"
-
 html+="Migration: "+migrationSignals[Math.floor(Math.random()*migrationSignals.length)]+"<br><br>"
-
 html+="Markets: "+marketSignals[Math.floor(Math.random()*marketSignals.length)]
 
 document.getElementById("riskSignals").innerHTML=html
