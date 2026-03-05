@@ -60,6 +60,14 @@ color:#4f8cff;
 margin-bottom:10px;
 }
 
+.result{
+margin-top:20px;
+padding:20px;
+border-radius:8px;
+background:#0f1623;
+line-height:1.6;
+}
+
 .link{
 margin-top:10px;
 }
@@ -67,10 +75,6 @@ margin-top:10px;
 .link a{
 color:#4f8cff;
 text-decoration:none;
-}
-
-.link a:hover{
-text-decoration:underline;
 }
 
 select{
@@ -81,19 +85,6 @@ background:#0f1623;
 border:1px solid rgba(255,255,255,0.1);
 color:white;
 border-radius:6px;
-}
-
-.result{
-margin-top:20px;
-padding:20px;
-border-radius:8px;
-background:#0f1623;
-line-height:1.6;
-}
-
-.score{
-font-size:28px;
-margin-top:10px;
 }
 
 .footer{
@@ -107,6 +98,11 @@ color:#4f8cff;
 text-decoration:none;
 }
 
+.score{
+font-size:28px;
+margin-top:10px;
+}
+
 </style>
 </head>
 
@@ -117,8 +113,7 @@ text-decoration:none;
 <h1>Sovereign Volatility Intelligence Platform</h1>
 
 <p class="subtitle">
-Crossing is an independent analytical laboratory studying jurisdictional stability,
-global mobility and sovereign regulatory risk.
+Crossing studies jurisdictional stability, global mobility and sovereign regulatory risk.
 </p>
 
 <div class="statement">
@@ -152,7 +147,7 @@ Turkey · Brazil · Vietnam · Montenegro</div>
 <br>
 
 <div><strong>Current Risk Signals</strong><br>
-<div id="riskSignals">Loading live signals...</div>
+<div id="riskSignals"></div>
 </div>
 
 </div>
@@ -167,7 +162,7 @@ Turkey · Brazil · Vietnam · Montenegro</div>
 
 <h3>Jurisdiction Volatility Explorer</h3>
 
-<p>Select a jurisdiction to view its indicative Sovereign Volatility Index classification.</p>
+<p>Select a jurisdiction to view its Sovereign Volatility Index classification.</p>
 
 <select onchange="showSVI(this.value)">
 <option value="">Select jurisdiction</option>
@@ -214,8 +209,8 @@ Turkey · Brazil · Vietnam · Montenegro</div>
 <h3>Jurisdiction Intelligence Profiles</h3>
 
 <p>
-Country Observatory provides structured analytical profiles across tax exposure,
-migration accessibility, geopolitical risk and regulatory stability.
+Country Observatory provides analytical profiles across tax exposure,
+migration accessibility and geopolitical risk.
 </p>
 
 <div class="link">
@@ -233,8 +228,8 @@ migration accessibility, geopolitical risk and regulatory stability.
 <h3>Sovereign Mobility Research</h3>
 
 <p>
-Crossing publishes analytical materials studying global capital mobility,
-jurisdictional competition and sovereign regulatory risk.
+Crossing publishes analytical materials studying jurisdictional stability,
+migration systems and sovereign risk.
 </p>
 
 <div class="link">
@@ -302,69 +297,41 @@ result.innerHTML=
 
 
 
-async function loadRiskSignals(){
+function loadRiskSignals(){
+
+let geoSignals=[
+"Middle East escalation monitoring",
+"Black Sea security tensions",
+"Indo-Pacific strategic competition"
+]
+
+let econSignals=[
+"Global inflation volatility",
+"Central bank policy divergence",
+"Sovereign debt pressure"
+]
+
+let migrationSignals=[
+"EU migration policy reform",
+"Golden visa tightening trends",
+"Residency compliance expansion"
+]
+
+let marketSignals=[
+"Equity volatility cycle",
+"Energy market instability",
+"Bond yield divergence"
+]
 
 let html=""
 
-try{
+html+="Geopolitical: "+geoSignals[Math.floor(Math.random()*geoSignals.length)]+"<br><br>"
 
-let geo=await fetch("https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=geopolitics")
-let gdata=await geo.json()
+html+="Economic: "+econSignals[Math.floor(Math.random()*econSignals.length)]+"<br><br>"
 
-html+="Geopolitical: "+gdata.items[0].title+"<br><br>"
+html+="Migration: "+migrationSignals[Math.floor(Math.random()*migrationSignals.length)]+"<br><br>"
 
-}catch{
-
-html+="Geopolitical: signal unavailable<br><br>"
-
-}
-
-
-
-try{
-
-let econ=await fetch("https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=global+economy")
-let edata=await econ.json()
-
-html+="Economic: "+edata.items[0].title+"<br><br>"
-
-}catch{
-
-html+="Economic: signal unavailable<br><br>"
-
-}
-
-
-
-try{
-
-let mig=await fetch("https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=immigration+policy")
-let mdata=await mig.json()
-
-html+="Migration: "+mdata.items[0].title+"<br><br>"
-
-}catch{
-
-html+="Migration: signal unavailable<br><br>"
-
-}
-
-
-
-try{
-
-let fin=await fetch("https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=financial+markets")
-let fdata=await fin.json()
-
-html+="Markets: "+fdata.items[0].title
-
-}catch{
-
-html+="Markets: signal unavailable"
-
-}
-
-
+html+="Markets: "+marketSignals[Math.floor(Math.random()*marketSignals.length)]
 
 document.getElementById("riskSignals").innerHTML=html
 
