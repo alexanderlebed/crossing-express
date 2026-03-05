@@ -1,109 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>SVI Country Profile — Crossing</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<style>
-
-body{
-margin:0;
-background:#05070f;
-color:#e8ecf1;
-font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
-}
-
-.container{
-max-width:900px;
-margin:auto;
-padding:80px 30px;
-}
-
-h1{
-font-size:36px;
-margin-bottom:10px;
-}
-
-.subtitle{
-opacity:0.8;
-margin-bottom:40px;
-}
-
-.card{
-margin-top:25px;
-padding:25px;
-background:#0f1623;
-border:1px solid rgba(255,255,255,0.08);
-border-radius:10px;
-}
-
-.score{
-font-size:34px;
-margin-top:10px;
-}
-
-.vector{
-margin-top:12px;
-opacity:0.9;
-}
-
-.footer{
-margin-top:80px;
-opacity:0.6;
-}
-
-.footer a{
-color:#4f8cff;
-text-decoration:none;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="container">
-
-<h1 id="countryName">Country</h1>
-
-<p class="subtitle">
-SVI analytical country profile within the SRIM jurisdiction modeling framework.
-</p>
-
-<div class="card">
-
-<h3>Sovereign Volatility Index</h3>
-
-<div class="score" id="sviScore"></div>
-
-<div id="sviClass"></div>
-
-</div>
-
-<div class="card">
-
-<h3>Core Vectors</h3>
-
-<div class="vector"><strong>Tax Pressure:</strong> <span id="tax"></span></div>
-<div class="vector"><strong>Migration Accessibility:</strong> <span id="migration"></span></div>
-<div class="vector"><strong>Residency Path:</strong> <span id="residency"></span></div>
-<div class="vector"><strong>Geopolitical Risk:</strong> <span id="geo"></span></div>
-<div class="vector"><strong>Crime & Safety:</strong> <span id="crime"></span></div>
-
-</div>
-
-<div class="footer">
-Crossing — Strategic Navigation Laboratory<br>
-<a href="/countries.html">Country List</a><br>
-<a href="/">Return to Home</a>
-</div>
-
-</div>
-
-<script>
-
 const database={
 
 spain:{
@@ -126,6 +20,72 @@ migration:"Accessible",
 residency:"Accessible",
 geo:"Low",
 crime:"Low"
+},
+
+france:{
+name:"France",
+score:41,
+class:"Managed Stability",
+tax:"High",
+migration:"Moderate",
+residency:"Accessible",
+geo:"Low",
+crime:"Low"
+},
+
+italy:{
+name:"Italy",
+score:47,
+class:"Regulatory Fluidity",
+tax:"High",
+migration:"Moderate",
+residency:"Accessible",
+geo:"Low",
+crime:"Moderate"
+},
+
+germany:{
+name:"Germany",
+score:35,
+class:"Managed Stability",
+tax:"High",
+migration:"Moderate",
+residency:"Accessible",
+geo:"Low",
+crime:"Low"
+},
+
+netherlands:{
+name:"Netherlands",
+score:33,
+class:"Managed Stability",
+tax:"High",
+migration:"Moderate",
+residency:"Accessible",
+geo:"Low",
+crime:"Low"
+},
+
+switzerland:{
+name:"Switzerland",
+score:28,
+class:"Structural Stability",
+tax:"Moderate",
+migration:"Selective",
+residency:"Selective",
+geo:"Very Low",
+crime:"Very Low"
+},
+
+austria:{
+name:"Austria",
+score:30,
+class:"Structural Stability",
+tax:"Moderate",
+migration:"Selective",
+residency:"Selective",
+geo:"Very Low",
+crime:"Very Low"
 },
 
 singapore:{
@@ -159,53 +119,39 @@ migration:"Selective",
 residency:"Moderate",
 geo:"Very Low",
 crime:"Very Low"
+},
+
+japan:{
+name:"Japan",
+score:29,
+class:"Structural Stability",
+tax:"Moderate",
+migration:"Selective",
+residency:"Selective",
+geo:"Low",
+crime:"Very Low"
+},
+
+thailand:{
+name:"Thailand",
+score:57,
+class:"Regulatory Fluidity",
+tax:"Moderate",
+migration:"Accessible",
+residency:"Accessible",
+geo:"Moderate",
+crime:"Moderate"
+},
+
+vietnam:{
+name:"Vietnam",
+score:61,
+class:"Systemic Volatility",
+tax:"Moderate",
+migration:"Moderate",
+residency:"Moderate",
+geo:"Moderate",
+crime:"Moderate"
 }
 
 }
-
-function getParam(name){
-
-let url=new URL(window.location.href)
-return url.searchParams.get(name)
-
-}
-
-let key=getParam("c")
-
-if(!key){
-
-let path=window.location.pathname.split("/")
-key=path[path.length-1]
-
-}
-
-if(key){
-
-key=key.toLowerCase().replace("-","")
-
-}
-
-if(database[key]){
-
-let c=database[key]
-
-document.getElementById("countryName").innerText=c.name
-document.getElementById("sviScore").innerText=c.score
-document.getElementById("sviClass").innerText=c.class
-
-document.getElementById("tax").innerText=c.tax
-document.getElementById("migration").innerText=c.migration
-document.getElementById("residency").innerText=c.residency
-document.getElementById("geo").innerText=c.geo
-document.getElementById("crime").innerText=c.crime
-
-}else{
-
-document.getElementById("countryName").innerText="Country not found"
-
-}
-
-</script>
-
-</body>
-</html>
