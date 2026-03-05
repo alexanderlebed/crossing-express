@@ -36,6 +36,7 @@ padding:30px;
 background:rgba(255,255,255,0.03);
 border:1px solid rgba(255,255,255,0.08);
 border-radius:10px;
+display:none;
 }
 
 .score{
@@ -48,6 +49,16 @@ color:#4f8cff;
 margin-top:10px;
 }
 
+select{
+width:100%;
+padding:12px;
+margin-top:25px;
+background:#0f1623;
+border:1px solid rgba(255,255,255,0.1);
+color:white;
+border-radius:6px;
+}
+
 .footer{
 margin-top:80px;
 opacity:0.6;
@@ -58,16 +69,6 @@ color:#4f8cff;
 text-decoration:none;
 }
 
-select{
-width:100%;
-padding:12px;
-margin-top:20px;
-background:#0f1623;
-border:1px solid rgba(255,255,255,0.1);
-color:white;
-border-radius:6px;
-}
-
 </style>
 </head>
 
@@ -75,18 +76,23 @@ border-radius:6px;
 
 <div class="container">
 
-<h1 id="countryName">Country</h1>
+<h1>Country Observatory</h1>
 
 <p class="subtitle">
-SVI analytical country profile within the SRIM jurisdiction modeling framework.
+Select a jurisdiction to view its analytical profile within the SRIM mobility framework.
 </p>
 
+<select id="countrySelect">
+<option value="">Select jurisdiction</option>
+</select>
 
-<select id="countrySelect"></select>
+
+
+<h1 id="countryName"></h1>
 
 
 
-<div class="box">
+<div class="box" id="sviBox">
 
 <h3>Sovereign Volatility Index</h3>
 
@@ -98,7 +104,7 @@ SVI analytical country profile within the SRIM jurisdiction modeling framework.
 
 
 
-<div class="box">
+<div class="box" id="vectorsBox">
 
 <h3>Core Vectors</h3>
 
@@ -116,7 +122,7 @@ SVI analytical country profile within the SRIM jurisdiction modeling framework.
 
 
 
-<div class="box">
+<div class="box" id="mobilityBox">
 
 <h3>Mobility Score</h3>
 
@@ -142,21 +148,29 @@ Crossing — Strategic Navigation Laboratory<br>
 
 <script>
 
-function getCountryFromURL(){
+let select=document.getElementById("countrySelect")
 
-let params=new URLSearchParams(window.location.search)
+for(let key in COUNTRIES){
 
-return params.get("c")
+let option=document.createElement("option")
+
+option.value=key
+
+option.text=COUNTRIES[key].name
+
+select.appendChild(option)
 
 }
 
 
 
-function loadCountry(key){
+select.addEventListener("change",function(){
+
+let key=this.value
+
+if(!key)return
 
 let c=COUNTRIES[key]
-
-if(!c)return
 
 document.getElementById("countryName").innerText=c.name
 
@@ -176,51 +190,9 @@ document.getElementById("crime").innerText=c.crime
 
 document.getElementById("mobility").innerText=(100-c.svi)+"/100"
 
-}
-
-
-
-function populateCountries(){
-
-let select=document.getElementById("countrySelect")
-
-for(let key in COUNTRIES){
-
-let option=document.createElement("option")
-
-option.value=key
-
-option.text=COUNTRIES[key].name
-
-select.appendChild(option)
-
-}
-
-}
-
-
-
-populateCountries()
-
-
-
-let key=getCountryFromURL() || "spain"
-
-
-
-document.getElementById("countrySelect").value=key
-
-loadCountry(key)
-
-
-
-document.getElementById("countrySelect").addEventListener("change",function(){
-
-let k=this.value
-
-loadCountry(k)
-
-history.replaceState(null,null,"?c="+k)
+document.getElementById("sviBox").style.display="block"
+document.getElementById("vectorsBox").style.display="block"
+document.getElementById("mobilityBox").style.display="block"
 
 })
 
