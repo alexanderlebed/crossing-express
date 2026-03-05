@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AI Relocation Advisor — Crossing</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+body{
+margin:0;
+background:#05070f;
+color:#e8ecf1;
+font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:70px 30px;
+}
+
+h1{
+font-size:36px;
+margin-bottom:10px;
+}
+
+.subtitle{
+opacity:0.8;
+margin-bottom:40px;
+}
+
+.box{
+margin-top:30px;
+padding:30px;
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:10px;
+}
+
+label{
+display:block;
+margin-top:15px;
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin-top:8px;
+background:#0f1623;
+border:1px solid rgba(255,255,255,0.1);
+color:white;
+border-radius:6px;
+}
+
+button{
+margin-top:20px;
+padding:14px 20px;
+background:#4f8cff;
+border:none;
+border-radius:6px;
+color:white;
+font-weight:600;
+cursor:pointer;
+}
+
+.result{
+margin-top:30px;
+padding:25px;
+background:#0f1623;
+border-radius:8px;
+}
+
+.country{
+margin-top:10px;
+font-size:18px;
+}
+
+.footer{
+margin-top:80px;
+opacity:0.6;
+}
+
+.footer a{
+color:#4f8cff;
+text-decoration:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>AI Relocation Advisor</h1>
+
+<p class="subtitle">
+Evaluate optimal jurisdictions based on income, wealth exposure,
+tax sensitivity and geopolitical tolerance.
+</p>
+
+<div class="box">
+
+<label>Annual Income (€)</label>
+<input id="income" type="number" value="250000">
+
+<label>Net Worth (€)</label>
+<input id="wealth" type="number" value="5000000">
+
+<label>Region Preference</label>
+<select id="region">
+<option>Global</option>
+<option>Europe</option>
+<option>Asia</option>
+<option>Americas</option>
+</select>
+
+<label>Tax Sensitivity</label>
+<select id="tax">
+<option>Low</option>
+<option selected>Moderate</option>
+<option>High</option>
+</select>
+
+<label>Geopolitical Risk Tolerance</label>
+<select id="risk">
+<option>Low</option>
+<option selected>Moderate</option>
+<option>High</option>
+</select>
+
+<label>Safety Priority</label>
+<select id="crime">
+<option>Low</option>
+<option selected>Moderate</option>
+<option>High</option>
+</select>
+
+<button onclick="runAdvisor()">Run Analysis</button>
+
+<div id="result" class="result" style="display:none"></div>
+
+</div>
+
+<div class="footer">
+Crossing — Strategic Navigation Laboratory<br>
+<a href="/">Return to Home</a>
+</div>
+
+</div>
+
+<script>
+
+const countries=[
+
+{name:"Singapore",svi:22,tax:1,geo:1,crime:1,region:"Asia"},
+{name:"Switzerland",svi:28,tax:2,geo:1,crime:1,region:"Europe"},
+{name:"New Zealand",svi:24,tax:2,geo:1,crime:1,region:"Asia"},
+{name:"Portugal",svi:36,tax:2,geo:1,crime:1,region:"Europe"},
+{name:"Spain",svi:44,tax:3,geo:1,crime:1,region:"Europe"},
+{name:"UAE",svi:34,tax:1,geo:2,crime:1,region:"Asia"},
+{name:"Canada",svi:34,tax:2,geo:1,crime:1,region:"Americas"},
+{name:"Japan",svi:29,tax:2,geo:1,crime:1,region:"Asia"}
+
+]
+
+function scoreCountry(c,taxSensitivity,riskTolerance){
+
+let score=100
+
+score-=c.svi
+
+if(taxSensitivity==="High") score-=c.tax*10
+if(taxSensitivity==="Moderate") score-=c.tax*5
+
+if(riskTolerance==="Low") score-=c.geo*10
+
+return score
+
+}
+
+function runAdvisor(){
+
+let tax=document.getElementById("tax").value
+let risk=document.getElementById("risk").value
+let region=document.getElementById("region").value
+
+let filtered=countries
+
+if(region!=="Global")
+filtered=countries.filter(c=>c.region===region)
+
+let results=filtered.map(c=>{
+
+return{
+name:c.name,
+score:scoreCountry(c,tax,risk)
+}
+
+})
+
+results.sort((a,b)=>b.score-a.score)
+
+let html="<h3>Recommended Jurisdictions</h3>"
+
+results.slice(0,3).forEach((r,i)=>{
+
+html+=`<div class="country">${i+1}. ${r.name} — Score ${r.score}</div>`
+
+})
+
+let result=document.getElementById("result")
+
+result.innerHTML=html
+result.style.display="block"
+
+}
+
+</script>
+
+</body>
+</html>
