@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>SVI Jurisdiction Explorer — Crossing</title>
+<title>SVI Interactive Map — Crossing</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -15,7 +15,7 @@ font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
 }
 
 .container{
-max-width:900px;
+max-width:1100px;
 margin:auto;
 padding:80px 30px;
 }
@@ -30,34 +30,42 @@ opacity:0.8;
 margin-bottom:40px;
 }
 
-select{
-width:100%;
-padding:14px;
-background:#0f1623;
-border:1px solid rgba(255,255,255,0.08);
-border-radius:6px;
-color:#e8ecf1;
-font-size:16px;
+.map{
+display:grid;
+grid-template-columns:repeat(6,1fr);
+gap:12px;
 }
+
+.country{
+padding:14px;
+border-radius:6px;
+cursor:pointer;
+text-align:center;
+font-size:14px;
+transition:0.2s;
+}
+
+.country:hover{
+transform:scale(1.05);
+}
+
+.stable{ background:#123d2a; }
+.managed{ background:#0f2e4a; }
+.fluid{ background:#4a3a0f; }
+.volatility{ background:#4a250f; }
+.instability{ background:#4a0f0f; }
 
 .result{
 margin-top:40px;
-padding:30px;
-border-radius:10px;
-border:1px solid rgba(255,255,255,0.08);
-transition:all 0.3s ease;
+padding:25px;
+border:1px solid rgba(255,255,255,0.1);
+border-radius:8px;
+display:none;
 }
 
 .score{
-font-size:40px;
+font-size:36px;
 margin-top:10px;
-font-weight:600;
-}
-
-.class{
-margin-top:10px;
-opacity:0.9;
-font-size:18px;
 }
 
 .footer{
@@ -77,73 +85,21 @@ text-decoration:none;
 
 <div class="container">
 
-<h1>SVI Jurisdiction Explorer</h1>
+<h1>SVI Interactive Map</h1>
 
 <p class="subtitle">
-Select a jurisdiction to view its indicative Sovereign Volatility Index score.
+Click a jurisdiction to view its Sovereign Volatility Index classification.
 </p>
 
-<select id="countrySelect">
+<div class="map" id="map"></div>
 
-<option value="">Select jurisdiction</option>
+<div class="result" id="result">
 
-<!-- Europe -->
+<h2 id="country"></h2>
 
-<option>Portugal</option>
-<option>Spain</option>
-<option>France</option>
-<option>Italy</option>
-<option>Germany</option>
-<option>Netherlands</option>
-<option>Switzerland</option>
-<option>Austria</option>
-<option>Greece</option>
-<option>Cyprus</option>
-<option>Malta</option>
-<option>Montenegro</option>
-<option>Serbia</option>
+<div class="score" id="score"></div>
 
-<!-- Middle East -->
-
-<option>United Arab Emirates</option>
-<option>Qatar</option>
-
-<!-- Asia -->
-
-<option>Singapore</option>
-<option>Japan</option>
-<option>South Korea</option>
-<option>Thailand</option>
-<option>Vietnam</option>
-<option>Malaysia</option>
-<option>Indonesia</option>
-
-<!-- Americas -->
-
-<option>United States</option>
-<option>Canada</option>
-<option>Mexico</option>
-<option>Chile</option>
-<option>Brazil</option>
-<option>Argentina</option>
-<option>Costa Rica</option>
-<option>Panama</option>
-<option>Uruguay</option>
-
-<!-- Oceania -->
-
-<option>Australia</option>
-<option>New Zealand</option>
-
-</select>
-
-<div class="result" id="resultBox" style="display:none">
-
-<h2 id="countryName"></h2>
-
-<div class="score" id="sviScore"></div>
-
-<div class="class" id="sviClass"></div>
+<div id="class"></div>
 
 </div>
 
@@ -156,104 +112,88 @@ Crossing — Strategic Navigation Laboratory<br>
 
 <script>
 
-const sviData={
+const countries={
 
-Portugal:36,
-Spain:44,
-France:41,
-Italy:47,
-Germany:35,
-Netherlands:33,
-Switzerland:28,
-Austria:30,
-Greece:52,
-Cyprus:50,
-Malta:39,
-Montenegro:63,
-Serbia:58,
+Portugal:{score:36},
+Spain:{score:44},
+France:{score:41},
+Italy:{score:47},
+Germany:{score:35},
+Netherlands:{score:33},
+Switzerland:{score:28},
+Austria:{score:30},
+Greece:{score:52},
+Cyprus:{score:50},
+Malta:{score:39},
+Montenegro:{score:63},
+Serbia:{score:58},
 
-"United Arab Emirates":34,
-Qatar:32,
+"United Arab Emirates":{score:34},
+Qatar:{score:32},
 
-Singapore:22,
-Japan:29,
-"South Korea":37,
-Thailand:57,
-Vietnam:61,
-Malaysia:46,
-Indonesia:55,
+Singapore:{score:22},
+Japan:{score:29},
+"South Korea":{score:37},
+Thailand:{score:57},
+Vietnam:{score:61},
+Malaysia:{score:46},
+Indonesia:{score:55},
 
-"United States":38,
-Canada:34,
-Mexico:60,
-Chile:48,
-Brazil:65,
-Argentina:74,
-"Costa Rica":43,
-Panama:45,
-Uruguay:40,
+"United States":{score:38},
+Canada:{score:34},
+Mexico:{score:60},
+Chile:{score:48},
+Brazil:{score:65},
+Argentina:{score:74},
+"Costa Rica":{score:43},
+Panama:{score:45},
+Uruguay:{score:40},
 
-Australia:27,
-"New Zealand":24
+Australia:{score:27},
+"New Zealand":{score:24}
 
 };
 
 function getClass(score){
 
-if(score<=30) return "Structural Stability";
-if(score<=40) return "Managed Stability";
-if(score<=55) return "Regulatory Fluidity";
-if(score<=70) return "Systemic Volatility";
+if(score<=30) return ["Structural Stability","stable"];
+if(score<=40) return ["Managed Stability","managed"];
+if(score<=55) return ["Regulatory Fluidity","fluid"];
+if(score<=70) return ["Systemic Volatility","volatility"];
 
-return "Structural Instability";
-
-}
-
-function getColor(score){
-
-if(score<=30) return "rgba(60,180,120,0.15)";
-if(score<=40) return "rgba(100,180,255,0.15)";
-if(score<=55) return "rgba(255,200,80,0.15)";
-if(score<=70) return "rgba(255,120,80,0.18)";
-
-return "rgba(255,70,70,0.2)";
+return ["Structural Instability","instability"];
 
 }
 
-function getTextColor(score){
+const map=document.getElementById("map");
 
-if(score<=30) return "#3cff9b";
-if(score<=40) return "#6cc3ff";
-if(score<=55) return "#ffd166";
-if(score<=70) return "#ff9b66";
+for(const country in countries){
 
-return "#ff6666";
+const score=countries[country].score;
+
+const cls=getClass(score);
+
+const div=document.createElement("div");
+
+div.className="country "+cls[1];
+
+div.innerText=country;
+
+div.onclick=function(){
+
+document.getElementById("result").style.display="block";
+
+document.getElementById("country").innerText=country;
+
+document.getElementById("score").innerText="SVI Score: "+score;
+
+document.getElementById("class").innerText=cls[0];
+
+};
+
+map.appendChild(div);
 
 }
-
-document.getElementById("countrySelect").addEventListener("change",function(){
-
-const country=this.value;
-
-if(!country) return;
-
-const score=sviData[country];
-
-const result=document.getElementById("resultBox");
-
-result.style.display="block";
-
-result.style.background=getColor(score);
-
-result.style.color=getTextColor(score);
-
-document.getElementById("countryName").innerText=country;
-
-document.getElementById("sviScore").innerText="SVI Score: "+score;
-
-document.getElementById("sviClass").innerText=getClass(score);
-
-});
 
 </script>
 
