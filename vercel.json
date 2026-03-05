@@ -13,8 +13,8 @@
 
   "rewrites": [
     {
-      "source": "/country/:country",
-      "destination": "/country.html?c=:country"
+      "source": "/country-:name.html",
+      "destination": "/country.html?c=:name"
     }
   ]
 }
