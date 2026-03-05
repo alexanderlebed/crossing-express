@@ -100,16 +100,37 @@ color:white;
 border-radius:6px;
 }
 
-.result{
-margin-top:20px;
-padding:20px;
-border-radius:8px;
+/* popup */
+
+.popup{
+position:fixed;
+top:120px;
+right:40px;
+width:260px;
 background:#0f1623;
+border:1px solid rgba(255,255,255,0.1);
+border-radius:10px;
+padding:20px;
+box-shadow:0 10px 40px rgba(0,0,0,0.5);
+display:none;
+z-index:1000;
+}
+
+.popup h3{
+margin-top:0;
 }
 
 .score{
-font-size:28px;
+font-size:24px;
 margin-top:10px;
+}
+
+.close{
+position:absolute;
+top:8px;
+right:12px;
+cursor:pointer;
+opacity:0.6;
 }
 
 </style>
@@ -137,7 +158,7 @@ SRIM is an internal sovereign modeling instrument designed to map jurisdictional
 
 <h3>Global Volatility Indicators</h3>
 
-<div class="result">
+<div>
 
 <div><strong>Global Average SVI</strong><br>42 — Moderate Volatility</div>
 
@@ -186,8 +207,6 @@ Select a jurisdiction to view its Sovereign Volatility Index classification.
 <option value="Montenegro">Montenegro</option>
 <option value="New Zealand">New Zealand</option>
 </select>
-
-<div id="result" class="result" style="display:none;"></div>
 
 <div class="link">
 <a href="/svi-ranking.html">Explore Global Ranking →</a>
@@ -323,6 +342,20 @@ Crossing — Strategic Navigation Laboratory<br>
 
 
 
+<div id="popup" class="popup">
+
+<div class="close" onclick="closePopup()">✕</div>
+
+<h3 id="popupCountry"></h3>
+
+<div class="score" id="popupScore"></div>
+
+<div id="popupClass"></div>
+
+</div>
+
+
+
 <script>
 
 const sviData = {
@@ -344,14 +377,17 @@ if(!country)return
 
 let data=sviData[country]
 
-let result=document.getElementById("result")
+document.getElementById("popupCountry").innerText=country
+document.getElementById("popupScore").innerText="SVI Score: "+data.score
+document.getElementById("popupClass").innerText=data.class
 
-result.style.display="block"
+document.getElementById("popup").style.display="block"
 
-result.innerHTML=
-"<h3>"+country+"</h3>"+
-"<div class='score'>SVI Score: "+data.score+"</div>"+
-"<div>"+data.class+"</div>"
+}
+
+function closePopup(){
+
+document.getElementById("popup").style.display="none"
 
 }
 
