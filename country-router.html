@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Country Router</title>
+
+<script>
+
+let path = window.location.pathname
+
+let match = path.match(/country-(.*)\.html/)
+
+if(match){
+
+let country = match[1]
+
+window.location.replace("/country.html?c=" + country)
+
+}else{
+
+document.body.innerHTML="Country not found"
+
+}
+
+</script>
+
+</head>
+
+<body>
+Redirecting...
+</body>
+</html>
