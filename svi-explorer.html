@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SVI Relocation Explorer — Crossing</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+body{
+margin:0;
+background:#05070f;
+color:#e8ecf1;
+font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:80px 30px;
+}
+
+h1{
+font-size:34px;
+margin-bottom:10px;
+}
+
+.subtitle{
+opacity:0.8;
+margin-bottom:40px;
+}
+
+select{
+width:100%;
+padding:14px;
+background:#0f1623;
+border:1px solid rgba(255,255,255,0.08);
+border-radius:6px;
+color:#e8ecf1;
+font-size:16px;
+}
+
+.result{
+margin-top:40px;
+padding:30px;
+border-radius:10px;
+border:1px solid rgba(255,255,255,0.08);
+display:none;
+}
+
+.score{
+font-size:36px;
+margin-top:10px;
+font-weight:600;
+}
+
+.metric{
+margin-top:18px;
+padding:14px;
+background:#0f1623;
+border-radius:6px;
+}
+
+.metric-title{
+font-size:13px;
+opacity:0.7;
+}
+
+.metric-value{
+font-size:18px;
+margin-top:4px;
+}
+
+.footer{
+margin-top:80px;
+opacity:0.6;
+}
+
+.footer a{
+color:#4f8cff;
+text-decoration:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>SVI Relocation Explorer</h1>
+
+<p class="subtitle">
+Evaluate relocation jurisdictions across structural volatility,
+tax pressure, migration accessibility and geopolitical exposure.
+</p>
+
+<select id="countrySelect">
+
+<option value="">Select jurisdiction</option>
+
+<option>Portugal</option>
+<option>Spain</option>
+<option>France</option>
+<option>Italy</option>
+<option>Germany</option>
+<option>Netherlands</option>
+<option>Switzerland</option>
+<option>Austria</option>
+<option>Greece</option>
+<option>Cyprus</option>
+<option>Malta</option>
+
+<option>United Arab Emirates</option>
+<option>Qatar</option>
+
+<option>Singapore</option>
+<option>Japan</option>
+<option>South Korea</option>
+<option>Thailand</option>
+<option>Malaysia</option>
+
+<option>United States</option>
+<option>Canada</option>
+<option>Mexico</option>
+<option>Chile</option>
+
+<option>Australia</option>
+<option>New Zealand</option>
+
+</select>
+
+<div class="result" id="resultBox">
+
+<h2 id="countryName"></h2>
+
+<div class="score" id="sviScore"></div>
+
+<div class="metric">
+<div class="metric-title">Tax Pressure</div>
+<div class="metric-value" id="tax"></div>
+</div>
+
+<div class="metric">
+<div class="metric-title">Migration Accessibility</div>
+<div class="metric-value" id="migration"></div>
+</div>
+
+<div class="metric">
+<div class="metric-title">Residency Path</div>
+<div class="metric-value" id="residency"></div>
+</div>
+
+<div class="metric">
+<div class="metric-title">Geopolitical Risk</div>
+<div class="metric-value" id="geo"></div>
+</div>
+
+</div>
+
+<div class="footer">
+Crossing — Strategic Navigation Laboratory<br>
+<a href="/">Return to Home</a>
+</div>
+
+</div>
+
+<script>
+
+const data={
+
+Portugal:{svi:36,tax:"Moderate",migration:"Accessible",residency:"EU residency pathway",geo:"Low"},
+Spain:{svi:44,tax:"Moderate–High",migration:"Accessible",residency:"EU residency pathway",geo:"Low"},
+France:{svi:41,tax:"High",migration:"Moderate",residency:"EU residency pathway",geo:"Low"},
+Italy:{svi:47,tax:"Moderate–High",migration:"Moderate",residency:"EU residency pathway",geo:"Low"},
+Germany:{svi:35,tax:"High",migration:"Moderate",residency:"EU residency pathway",geo:"Low"},
+Netherlands:{svi:33,tax:"High",migration:"Moderate",residency:"EU residency pathway",geo:"Low"},
+Switzerland:{svi:28,tax:"Moderate",migration:"Restricted",residency:"Quota based",geo:"Very Low"},
+Austria:{svi:30,tax:"Moderate",migration:"Moderate",residency:"EU residency pathway",geo:"Very Low"},
+Greece:{svi:52,tax:"Moderate",migration:"Accessible",residency:"Golden Visa",geo:"Low"},
+Cyprus:{svi:50,tax:"Low",migration:"Accessible",residency:"Investment residency",geo:"Low"},
+Malta:{svi:39,tax:"Moderate",migration:"Moderate",residency:"Investment residency",geo:"Low"},
+
+"United Arab Emirates":{svi:34,tax:"Low",migration:"Accessible",residency:"Golden Visa",geo:"Medium"},
+Qatar:{svi:32,tax:"Low",migration:"Restricted",residency:"Investor residency",geo:"Medium"},
+
+Singapore:{svi:22,tax:"Low",migration:"Restricted",residency:"Highly selective",geo:"Very Low"},
+Japan:{svi:29,tax:"Moderate",migration:"Moderate",residency:"Work based residency",geo:"Low"},
+"South Korea":{svi:37,tax:"Moderate",migration:"Moderate",residency:"Work residency",geo:"Medium"},
+Thailand:{svi:57,tax:"Low",migration:"Accessible",residency:"Elite Visa",geo:"Medium"},
+Malaysia:{svi:46,tax:"Low",migration:"Accessible",residency:"MM2H program",geo:"Low"},
+
+"United States":{svi:38,tax:"High",migration:"Restricted",residency:"Complex immigration",geo:"Low"},
+Canada:{svi:34,tax:"Moderate–High",migration:"Moderate",residency:"PR programs",geo:"Very Low"},
+Mexico:{svi:60,tax:"Moderate",migration:"Accessible",residency:"Temporary residency",geo:"Medium"},
+Chile:{svi:48,tax:"Moderate",migration:"Moderate",residency:"Residency visa",geo:"Low"},
+
+Australia:{svi:27,tax:"Moderate–High",migration:"Selective",residency:"Points based",geo:"Very Low"},
+"New Zealand":{svi:24,tax:"Moderate",migration:"Selective",residency:"Points based",geo:"Very Low"}
+
+};
+
+document.getElementById("countrySelect").addEventListener("change",function(){
+
+const c=this.value;
+
+if(!c) return;
+
+const d=data[c];
+
+document.getElementById("resultBox").style.display="block";
+
+document.getElementById("countryName").innerText=c;
+
+document.getElementById("sviScore").innerText="SVI Score: "+d.svi;
+
+document.getElementById("tax").innerText=d.tax;
+document.getElementById("migration").innerText=d.migration;
+document.getElementById("residency").innerText=d.residency;
+document.getElementById("geo").innerText=d.geo;
+
+});
+
+</script>
+
+</body>
+</html>
