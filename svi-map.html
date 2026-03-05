@@ -87,8 +87,10 @@ Select a jurisdiction to view its indicative Sovereign Volatility Index score.
 
 <option value="">Select jurisdiction</option>
 
-<option>Spain</option>
+<!-- Europe -->
+
 <option>Portugal</option>
+<option>Spain</option>
 <option>France</option>
 <option>Italy</option>
 <option>Germany</option>
@@ -97,29 +99,38 @@ Select a jurisdiction to view its indicative Sovereign Volatility Index score.
 <option>Austria</option>
 <option>Greece</option>
 <option>Cyprus</option>
-
+<option>Malta</option>
 <option>Montenegro</option>
 <option>Serbia</option>
-<option>Turkey</option>
+
+<!-- Middle East -->
+
 <option>United Arab Emirates</option>
 <option>Qatar</option>
 
+<!-- Asia -->
+
+<option>Singapore</option>
+<option>Japan</option>
+<option>South Korea</option>
 <option>Thailand</option>
 <option>Vietnam</option>
 <option>Malaysia</option>
-<option>Singapore</option>
 <option>Indonesia</option>
 
-<option>Japan</option>
-<option>South Korea</option>
+<!-- Americas -->
 
 <option>United States</option>
 <option>Canada</option>
 <option>Mexico</option>
-
-<option>Brazil</option>
 <option>Chile</option>
+<option>Brazil</option>
 <option>Argentina</option>
+<option>Costa Rica</option>
+<option>Panama</option>
+<option>Uruguay</option>
+
+<!-- Oceania -->
 
 <option>Australia</option>
 <option>New Zealand</option>
@@ -146,8 +157,9 @@ Crossing — Strategic Navigation Laboratory<br>
 <script>
 
 const sviData={
-Spain:44,
+
 Portugal:36,
+Spain:44,
 France:41,
 Italy:47,
 Germany:35,
@@ -156,26 +168,34 @@ Switzerland:28,
 Austria:30,
 Greece:52,
 Cyprus:50,
+Malta:39,
 Montenegro:63,
 Serbia:58,
-Turkey:68,
+
 "United Arab Emirates":34,
 Qatar:32,
+
+Singapore:22,
+Japan:29,
+"South Korea":37,
 Thailand:57,
 Vietnam:61,
 Malaysia:46,
-Singapore:22,
 Indonesia:55,
-Japan:29,
-"South Korea":37,
+
 "United States":38,
 Canada:34,
 Mexico:60,
-Brazil:65,
 Chile:48,
+Brazil:65,
 Argentina:74,
+"Costa Rica":43,
+Panama:45,
+Uruguay:40,
+
 Australia:27,
 "New Zealand":24
+
 };
 
 function getClass(score){
