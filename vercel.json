@@ -9,5 +9,12 @@
         }
       ]
     }
+  ],
+
+  "routes": [
+    {
+      "src": "/country/(.*)",
+      "dest": "/country.html?c=$1"
+    }
   ]
 }
