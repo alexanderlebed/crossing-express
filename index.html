@@ -88,6 +88,7 @@ margin-top:20px;
 padding:20px;
 border-radius:8px;
 background:#0f1623;
+line-height:1.6;
 }
 
 .score{
@@ -117,8 +118,7 @@ text-decoration:none;
 
 <p class="subtitle">
 Crossing is an independent analytical laboratory studying jurisdictional stability,
-global mobility and sovereign regulatory risk.  
-The platform publishes open intelligence tools designed to support cross-border decision making.
+global mobility and sovereign regulatory risk.
 </p>
 
 <div class="statement">
@@ -130,30 +130,29 @@ migration accessibility and regulatory exposure across global mobility destinati
 
 <div class="box">
 
-<div class="tier-label">SVI Live Dashboard</div>
+<div class="tier-label">SVI Global Overview</div>
 
 <h3>Global Volatility Indicators</h3>
 
 <div class="result">
 
-<div><strong>Global Average SVI</strong><br>42 — Moderate Volatility</div>
+<div><strong>Global Average SVI</strong><br>
+42 — Moderate Volatility</div>
 
 <br>
 
 <div><strong>Structural Stability Leaders</strong><br>
-Singapore · New Zealand · Switzerland · Japan
-</div>
+Singapore · New Zealand · Switzerland · Japan</div>
 
 <br>
 
 <div><strong>Elevated Volatility Jurisdictions</strong><br>
-Turkey · Brazil · Vietnam · Montenegro
-</div>
+Turkey · Brazil · Vietnam · Montenegro</div>
 
 <br>
 
-<div><strong>Active Crisis Signals</strong><br>
-Middle East escalation · Red Sea corridor disruption
+<div><strong>Current Risk Signals</strong><br>
+<div id="riskSignals">Loading live signals...</div>
 </div>
 
 </div>
@@ -168,9 +167,7 @@ Middle East escalation · Red Sea corridor disruption
 
 <h3>Jurisdiction Volatility Explorer</h3>
 
-<p>
-Select a jurisdiction to view its indicative Sovereign Volatility Index classification.
-</p>
+<p>Select a jurisdiction to view its indicative Sovereign Volatility Index classification.</p>
 
 <select onchange="showSVI(this.value)">
 <option value="">Select jurisdiction</option>
@@ -263,14 +260,7 @@ Crossing — Strategic Navigation Laboratory<br>
 <a href="/research.html">Research</a><br>
 <a href="/svi.html">Sovereign Volatility Index</a><br>
 <a href="/conceptual-framework.html">Conceptual Framework</a><br>
-<a href="/methodology.html">Methodology</a><br>
-<a href="/identity.html">Identity</a><br>
-<a href="/origin.html">Origin</a><br>
-<a href="/principles.html">Operating Principles</a><br>
-<a href="/doctrine.html">Foundational Doctrine</a><br>
-<a href="/charter.html">Charter of Analytical Neutrality</a><br>
-<a href="/council.html">Strategic Advisory Council</a><br>
-<a href="/institute.html">Institutional Structure</a>
+<a href="/methodology.html">Methodology</a>
 
 </div>
 
@@ -309,6 +299,78 @@ result.innerHTML=
 "<div>"+data.class+"</div>"
 
 }
+
+
+
+async function loadRiskSignals(){
+
+let html=""
+
+try{
+
+let geo=await fetch("https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=geopolitics")
+let gdata=await geo.json()
+
+html+="Geopolitical: "+gdata.items[0].title+"<br><br>"
+
+}catch{
+
+html+="Geopolitical: signal unavailable<br><br>"
+
+}
+
+
+
+try{
+
+let econ=await fetch("https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=global+economy")
+let edata=await econ.json()
+
+html+="Economic: "+edata.items[0].title+"<br><br>"
+
+}catch{
+
+html+="Economic: signal unavailable<br><br>"
+
+}
+
+
+
+try{
+
+let mig=await fetch("https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=immigration+policy")
+let mdata=await mig.json()
+
+html+="Migration: "+mdata.items[0].title+"<br><br>"
+
+}catch{
+
+html+="Migration: signal unavailable<br><br>"
+
+}
+
+
+
+try{
+
+let fin=await fetch("https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=financial+markets")
+let fdata=await fin.json()
+
+html+="Markets: "+fdata.items[0].title
+
+}catch{
+
+html+="Markets: signal unavailable"
+
+}
+
+
+
+document.getElementById("riskSignals").innerHTML=html
+
+}
+
+loadRiskSignals()
 
 </script>
 
