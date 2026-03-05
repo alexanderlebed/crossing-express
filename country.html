@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SVI Country Profile — Crossing</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+body{
+margin:0;
+background:#05070f;
+color:#e8ecf1;
+font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:80px 30px;
+}
+
+h1{
+font-size:36px;
+margin-bottom:10px;
+}
+
+.subtitle{
+opacity:0.8;
+margin-bottom:40px;
+}
+
+.card{
+margin-top:25px;
+padding:25px;
+background:#0f1623;
+border:1px solid rgba(255,255,255,0.08);
+border-radius:10px;
+}
+
+.score{
+font-size:34px;
+margin-top:10px;
+}
+
+.vector{
+margin-top:12px;
+opacity:0.85;
+}
+
+.footer{
+margin-top:80px;
+opacity:0.6;
+}
+
+.footer a{
+color:#4f8cff;
+text-decoration:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1 id="countryName"></h1>
+
+<p class="subtitle">
+SVI analytical country profile within the SRIM jurisdiction modeling framework.
+</p>
+
+
+<div class="card">
+
+<h3>Sovereign Volatility Index</h3>
+
+<div class="score" id="sviScore"></div>
+
+<div id="sviClass"></div>
+
+</div>
+
+
+<div class="card">
+
+<h3>Core Vectors</h3>
+
+<div class="vector"><strong>Tax Pressure:</strong> <span id="tax"></span></div>
+<div class="vector"><strong>Migration Accessibility:</strong> <span id="migration"></span></div>
+<div class="vector"><strong>Residency Path:</strong> <span id="residency"></span></div>
+<div class="vector"><strong>Geopolitical Risk:</strong> <span id="geo"></span></div>
+<div class="vector"><strong>Crime & Safety:</strong> <span id="crime"></span></div>
+
+</div>
+
+
+<div class="footer">
+
+Crossing — Strategic Navigation Laboratory<br>
+
+<a href="/countries.html">Country List</a><br>
+<a href="/">Return to Home</a>
+
+</div>
+
+</div>
+
+
+
+<script>
+
+const database={
+
+spain:{
+name:"Spain",
+score:44,
+class:"Regulatory Fluidity",
+tax:"High",
+migration:"Moderate",
+residency:"Accessible",
+geo:"Low",
+crime:"Low"
+},
+
+portugal:{
+name:"Portugal",
+score:36,
+class:"Managed Stability",
+tax:"Moderate",
+migration:"Accessible",
+residency:"Accessible",
+geo:"Low",
+crime:"Low"
+},
+
+singapore:{
+name:"Singapore",
+score:22,
+class:"Structural Stability",
+tax:"Low",
+migration:"Selective",
+residency:"Difficult",
+geo:"Very Low",
+crime:"Very Low"
+},
+
+uae:{
+name:"United Arab Emirates",
+score:34,
+class:"Managed Stability",
+tax:"Very Low",
+migration:"Accessible",
+residency:"Accessible",
+geo:"Moderate",
+crime:"Very Low"
+},
+
+newzealand:{
+name:"New Zealand",
+score:24,
+class:"Structural Stability",
+tax:"Moderate",
+migration:"Selective",
+residency:"Moderate",
+geo:"Very Low",
+crime:"Very Low"
+}
+
+}
+
+
+
+function getParam(name){
+
+let url=new URL(window.location.href)
+
+return url.searchParams.get(name)
+
+}
+
+
+
+let key=getParam("c")
+
+if(database[key]){
+
+let c=database[key]
+
+document.getElementById("countryName").innerText=c.name
+
+document.getElementById("sviScore").innerText=c.score
+
+document.getElementById("sviClass").innerText=c.class
+
+document.getElementById("tax").innerText=c.tax
+
+document.getElementById("migration").innerText=c.migration
+
+document.getElementById("residency").innerText=c.residency
+
+document.getElementById("geo").innerText=c.geo
+
+document.getElementById("crime").innerText=c.crime
+
+}
+
+</script>
+
+</body>
+</html>
