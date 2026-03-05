@@ -58,6 +58,16 @@ color:#4f8cff;
 text-decoration:none;
 }
 
+select{
+width:100%;
+padding:12px;
+margin-top:20px;
+background:#0f1623;
+border:1px solid rgba(255,255,255,0.1);
+color:white;
+border-radius:6px;
+}
+
 </style>
 </head>
 
@@ -65,11 +75,15 @@ text-decoration:none;
 
 <div class="container">
 
-<h1 id="countryName"></h1>
+<h1 id="countryName">Country</h1>
 
 <p class="subtitle">
 SVI analytical country profile within the SRIM jurisdiction modeling framework.
 </p>
+
+
+<select id="countrySelect"></select>
+
 
 
 <div class="box">
@@ -136,15 +150,13 @@ return params.get("c")
 
 }
 
-let key=getCountryFromURL()
 
-if(!key || !COUNTRIES[key]){
 
-document.getElementById("countryName").innerText="Country not found"
-
-}else{
+function loadCountry(key){
 
 let c=COUNTRIES[key]
+
+if(!c)return
 
 document.getElementById("countryName").innerText=c.name
 
@@ -162,11 +174,55 @@ document.getElementById("geo").innerText=c.geo
 
 document.getElementById("crime").innerText=c.crime
 
-let mobility=100-c.svi
-
-document.getElementById("mobility").innerText=mobility+"/100"
+document.getElementById("mobility").innerText=(100-c.svi)+"/100"
 
 }
+
+
+
+function populateCountries(){
+
+let select=document.getElementById("countrySelect")
+
+for(let key in COUNTRIES){
+
+let option=document.createElement("option")
+
+option.value=key
+
+option.text=COUNTRIES[key].name
+
+select.appendChild(option)
+
+}
+
+}
+
+
+
+populateCountries()
+
+
+
+let key=getCountryFromURL() || "spain"
+
+
+
+document.getElementById("countrySelect").value=key
+
+loadCountry(key)
+
+
+
+document.getElementById("countrySelect").addEventListener("change",function(){
+
+let k=this.value
+
+loadCountry(k)
+
+history.replaceState(null,null,"?c="+k)
+
+})
 
 </script>
 
