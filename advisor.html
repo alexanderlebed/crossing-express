@@ -87,6 +87,7 @@ text-decoration:none;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -96,7 +97,7 @@ text-decoration:none;
 <h1>AI Relocation Advisor</h1>
 
 <p class="subtitle">
-Evaluate optimal jurisdictions based on income, wealth exposure and geopolitical tolerance.
+Evaluate optimal jurisdictions based on tax exposure, regulatory stability and geopolitical risk.
 </p>
 
 <div class="box">
@@ -113,6 +114,7 @@ Evaluate optimal jurisdictions based on income, wealth exposure and geopolitical
 <option value="Europe">Europe</option>
 <option value="Asia">Asia</option>
 <option value="Americas">Americas</option>
+<option value="Middle East">Middle East</option>
 </select>
 
 <button id="runButton">Run Analysis</button>
@@ -131,63 +133,92 @@ Crossing — Strategic Navigation Laboratory<br>
 <script>
 
 const countries = [
-{name:"Singapore", svi:22, region:"Asia"},
-{name:"Switzerland", svi:28, region:"Europe"},
-{name:"New Zealand", svi:24, region:"Asia"},
-{name:"Portugal", svi:36, region:"Europe"},
-{name:"Spain", svi:44, region:"Europe"},
-{name:"UAE", svi:34, region:"Asia"},
-{name:"Canada", svi:34, region:"Americas"},
-{name:"Japan", svi:29, region:"Asia"}
-];
+
+{name:"Singapore",region:"Asia",svi:22,tax:1,geo:1,crime:1},
+{name:"Switzerland",region:"Europe",svi:28,tax:2,geo:1,crime:1},
+{name:"New Zealand",region:"Asia",svi:24,tax:2,geo:1,crime:1},
+{name:"Japan",region:"Asia",svi:29,tax:2,geo:1,crime:1},
+{name:"Austria",region:"Europe",svi:30,tax:2,geo:1,crime:1},
+
+{name:"Netherlands",region:"Europe",svi:33,tax:3,geo:1,crime:1},
+{name:"Germany",region:"Europe",svi:35,tax:3,geo:1,crime:1},
+{name:"Portugal",region:"Europe",svi:36,tax:2,geo:1,crime:1},
+{name:"Canada",region:"Americas",svi:34,tax:3,geo:1,crime:1},
+{name:"United States",region:"Americas",svi:38,tax:3,geo:1,crime:2},
+
+{name:"France",region:"Europe",svi:41,tax:4,geo:1,crime:2},
+{name:"Spain",region:"Europe",svi:44,tax:4,geo:1,crime:2},
+{name:"Italy",region:"Europe",svi:47,tax:4,geo:1,crime:2},
+{name:"Cyprus",region:"Europe",svi:50,tax:2,geo:2,crime:2},
+{name:"Greece",region:"Europe",svi:52,tax:2,geo:2,crime:2},
+
+{name:"UAE",region:"Middle East",svi:34,tax:1,geo:2,crime:1},
+{name:"Qatar",region:"Middle East",svi:32,tax:1,geo:2,crime:1},
+
+{name:"Thailand",region:"Asia",svi:57,tax:2,geo:2,crime:2},
+{name:"Malaysia",region:"Asia",svi:46,tax:2,geo:2,crime:2},
+{name:"Indonesia",region:"Asia",svi:55,tax:2,geo:2,crime:2},
+{name:"Vietnam",region:"Asia",svi:61,tax:2,geo:2,crime:2},
+
+{name:"Chile",region:"Americas",svi:48,tax:2,geo:2,crime:2},
+{name:"Mexico",region:"Americas",svi:60,tax:2,geo:2,crime:3},
+{name:"Brazil",region:"Americas",svi:65,tax:3,geo:2,crime:3},
+{name:"Argentina",region:"Americas",svi:74,tax:3,geo:2,crime:3}
+
+]
 
 function runAdvisor(){
 
-const income = parseInt(document.getElementById("income").value) || 0;
-const wealth = parseInt(document.getElementById("wealth").value) || 0;
-const region = document.getElementById("region").value;
+const income = parseInt(document.getElementById("income").value) || 0
+const wealth = parseInt(document.getElementById("wealth").value) || 0
+const region = document.getElementById("region").value
 
-let filtered = countries;
+let filtered = countries
 
 if(region !== "Global"){
-filtered = countries.filter(c => c.region === region);
+filtered = countries.filter(c => c.region === region)
 }
 
 let results = filtered.map(c => {
 
-let score = 100 - c.svi;
+let score = 100
 
-if(income > 200000) score += 5;
-if(wealth > 2000000) score += 5;
+score -= c.svi
+score -= c.tax * 6
+score -= c.geo * 4
+score -= c.crime * 3
 
-return {name:c.name, score:score};
+if(income > 200000) score += 5
+if(wealth > 2000000) score += 5
 
-});
+return {name:c.name,score:score}
 
-results.sort((a,b)=>b.score-a.score);
+})
 
-let html = "<h3>Recommended Jurisdictions</h3>";
+results.sort((a,b)=>b.score-a.score)
 
-results.slice(0,3).forEach((r,i)=>{
-html += "<div class='country'>" + (i+1) + ". " + r.name + " — Score " + r.score + "</div>";
-});
+let html = "<h3>Recommended Jurisdictions</h3>"
 
-let mobility = 70;
+results.slice(0,5).forEach((r,i)=>{
+html += "<div class='country'>" + (i+1) + ". " + r.name + " — Score " + r.score + "</div>"
+})
 
-if(income > 200000) mobility += 10;
-if(wealth > 2000000) mobility += 10;
+let mobility = 60
 
-html += "<br><h3>Mobility Score</h3>";
-html += "<div class='country'>" + mobility + " / 100</div>";
+if(income > 200000) mobility += 10
+if(wealth > 2000000) mobility += 10
 
-const resultBox = document.getElementById("result");
+html += "<br><h3>Mobility Score</h3>"
+html += "<div class='country'>" + mobility + " / 100</div>"
 
-resultBox.innerHTML = html;
-resultBox.style.display = "block";
+const resultBox = document.getElementById("result")
+
+resultBox.innerHTML = html
+resultBox.style.display = "block"
 
 }
 
-document.getElementById("runButton").addEventListener("click", runAdvisor);
+document.getElementById("runButton").addEventListener("click", runAdvisor)
 
 </script>
 
