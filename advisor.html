@@ -76,6 +76,11 @@ margin-top:10px;
 font-size:18px;
 }
 
+.warning{
+color:#ff9b66;
+font-weight:600;
+}
+
 .footer{
 margin-top:80px;
 opacity:0.6;
@@ -97,25 +102,16 @@ text-decoration:none;
 <h1>AI Relocation Advisor</h1>
 
 <p class="subtitle">
-Evaluate optimal jurisdictions based on tax exposure, regulatory stability and geopolitical risk.
+Evaluate realistic relocation options based on income, capital and jurisdictional accessibility.
 </p>
 
 <div class="box">
 
 <label>Annual Income (€)</label>
-<input id="income" type="number" value="250000">
+<input id="income" type="number" value="50000">
 
 <label>Net Worth (€)</label>
-<input id="wealth" type="number" value="5000000">
-
-<label>Region Preference</label>
-<select id="region">
-<option value="Global">Global</option>
-<option value="Europe">Europe</option>
-<option value="Asia">Asia</option>
-<option value="Americas">Americas</option>
-<option value="Middle East">Middle East</option>
-</select>
+<input id="wealth" type="number" value="100000">
 
 <button id="runButton">Run Analysis</button>
 
@@ -134,36 +130,28 @@ Crossing — Strategic Navigation Laboratory<br>
 
 const countries = [
 
-{name:"Singapore",region:"Asia",svi:22,tax:1,geo:1,crime:1},
-{name:"Switzerland",region:"Europe",svi:28,tax:2,geo:1,crime:1},
-{name:"New Zealand",region:"Asia",svi:24,tax:2,geo:1,crime:1},
-{name:"Japan",region:"Asia",svi:29,tax:2,geo:1,crime:1},
-{name:"Austria",region:"Europe",svi:30,tax:2,geo:1,crime:1},
+{name:"Serbia",minIncome:15000,minWealth:20000},
+{name:"Montenegro",minIncome:20000,minWealth:30000},
+{name:"Bulgaria",minIncome:20000,minWealth:30000},
+{name:"Romania",minIncome:20000,minWealth:30000},
 
-{name:"Netherlands",region:"Europe",svi:33,tax:3,geo:1,crime:1},
-{name:"Germany",region:"Europe",svi:35,tax:3,geo:1,crime:1},
-{name:"Portugal",region:"Europe",svi:36,tax:2,geo:1,crime:1},
-{name:"Canada",region:"Americas",svi:34,tax:3,geo:1,crime:1},
-{name:"United States",region:"Americas",svi:38,tax:3,geo:1,crime:2},
+{name:"Thailand",minIncome:30000,minWealth:50000},
+{name:"Mexico",minIncome:30000,minWealth:50000},
+{name:"Panama",minIncome:35000,minWealth:60000},
 
-{name:"France",region:"Europe",svi:41,tax:4,geo:1,crime:2},
-{name:"Spain",region:"Europe",svi:44,tax:4,geo:1,crime:2},
-{name:"Italy",region:"Europe",svi:47,tax:4,geo:1,crime:2},
-{name:"Cyprus",region:"Europe",svi:50,tax:2,geo:2,crime:2},
-{name:"Greece",region:"Europe",svi:52,tax:2,geo:2,crime:2},
+{name:"Portugal",minIncome:45000,minWealth:80000},
+{name:"Spain",minIncome:50000,minWealth:100000},
+{name:"Greece",minIncome:45000,minWealth:80000},
 
-{name:"UAE",region:"Middle East",svi:34,tax:1,geo:2,crime:1},
-{name:"Qatar",region:"Middle East",svi:32,tax:1,geo:2,crime:1},
+{name:"Italy",minIncome:60000,minWealth:150000},
+{name:"France",minIncome:65000,minWealth:200000},
 
-{name:"Thailand",region:"Asia",svi:57,tax:2,geo:2,crime:2},
-{name:"Malaysia",region:"Asia",svi:46,tax:2,geo:2,crime:2},
-{name:"Indonesia",region:"Asia",svi:55,tax:2,geo:2,crime:2},
-{name:"Vietnam",region:"Asia",svi:61,tax:2,geo:2,crime:2},
+{name:"Canada",minIncome:80000,minWealth:300000},
+{name:"Netherlands",minIncome:90000,minWealth:300000},
 
-{name:"Chile",region:"Americas",svi:48,tax:2,geo:2,crime:2},
-{name:"Mexico",region:"Americas",svi:60,tax:2,geo:2,crime:3},
-{name:"Brazil",region:"Americas",svi:65,tax:3,geo:2,crime:3},
-{name:"Argentina",region:"Americas",svi:74,tax:3,geo:2,crime:3}
+{name:"UAE",minIncome:100000,minWealth:500000},
+{name:"Switzerland",minIncome:200000,minWealth:2000000},
+{name:"Singapore",minIncome:250000,minWealth:3000000}
 
 ]
 
@@ -171,50 +159,52 @@ function runAdvisor(){
 
 const income = parseInt(document.getElementById("income").value) || 0
 const wealth = parseInt(document.getElementById("wealth").value) || 0
-const region = document.getElementById("region").value
-
-let filtered = countries
-
-if(region !== "Global"){
-filtered = countries.filter(c => c.region === region)
-}
-
-let results = filtered.map(c => {
-
-let score = 100
-
-score -= c.svi
-score -= c.tax * 6
-score -= c.geo * 4
-score -= c.crime * 3
-
-if(income > 200000) score += 5
-if(wealth > 2000000) score += 5
-
-return {name:c.name,score:score}
-
-})
-
-results.sort((a,b)=>b.score-a.score)
-
-let html = "<h3>Recommended Jurisdictions</h3>"
-
-results.slice(0,5).forEach((r,i)=>{
-html += "<div class='country'>" + (i+1) + ". " + r.name + " — Score " + r.score + "</div>"
-})
-
-let mobility = 60
-
-if(income > 200000) mobility += 10
-if(wealth > 2000000) mobility += 10
-
-html += "<br><h3>Mobility Score</h3>"
-html += "<div class='country'>" + mobility + " / 100</div>"
 
 const resultBox = document.getElementById("result")
 
-resultBox.innerHTML = html
 resultBox.style.display = "block"
+
+if(income < 15000 && wealth < 20000){
+
+resultBox.innerHTML = `
+<h3 class="warning">Relocation currently not financially feasible</h3>
+<p>
+Current income and savings are below the minimum threshold required for sustainable relocation.
+</p>
+<p>
+Estimated minimum financial base for relocation: <strong>€50k–€100k</strong> depending on jurisdiction.
+</p>
+`
+
+return
+}
+
+let available = countries.filter(c =>
+income >= c.minIncome && wealth >= c.minWealth
+)
+
+if(available.length === 0){
+
+resultBox.innerHTML = `
+<h3 class="warning">Limited relocation feasibility</h3>
+<p>
+Current financial profile restricts relocation options.
+Consider building additional savings before relocating.
+</p>
+`
+
+return
+}
+
+available.sort((a,b)=>a.minIncome - b.minIncome)
+
+let html = "<h3>Accessible Jurisdictions</h3>"
+
+available.slice(0,5).forEach((c,i)=>{
+html += "<div class='country'>" + (i+1) + ". " + c.name + "</div>"
+})
+
+resultBox.innerHTML = html
 
 }
 
